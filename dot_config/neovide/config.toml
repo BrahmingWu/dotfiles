@@ -1,0 +1,15 @@
+frame = "transparent"
+mouse-cursor-icon = "arrow"
+title-hidden = false
+
+[font]
+normal = ["Fira Code"] # Will use the bundled Fira Code Nerd Font by default
+size = 16.0
+
+[box-drawing]
+# "font-glyph", "native" or "selected-native"
+# mode = "font-glyph"
+#
+# [box-drawing.sizes]
+# default = [2, 4]  # Thin and thick values respectively, for all sizes
+#

@@ -1,0 +1,33 @@
+export PS1="[%?] %1~ %# "
+#export CLICOLOR=1
+#export LSCOLORS=ExGxFxdaCxDaDahbadeche
+
+export EDITOR="nvim"
+export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=http://127.0.0.1:7890
+alias cda='cd /Users/brahmingwu/MyDocs/src/Test'
+alias ls='eza'
+
+autoload -Uz compinit
+compinit
+
+# bun completions
+[ -s "/Users/brahmingwu/.bun/_bun" ] && source "/Users/brahmingwu/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+export PATH="$PATH:$HOME/.local/bin"
+#export PAGER="lnav -q"
+export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+
+export FZF_DEFAULT_OPTS="
+  --walker=file,dir,hidden
+  --preview 'fzf-preview.sh {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'
+"
+
+
