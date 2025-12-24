@@ -1,12 +1,12 @@
 patch:
   menu/page_size: 8
   schema_list:
-    - schema: double_pinyin_flypy    # 小鹤双拼
+    - schema: double_pinyin_flypy # 小鹤双拼
   ascii_composer/good_old_caps_lock: false
   ascii_composer/switch_key/Caps_Lock: commit_code
   switcher/hotkeys:
-    - Control+grave
-  punctuator/half_shape/$: '$'
+    - F4
+  punctuator/half_shape/$: "$"
 
 # 按键速查
 # https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md

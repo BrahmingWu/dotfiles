@@ -54,7 +54,7 @@ window-width = 160
 mouse-hide-while-typing = true
 macos-option-as-alt = true
 font-size = 18
-quit-after-last-window-closed = true
+#quit-after-last-window-closed = true
 background-opacity = 0.8
 background-opacity-cells = true
 background-blur = true
@@ -62,3 +62,14 @@ theme = light: Catppuccin Latte, dark: Catppuccin Macchiato
 macos-window-buttons = hidden
 macos-titlebar-style = transparent
 
+shell-integration-features = ssh-terminfo,ssh-env
+
+keybind = global:ctrl+backquote=toggle_quick_terminal
+keybind = opt+cmd+k=resize_split:up,10
+keybind = opt+cmd+j=resize_split:down,10
+keybind = opt+cmd+h=resize_split:left,10
+keybind = opt+cmd+l=resize_split:right,10
+keybind = ctrl+cmd+k=goto_split:up
+keybind = ctrl+cmd+j=goto_split:down
+keybind = ctrl+cmd+h=goto_split:left
+keybind = ctrl+cmd+l=goto_split:right

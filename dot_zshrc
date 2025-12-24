@@ -1,34 +1,49 @@
 
 export EDITOR="nvim"
-export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=http://127.0.0.1:7890
-
-alias cda='cd /Users/brahmingwu/MyDocs/src/Test'
-alias ..='cd ..'
-alias ...='cd ../..'
-
-alias ls='eza'
-alias ll='eza -lh'
-alias lt='eza -T'
-alias l='eza -lah@'
-
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export EZA_ICONS_AUTO="auto"
-
-autoload -Uz compinit
-compinit
-
-# bun completions
-[ -s "/Users/brahmingwu/.bun/_bun" ] && source "/Users/brahmingwu/.bun/_bun"
-
-# Carapace
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-source <(carapace _carapace)
+export _ZO_DATA_DIR="$HOME/Documents/App/zoxide/"
+export _ZO_ECHO=1
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$PATH:$HOME/.local/bin"
+export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+
+
+export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=http://127.0.0.1:7890
+
+
+HISTSIZE=10000
+SAVEHIST=10000
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_VERIFY
+setopt NO_CASE_GLOB
+setopt VI
+
+
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m-1) ]]; then
+  compinit -C
+else
+  compinit
+fi
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+
+# bun completions
+[ -s "/Users/brahmingwu/.bun/_bun" ] && source "/Users/brahmingwu/.bun/_bun"
+
+
 
 export FZF_DEFAULT_OPTS="
   --style minimal
@@ -54,19 +69,24 @@ export FZF_ALT_C_OPTS="
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-export PATH="$PATH:$HOME/.local/bin"
-export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+alias cd='z'
+alias ..='z..'
+alias ...='z ../..'
+alias ls='eza'
+alias ll='eza -alh --git'
+alias lt='eza -T'
+alias l='eza -lah@'
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
-
-HISTSIZE=10000
-HISTFILESIZE=10000
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_VERIFY
+bindkey -M viins '\e.' insert-last-word
+bindkey -M vicmd '\e.' insert-last-word
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
