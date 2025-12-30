@@ -5,7 +5,7 @@ patch:
       ascii_mode: true
       #no_inline: true
   style/candidate_list_layout: linear # stacked | linear
-  style/font_face: "霞鹜文楷,Fira Code"
+  style/font_face: "LXGW WenKai Mono"
   style/font_point: 36
   style/shadow_size: 10
   style/label_font_face: "Fira Code"

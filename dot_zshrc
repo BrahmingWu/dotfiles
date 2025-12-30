@@ -13,7 +13,7 @@ export PATH="$PATH:$HOME/.local/bin"
 export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 
 
-export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7893 http_proxy=http://127.0.0.1:7893 all_proxy=socks5://127.0.0.1:7893
 
 
 HISTSIZE=10000
@@ -28,6 +28,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt NO_CASE_GLOB
 setopt VI
+setopt CORRECT
 
 
 autoload -Uz compinit
@@ -41,7 +42,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 
 # bun completions
-[ -s "/Users/brahmingwu/.bun/_bun" ] && source "/Users/brahmingwu/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 
 
@@ -70,20 +71,14 @@ export FZF_ALT_C_OPTS="
 source <(fzf --zsh)
 
 alias cd='z'
-alias ..='z..'
-alias ...='z ../..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias ls='eza'
 alias ll='eza -alh --git'
 alias lt='eza -T'
 alias l='eza -lah@'
 
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
-}
 
 bindkey -M viins '\e.' insert-last-word
 bindkey -M vicmd '\e.' insert-last-word

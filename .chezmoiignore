@@ -25,3 +25,9 @@
 
 **/*.cache
 
+**/lazy-lock.json
+
+{{- if ne .chezmoi.os "darwin" }}
+**/aerospace
+Library/
+{{- end }}

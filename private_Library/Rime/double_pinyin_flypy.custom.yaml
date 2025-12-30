@@ -1,0 +1,45 @@
+# Rime schema
+# encoding: utf-8
+
+# 复制自 rime_ice.schema.yaml ，适配了双拼。
+# 双拼键位映射复制自 https://github.com/rime/rime-double-pinyin
+# 双拼之间主要就是 speller/algebra 和 translator/preedit_format 这里有区别。
+#
+# 全拼的自定义文本和双拼有些冲突，改成了 custom_phrase_double ，需要创建 custom_phrase_double.txt 文件。
+#
+# 目前配置中有个别功能仍然是全拼拼写，不能自动适配，所以需要手动修改一下：
+# - 英文中部分符号的派生规则：在英文方案文件 melt_eng.schema.yaml > speller > algebra 修改为对应的双拼拼写运算
+# - 部件拆字的拼写规则：在部件拆字方案 radical_pinyin.schema.yaml > speller > algebra 修改为对应的双拼拼写运算
+# 打个补丁一劳永逸，补丁写法参考 [常见问题](https://github.com/iDvel/rime-ice/issues/133) 或 others/双拼补丁示例/ 文件夹
+
+patch:
+  switches/+:
+    - name: aux_code_display # 拆字滤镜
+      states: [🙈, 🐵] # 快捷键
+      reset: 0
+  engine/filters/+:
+    - lua_filter@*auxCode_filter@flypy_full # 小鹤双拼辅码(音形)
+    - simplifier@chaifen_cc # 鹤形拆字辅助滤镜
+  axu_code:
+    # 小鹤音形配置
+    # 激活码
+    trigger_word: ";"
+    # 展示辅码的模式
+    # always:   总是展示(默认)
+    # trigger:  输入激活码后激活辅码
+    # none:     始终不展示辅码
+    show_aux_notice: "trigger"
+  # 鹤形拆字辅助滤镜
+  chaifen_cc:
+    opencc_config: fly_Chaifen.json
+    option_name: aux_code_display
+    show_in_comment: true # 是否仅将转换结果显示在备注中
+    comment_format:
+      - "xform/&nbsp;/ /"
+    tags: # 设置其作用范围
+      - abc
+      - storkfly
+      - reverse_lookup
+    tips: char #  单字加滤镜: char; 全部: all，
+
+  speller/alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA;

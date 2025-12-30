@@ -1,9 +1,12 @@
 frame = "transparent"
 mouse-cursor-icon = "arrow"
 title-hidden = false
+srgb = true
 
 [font]
-normal = ["Fira Code"] # Will use the bundled Fira Code Nerd Font by default
+normal = [
+  "JetBrainsMono Nerd Font",
+] # Will use the bundled Fira Code Nerd Font by default
 size = 18.0
 
 [box-drawing]

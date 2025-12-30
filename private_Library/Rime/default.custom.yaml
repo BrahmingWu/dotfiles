@@ -5,7 +5,8 @@ patch:
   ascii_composer/good_old_caps_lock: false
   ascii_composer/switch_key/Caps_Lock: commit_code
   switcher/hotkeys:
-    - F4
+    - Control+F4
+  switcher/fold_options: false
   punctuator/half_shape/$: "$"
 
 # 按键速查
