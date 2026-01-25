@@ -32,4 +32,6 @@ chezmoiKey.key.age
 {{- if ne .chezmoi.os "darwin" }}
 **/aerospace
 Library/
+**/neovide
+**/karabiner
 {{- end }}

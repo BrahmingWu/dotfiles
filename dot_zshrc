@@ -27,7 +27,6 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt NO_CASE_GLOB
-setopt VI
 
 
 autoload -Uz compinit

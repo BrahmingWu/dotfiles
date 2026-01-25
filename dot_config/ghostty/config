@@ -61,7 +61,7 @@ background-blur = true
 theme = light: Catppuccin Latte, dark: Catppuccin Macchiato
 macos-window-buttons = hidden
 macos-titlebar-style = transparent
-
+scrollback-limit = 134217728
 shell-integration-features = ssh-terminfo,ssh-env
 
 keybind = global:ctrl+backquote=toggle_quick_terminal
