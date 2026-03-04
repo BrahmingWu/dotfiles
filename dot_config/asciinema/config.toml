@@ -1,0 +1,6 @@
+[server]
+url = "https://asciinema.org/"
+
+[session]
+idle_time_limit = 2
+

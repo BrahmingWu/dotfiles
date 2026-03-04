@@ -48,9 +48,9 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-window-height = 40
-window-width = 160
-#maximize = true
+#window-height = 40
+#window-width = 160
+maximize = true
 mouse-hide-while-typing = true
 macos-option-as-alt = true
 font-size = 18
@@ -65,11 +65,11 @@ scrollback-limit = 134217728
 shell-integration-features = ssh-terminfo,ssh-env
 
 keybind = global:ctrl+backquote=toggle_quick_terminal
-keybind = opt+cmd+k=resize_split:up,10
-keybind = opt+cmd+j=resize_split:down,10
-keybind = opt+cmd+h=resize_split:left,10
-keybind = opt+cmd+l=resize_split:right,10
-keybind = ctrl+cmd+k=goto_split:up
-keybind = ctrl+cmd+j=goto_split:down
-keybind = ctrl+cmd+h=goto_split:left
-keybind = ctrl+cmd+l=goto_split:right
+# keybind = opt+shift+k=resize_split:up,10
+# keybind = opt+shift+j=resize_split:down,10
+# keybind = opt+shift+h=resize_split:left,10
+# keybind = opt+shift+l=resize_split:right,10
+# keybind = opt+k=goto_split:up
+# keybind = opt+j=goto_split:down
+# keybind = opt+h=goto_split:left
+# keybind = opt+l=goto_split:right

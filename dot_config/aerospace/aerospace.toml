@@ -7,9 +7,9 @@ config-version = 2
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = [
-    'exec-and-forget borders active_color=0xff0064E1 inactive_color=0x00494d64 width=5.0'
-]
+# after-startup-command = [
+#     'exec-and-forget borders active_color=0xff0064E1 inactive_color=0x00494d64 width=5.0'
+# ]
 # Start AeroSpace at login
 start-at-login = true
 
@@ -38,7 +38,13 @@ default-root-container-orientation = 'auto'
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 #on-focus-changed = ['move-mouse window-lazy-center']
-
+exec-on-workspace-change = ['/bin/bash','-c','''
+  if [ ${AEROSPACE_FOCUSED_WORKSPACE} = "T" ]; then
+    /usr/local/bin/aerospace mode terminal
+  elif [ ${AEROSPACE_PREV_WORKSPACE} = "T" ]; then
+    /usr/local/bin/aerospace mode main
+  fi
+  ''']
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
@@ -48,18 +54,7 @@ automatically-unhide-macos-hidden-apps = true
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = [
-  "1",
-  "2",
-  "5",
-  "6",
-  "B",
-  "E",
-  "F",
-  "O",
-  "T",
-  "W",
-]
+persistent-workspaces = ["1", "2", "5", "6", "B", "E", "F", "O", "T", "W"]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -126,7 +121,7 @@ outer.right = 10
 # end tell'
 # '''
 
-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
+alt-enter = 'exec-and-forget open /Applications/kitty.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
@@ -223,7 +218,7 @@ alt-tab = 'workspace-back-and-forth'
 alt-shift-backslash = 'move-workspace-to-monitor --wrap-around next'
 
 alt-backslash = [
-  'move-node-to-monitor --wrap-around --focus-follows-window next'
+  'move-node-to-monitor --wrap-around --focus-follows-window next',
 ]
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
@@ -250,6 +245,12 @@ alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
+
+[mode.terminal.binding]
+alt-tab = 'workspace-back-and-forth'
+alt-shift-backslash = 'move-workspace-to-monitor --wrap-around next'
+alt-enter = 'exec-and-forget open /Applications/kitty.app'
+
 # App-specific settings
 [[on-window-detected]]
 if.app-name-regex-substring = '微信|Wexin|WeChat'
@@ -260,12 +261,9 @@ if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace T'
+if.app-name-regex-substring = '^Ghostty$|^kitty$'
+run = ['move-node-to-workspace T']
 
-[[on-window-detected]]
-if.app-name-regex-substring = 'Clash'
-run = ['layout floating', 'move-node-to-workspace C']
 
 [[on-window-detected]]
 if.window-title-regex-substring = 'SAP GUI'
@@ -274,6 +272,10 @@ run = ['layout floating', 'move-node-to-workspace S']
 [[on-window-detected]]
 if.app-id = 'com.tencent.flue.WeApp'
 run = ['layout floating', 'move-node-to-workspace F']
+
+[[on-window-detected]]
+if.window-title-regex-substring = '^(Quick\sLook)$'
+run = ['layout floating']
 
 # Common settings
 [[on-window-detected]]
@@ -315,5 +317,3 @@ run = 'move-node-to-workspace S'
 [[on-window-detected]]
 if.app-name-regex-substring = '^W.*'
 run = 'move-node-to-workspace W'
-
-

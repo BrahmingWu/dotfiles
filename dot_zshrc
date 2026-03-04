@@ -4,6 +4,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export EZA_ICONS_AUTO="auto"
 export _ZO_DATA_DIR="$HOME/Documents/App/zoxide/"
 export _ZO_ECHO=1
+export ZELLIJ_AUTO_EXIT="true"
+# export ZELLIJ_AUTO_ATTACH="true"
+
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -13,7 +16,7 @@ export PATH="$PATH:$HOME/.local/bin"
 export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 
 
-export https_proxy=http://127.0.0.1:7893 http_proxy=http://127.0.0.1:7893 all_proxy=socks5://127.0.0.1:7893
+export https_proxy=http://127.0.0.1:20122 http_proxy=http://127.0.0.1:20122 all_proxy=socks5://127.0.0.1:20122
 
 
 HISTSIZE=10000
@@ -36,8 +39,8 @@ else
   compinit
 fi
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
+# zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -83,3 +86,4 @@ bindkey -M vicmd '\e.' insert-last-word
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+# eval "$(zellij setup --generate-auto-start zsh)"
