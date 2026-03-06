@@ -177,7 +177,6 @@ alt-v = 'workspace V'
 alt-w = 'workspace W'
 alt-x = 'workspace X'
 alt-y = 'workspace Y'
-alt-z = 'workspace Z'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 #alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
@@ -210,7 +209,6 @@ alt-shift-v = 'move-node-to-workspace V --focus-follows-window'
 alt-shift-w = 'move-node-to-workspace W --focus-follows-window'
 alt-shift-x = 'move-node-to-workspace X --focus-follows-window'
 alt-shift-y = 'move-node-to-workspace Y --focus-follows-window'
-alt-shift-z = 'move-node-to-workspace Z --focus-follows-window'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
