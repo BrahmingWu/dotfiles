@@ -1,0 +1,11 @@
+- id: ID_og9jznfc
+  name: UpdateSubscriptions
+  type: update::all::subscription
+  subscriptions: []
+  rulesets: []
+  plugins: []
+  script: ""
+  cron: 0 0 11 * * *
+  notification: false
+  disabled: false
+  lastTime: 1773194400708

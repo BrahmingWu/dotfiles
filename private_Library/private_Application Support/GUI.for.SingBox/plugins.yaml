@@ -1,0 +1,314 @@
+- id: plugin-smart-proxy-switcher
+  version: v5.1.0
+  name: 节点智能切换
+  description: 实现动态代理选择机制，包含故障转移、断路器、EWMA 延迟跟踪、基于分数调度与滞后控制。
+  tags:
+    - 提升体验
+    - 功能扩展
+  type: Http
+  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-smart-proxy-switcher.js
+  path: data/plugins/plugin-smart-proxy-switcher.js
+  triggers:
+    - on::manual
+    - on::ready
+    - on::core::started
+    - on::core::stopped
+  hasUI: true
+  menus:
+    启动: Start
+    停止: Stop
+  context:
+    profiles: {}
+    subscriptions: {}
+    rulesets: {}
+    plugins: {}
+    scheduledtasks: {}
+  configuration:
+    - id: ID_pxpbp262
+      title: 使用场景
+      description: 哪种使用场景更适合你？
+      key: Preset
+      component: Radio
+      value: Stable
+      options:
+        - 稳定型,Stable
+        - 延迟优先型,LatencyFirst
+        - 自定义型,Custom
+    - id: ID_fe2ext3m
+      title: 应用智能切换的策略组
+      description: 在列表中添加你要应用智能切换的策略组名称
+      key: IncludeGroup
+      component: InputList
+      value:
+        - 🚀 节点选择
+        - 🚀 Select
+      options: []
+    - id: ID_53zg977v
+      title: 并发检测数量
+      description: ""
+      key: ConcurrencyLimit
+      component: Input
+      value: "10"
+      options: []
+    - id: ID_0j5oj2fv
+      title: 检测时间间隔(ms)
+      description: 作用：控制状态监测的频率和实时性，更大的数值更省资源，更小的数值更新代理状态更及时
+      key: MonitoringInterval
+      component: Input
+      value: "180000"
+      options: []
+    - id: ID_jad56pmh
+      title: 代理超时时间(ms)
+      description: 作用：控制检测速度与“是否误判”为失败之间的平衡，更大的数值更宽容高延迟的代理，更小的数值则快速放弃响应慢的代理
+      key: RequestTimeout
+      component: Input
+      value: "5000"
+      options: []
+    - id: ID_ktzcar7y
+      title: 代理测试链接
+      description: ""
+      key: TestUrl
+      component: Input
+      value: https://www.gstatic.com/generate_204
+      options: []
+    - id: ID_qslmfrva
+      title: 稳定型
+      description: 减少切换，容忍波动，适合：对切换敏感、希望尽可能维持当前代理状态
+      key: StableMode
+      component: CodeViewer
+      value: |
+        {
+          "ewmaAlpha": 0.1,
+          "_ewmaAlpha": "更平滑，更看重历史表现",
+          "failureThreshold": 5,
+          "_failureThreshold": "更容忍失败，不容易触发断路",
+          "hysteresisMargin": 1.0,
+          "_hysteresisMargin": "减少切换频率，保持更稳定",
+          "latencyWeight": 50.0,
+          "_latencyWeight": "降低延迟影响，更重视稳定性"
+        }
+      options: []
+    - id: ID_cqum4do9
+      title: 延迟优先型
+      description: 严格追求低延迟，适合：对响应速度要求极高，宁愿频繁切换
+      key: LatencyFirstMode
+      component: CodeViewer
+      value: |
+        {
+          "ewmaAlpha": 0.5,
+          "_ewmaAlpha": "更敏感，延迟波动响应更快",
+          "failureThreshold": 2,
+          "_failureThreshold": "更快识别故障，更敏捷",
+          "hysteresisMargin": 0.05,
+          "_hysteresisMargin": "更敏感，容易发生代理抖动",
+          "latencyWeight": 200.0,
+          "_latencyWeight": "更关注低延迟，代理切换更频繁"
+        }
+      options: []
+    - id: ID_xa46mkur
+      title: 自定义型
+      description: 对切换策略进行微调，适合高级玩家
+      key: CustomMode
+      component: CodeViewer
+      value: |
+        {
+          "ewmaAlpha": 0.3,
+          "_ewmaAlpha": "作用：控制 EWMA 对延迟的记忆程度，默认值：0.3",
+          "_ewmaAlpha增大": "更敏感，延迟波动响应更快",
+          "_ewmaAlpha减小": "更平滑，更看重历史表现",
+          "_ewmaAlpha提示": "适合根据网络抖动强度调节灵敏度",
+
+          "failureThreshold": 3,
+          "_failureThreshold": "作用：连续失败几次后触发断路器，默认值：3",
+          "_failureThreshold增大": "更容忍失败，不容易触发断路",
+          "_failureThreshold减小": "更快识别故障，更敏捷",
+          "_failureThreshold提示": "影响代理因失败被判为不可用的门槛",
+
+          "circuitBreakerTimeout": 360000,
+          "_circuitBreakerTimeout": "作用：断路器打开后等待多长时间重试，默认值：360000（6分钟）",
+          "_circuitBreakerTimeout增大": "断路持续更久，降低恢复频率",
+          "_circuitBreakerTimeout减小": "更早尝试恢复，有可能误恢复",
+          "_circuitBreakerTimeout提示": "适合根据代理恢复速度调整重试间隔",
+
+          "penaltyIncrement": 5,
+          "_penaltyIncrement": "作用：每次失败后累加的惩罚值，默认值：5",
+          "_penaltyIncrement增大": "失败惩罚更重，代理得分下降更快",
+          "_penaltyIncrement减小": "更宽容失败，不易被替换",
+          "_penaltyIncrement提示": "影响失败事件对代理选择的惩罚力度",
+
+          "penaltyDecayRate": 0.1,
+          "_penaltyDecayRate": "作用：惩罚值的时间衰减速率，默认值：0.1",
+          "_penaltyDecayRate增大": "惩罚恢复更快，代理更容易被原谅",
+          "_penaltyDecayRate减小": "惩罚持续时间更长，慎重切换回来",
+          "_penaltyDecayRate提示": "控制失败历史影响持续多久",
+
+          "priorityWeight": 1.0,
+          "_priorityWeight": "作用：优先级在综合评分中的权重，默认值：1.0",
+          "_priorityWeight增大": "更倾向优先使用高优先级代理",
+          "_priorityWeight减小": "更注重实际性能而非设定优先级",
+          "_priorityWeight提示": "反映系统对预设偏好程度的信任",
+
+          "latencyWeight": 100.0,
+          "_latencyWeight": "作用：延迟在综合评分中的权重，默认值：100.0",
+          "_latencyWeight增大": "更关注低延迟，代理切换更频繁",
+          "_latencyWeight减小": "更稳定，允许较高延迟代理被选中",
+          "_latencyWeight提示": "决定系统是否更看重实时响应性能",
+
+          "penaltyWeight": 1.0,
+          "_penaltyWeight": "作用：惩罚值在综合评分中的权重，默认值：1.0",
+          "_penaltyWeight增大": "历史失败更影响评分，代理更难被重新使用",
+          "_penaltyWeight减小": "惩罚影响弱化，更容易容忍曾失败的代理",
+          "_penaltyWeight提示": "影响失败代理重新进入候选池的难度",
+
+          "hysteresisMargin": 0.1,
+          "_hysteresisMargin": "作用：切换代理需超出当前代理得分多少，默认值：0.1",
+          "_hysteresisMargin增大": "减少切换频率，保持更稳定",
+          "_hysteresisMargin减小": "更敏感，容易发生代理抖动",
+          "_hysteresisMargin提示": "防止分数接近时频繁切换（抖动）"
+        }
+      options: []
+  status: 0
+  disabled: true
+  install: false
+  installed: false
+- id: plugin-rolling-release
+  name: 滚动发行
+  version: v3.2.0
+  description: 提升GUI升级体验，获取更快、更新、更稳定的版本更新。
+  tags:
+    - 提升体验
+    - 功能扩展
+  type: Http
+  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-rolling-release.js
+  path: data/plugins/plugin-rolling-release.js
+  triggers:
+    - on::manual
+    - on::ready
+    - on::startup
+  hasUI: false
+  menus:
+    滚动版本: Rolling
+    恢复版本: Recovery
+    更新日志: Changelog
+    版本统计: Statistics
+  context:
+    profiles: {}
+    subscriptions: {}
+    rulesets: {}
+    plugins: {}
+    scheduledtasks: {}
+  configuration:
+    - id: ID_wqicvdoc
+      title: 自动更新策略
+      description: 自动滚动至最新版本
+      key: AutoRollingMode
+      component: Radio
+      value: disabled
+      options:
+        - 不自动更新,disabled
+        - 启动APP时,onStartup
+        - APP就绪时,onReady
+    - id: ID_7im5ezm7
+      title: 自动重载界面
+      description: 自动更新完成后是否自动重载界面
+      key: AutoRollingReload
+      component: Switch
+      value: true
+      options: []
+    - id: ID_vognsfjh
+      title: 自动更新策略延迟
+      description: 延迟N秒再执行检测，确保核心已启动（若核心在运行则不延迟）
+      key: AutoRollingDelay
+      component: Input
+      value: "10"
+      options: []
+  status: 0
+  disabled: false
+  install: false
+  installed: false
+- id: plugin-sub-store-v3
+  name: Sub-Store 纯净版
+  version: v1.3.2
+  description: 高级订阅管理工具。无Node.js、无MITM，优雅。（Advanced Subscription Manager for QX, Loon, Surge, Stash and Shadowrocket!）
+  tags:
+    - 实用工具
+  type: Http
+  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-sub-store-v3.js
+  path: data/plugins/plugin-sub-store-v3.js
+  triggers:
+    - on::manual
+    - on::ready
+  hasUI: false
+  menus:
+    运行服务: Start
+    停止服务: Stop
+    更新程序: Update
+  context:
+    profiles: {}
+    subscriptions: {}
+    rulesets: {}
+    plugins: {}
+    scheduledtasks: {}
+  status: 2
+  configuration:
+    - id: ID_ziwhcqmo
+      title: 服务监听地址
+      description: ""
+      key: Address
+      component: Input
+      value: 127.0.0.1:3002
+      options: []
+    - id: ID_or2prycz
+      title: 自动启动
+      description: 自动跟随GUI启动？（注：该服务总是跟随GUI自动停止）
+      key: AutoStart
+      component: Switch
+      value: false
+      options: []
+  disabled: false
+  install: true
+  installed: true
+- id: plugin-clash-api-dashboard
+  name: Clash API 仪表板
+  version: v3.0.0
+  description: "方便的切换和访问 Clash 面板。Supported by: 泡泡茶壶"
+  tags:
+    - 提升体验
+    - 功能扩展
+  type: Http
+  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-clash-api-dashboard.js
+  path: data/plugins/plugin-clash-api-dashboard.js
+  triggers:
+    - on::manual
+    - on::core::started
+    - on::core::stopped
+  hasUI: false
+  menus: {}
+  context:
+    profiles: {}
+    subscriptions: {}
+    rulesets: {}
+    plugins: {}
+    scheduledtasks: {}
+  status: 0
+  configuration:
+    - id: ID_vdiv901m
+      title: 选择仪表板
+      description: ""
+      key: DashboardName
+      component: Radio
+      value: Zashboard
+      options:
+        - Yacd,Yacd
+        - Zashboard,Zashboard
+        - MetaCubeXD,MetaCubeXD
+    - id: ID_m1ipygpg
+      title: 更多 Clash 模式切换
+      description: ""
+      key: ClashModeAction
+      component: Switch
+      value: false
+      options: []
+  disabled: true
+  install: false
+  installed: false

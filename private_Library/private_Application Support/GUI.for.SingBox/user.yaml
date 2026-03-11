@@ -1,0 +1,102 @@
+lang: zh
+theme: auto
+color: default
+primaryColor: "#000"
+secondaryColor: "#545454"
+fontFamily: system-ui, "Microsoft YaHei UI", "Source Han Sans CN", "Twemoji
+  Mozilla", sans-serif
+profilesView: list
+subscribesView: list
+rulesetsView: list
+pluginsView: list
+scheduledtasksView: grid
+windowStartState: 0
+webviewGpuPolicy: 1
+width: 1171
+height: 858
+exitOnClose: false
+closeKernelOnExit: false
+autoSetSystemProxy: true
+proxyBypassList: |
+  *.kwggroupholdings.com;
+  *.kwgproperty.com;
+  *.yaluoo.com;
+autoStartKernel: true
+autoRestartKernel: false
+userAgent: ""
+startupDelay: 30
+connections:
+  visibility:
+    metadata.type: true
+    metadata.processPath: true
+    metadata.host: true
+    metadata.sourceIP: false
+    metadata.destinationIP: true
+    rule: true
+    chains: true
+    up: true
+    down: true
+    upload: true
+    download: true
+    start: true
+  order:
+    - metadata.type
+    - metadata.processPath
+    - metadata.host
+    - metadata.sourceIP
+    - down
+    - metadata.destinationIP
+    - rule
+    - chains
+    - up
+    - upload
+    - download
+    - start
+kernel:
+  realMemoryUsage: true
+  branch: main
+  profile: ID_aphupuzy
+  autoClose: true
+  unAvailable: true
+  cardMode: true
+  cardColumns: 5
+  sortByDelay: false
+  testUrl: https://www.gstatic.com/generate_204
+  concurrencyLimit: 20
+  controllerCloseMode: all
+  controllerSensitivity: 1
+  main:
+    env: {}
+    args:
+      - run
+      - --disable-color
+      - -c
+      - $APP_BASE_PATH/$CORE_BASE_PATH/config.json
+      - -D
+      - $APP_BASE_PATH/$CORE_BASE_PATH
+  alpha:
+    env: {}
+    args:
+      - run
+      - --disable-color
+      - -c
+      - $APP_BASE_PATH/$CORE_BASE_PATH/config.json
+      - -D
+      - $APP_BASE_PATH/$CORE_BASE_PATH
+pluginSettings: {}
+githubApiToken: ""
+multipleInstance: false
+addPluginToMenu: false
+addGroupToMenu: true
+rollingRelease: true
+debugOutline: false
+debugNoAnimation: false
+debugNoRounded: false
+debugBorder: false
+pages:
+  - Overview
+  - Profiles
+  - Subscriptions
+  - Plugins
+  - Rulesets
+  - ScheduledTasks
