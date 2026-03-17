@@ -52,24 +52,30 @@
 #window-width = 160
 maximize = true
 mouse-hide-while-typing = true
-macos-option-as-alt = true
+macos-option-as-alt = right
 font-size = 18
 #quit-after-last-window-closed = true
 background-opacity = 0.8
 background-opacity-cells = true
+#background-blur = macos-glass-regular
 background-blur = true
 theme = light: Catppuccin Latte, dark: Catppuccin Macchiato
 macos-window-buttons = hidden
 macos-titlebar-style = transparent
+macos-window-shadow = false
 scrollback-limit = 134217728
-shell-integration-features = ssh-terminfo,ssh-env
+shell-integration-features = ssh-terminfo,ssh-env,cursor,no-sudo,title,path
+unfocused-split-opacity = 0.5
+
+custom-shader = shaders/cursor_smear.glsl
 
 keybind = global:ctrl+backquote=toggle_quick_terminal
-# keybind = opt+shift+k=resize_split:up,10
-# keybind = opt+shift+j=resize_split:down,10
-# keybind = opt+shift+h=resize_split:left,10
-# keybind = opt+shift+l=resize_split:right,10
-# keybind = opt+k=goto_split:up
-# keybind = opt+j=goto_split:down
-# keybind = opt+h=goto_split:left
-# keybind = opt+l=goto_split:right
+keybind = alt+k=goto_split:up
+keybind = alt+j=goto_split:down
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+keybind = super+ctrl+k=resize_split:up,10
+keybind = super+ctrl+j=resize_split:down,10
+keybind = super+ctrl+h=resize_split:left,10
+keybind = super+ctrl+l=resize_split:right,10
+

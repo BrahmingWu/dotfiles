@@ -29,6 +29,8 @@
 
 chezmoiKey.key.age
 
+ignorefiles
+
 {{- if ne .chezmoi.os "darwin" }}
 **/aerospace
 Library/

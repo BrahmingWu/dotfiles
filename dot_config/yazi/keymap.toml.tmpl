@@ -1,0 +1,6 @@
+{{ if eq .chezmoi.os "darwin" }}
+# macOS: Preview files with the system Quick Look
+[[mgr.prepend_keymap]]
+on = "<C-p>"
+run = "shell -- qlmanage -p %s"
+{{ end }}

@@ -15,9 +15,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 
+export FX_THEME="1"
 
+{{ if eq .chezmoi.os "darwin" }}
 export https_proxy=http://127.0.0.1:20122 http_proxy=http://127.0.0.1:20122 all_proxy=socks5://127.0.0.1:20122
-
+{{ end }}
 
 HISTSIZE=10000
 SAVEHIST=10000
@@ -52,7 +54,7 @@ export FZF_DEFAULT_OPTS="
   --preview 'if [[ -d {} ]]; 
       then eza -TL2 {} ; 
     elif [[ \$(file --mime-encoding -b {}) =~ binary ]];
-      then file {};
+      then mcat {} 2> /dev/null || file {};
     else bat -p --theme=auto:system --color=always {};
     fi'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'
@@ -80,6 +82,13 @@ alias ll='eza -alh --git'
 alias lt='eza -T'
 alias l='eza -lah@'
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
 bindkey -M viins '\e.' insert-last-word
 bindkey -M vicmd '\e.' insert-last-word

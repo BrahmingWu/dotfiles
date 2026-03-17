@@ -1,0 +1,5 @@
+[".config/ghostty/shaders"]
+  type = "archive"
+  url = "https://github.com/KroneCorylus/ghostty-shader-playground/archive/master.tar.gz"
+  include = ["**/shaders/**"]
+  stripComponents = 3

@@ -167,8 +167,8 @@
           "_hysteresisMargin提示": "防止分数接近时频繁切换（抖动）"
         }
       options: []
-  status: 0
-  disabled: true
+  status: 1
+  disabled: false
   install: false
   installed: false
 - id: plugin-rolling-release
