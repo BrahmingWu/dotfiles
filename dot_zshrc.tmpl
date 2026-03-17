@@ -17,9 +17,7 @@ export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08
 
 export FX_THEME="1"
 
-{{ if eq .chezmoi.os "darwin" }}
 export https_proxy=http://127.0.0.1:20122 http_proxy=http://127.0.0.1:20122 all_proxy=socks5://127.0.0.1:20122
-{{ end }}
 
 HISTSIZE=10000
 SAVEHIST=10000
