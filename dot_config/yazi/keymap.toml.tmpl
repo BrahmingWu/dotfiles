@@ -4,3 +4,8 @@
 on = "<C-p>"
 run = "shell -- qlmanage -p %s"
 {{ end }}
+
+# Confirm before quitting if multiple tabs are open
+[[mgr.prepend_keymap]]
+on  = "q"
+run = "plugin confirm-quit"
