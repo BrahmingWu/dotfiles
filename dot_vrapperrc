@@ -1,3 +1,4 @@
+set clipboard=unnamed
 nmap s <Plug>(sneak_s)
 nmap S <Plug>(sneak_S)
 nmap ; <Plug>(sneak-next)

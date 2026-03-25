@@ -18,12 +18,12 @@
   count: 36
 - id: direct
   tag: direct
-  updateTime: 1773641841730
+  updateTime: 1774400857774
   type: Manual
   format: source
   url: ""
   path: data/rulesets/direct.json
-  count: 14
+  count: 15
   disabled: false
 - id: geosite_geolocation-!cn.binary
   tag: geolocation-!cn-geosite.srs

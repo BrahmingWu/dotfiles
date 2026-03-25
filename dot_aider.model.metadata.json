@@ -1,0 +1,20 @@
+{
+  "openai/glm-4.7-flash": {
+    "max_tokens": 204800,
+    "max_input_tokens": 73728,
+    "max_output_tokens": 131072,
+    "input_cost_per_token": 0.0,
+    "output_cost_per_token": 0.0,
+    "litellm_provider": "openai",
+    "mode": "chat"
+  },
+  "openai/glm-4.7": {
+    "max_tokens": 204800,
+    "max_input_tokens": 73728,
+    "max_output_tokens": 131072,
+    "input_cost_per_token": 0.000003,
+    "output_cost_per_token": 0.000014,
+    "litellm_provider": "openai",
+    "mode": "chat"
+  }
+}

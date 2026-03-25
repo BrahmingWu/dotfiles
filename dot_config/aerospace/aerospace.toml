@@ -326,6 +326,10 @@ if.app-name-regex-substring = '^P.*'
 run = 'move-node-to-workspace P'
 
 [[on-window-detected]]
+if.app-name-regex-substring = '^Q.*'
+run = 'move-node-to-workspace Q'
+
+[[on-window-detected]]
 if.app-name-regex-substring = '^S.*'
 run = 'move-node-to-workspace S'
 

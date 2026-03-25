@@ -65,7 +65,7 @@ macos-titlebar-style = transparent
 macos-window-shadow = false
 scrollback-limit = 134217728
 shell-integration-features = ssh-terminfo,ssh-env,cursor,no-sudo,title,path
-unfocused-split-opacity = 0.5
+unfocused-split-opacity = 0.7
 
 custom-shader = shaders/cursor_smear.glsl
 
