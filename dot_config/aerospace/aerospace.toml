@@ -86,6 +86,7 @@ outer.right = 10
 1 = 'built-in'
 2 = 'main'
 5 = 'secondary'
+E = 'secondary'
 
 
 # 'main' binding mode declaration

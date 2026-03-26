@@ -1,7 +1,11 @@
 #!/bin/sh
 
-if [ ! -f "${HOME}/.env/chezmoiKey.key" ]; then
-  mkdir -p "${HOME}/.env/"
-  chezmoi age decrypt --output "${HOME}/.env/chezmoiKey.key" --passphrase "{{ .chezmoi.sourceDir }}/chezmoiKey.key.age"
-  chmod 600 "${HOME}/.env/chezmoiKey.key"
+KEY_DIR="${HOME}/Documents/App"
+KEY_FILE="${KEY_DIR}/chezmoiKey.key"
+ENC_KEY_FILE="{{ .chezmoi.sourceDir }}/chezmoiKey.key.age"
+
+if [ ! -f "${KEY_FILE}" ]; then
+  mkdir -p "${KEY_DIR}"
+  chezmoi age decrypt --output "${KEY_FILE}" --passphrase "${ENC_KEY_FILE}"
+  chmod 600 "${KEY_FILE}"
 fi

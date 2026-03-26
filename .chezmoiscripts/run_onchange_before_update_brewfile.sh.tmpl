@@ -1,0 +1,8 @@
+#!/bin/sh
+
+{{- if eq .chezmoi.os "darwin" }}
+# MacOS build version: {{ output "sw_vers" "--buildVersion" }}
+BREWFILE_NAME="{{ .chezmoi.sourceDir }}/ignorefiles/Brewfile"
+brew bundle dump --force --file "${BREWFILE_NAME}"
+{{- end }}
+
