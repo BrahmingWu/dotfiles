@@ -1,0 +1,11 @@
+alias cd='z'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ls='eza'
+alias ll='eza -alh --git'
+alias lt='eza -T'
+alias l='eza -lah@'
+alias lzs='lazyssh'
+alias lzg='lazygit'
+

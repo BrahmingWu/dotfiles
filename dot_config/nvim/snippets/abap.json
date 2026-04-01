@@ -1,0 +1,15 @@
+{
+  "case": {
+    "prefix": "case",
+    "description": "Case block",
+    "body": [
+      "CASE $1.",
+      "  WHEN $2.",
+      "    $3",
+      "  WHEN $4.",
+      "    $5",
+      "  WHEN OTHERS.",
+      "ENDCASE."
+    ]
+  }
+}

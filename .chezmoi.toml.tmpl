@@ -1,24 +1,25 @@
 encryption = "age"
 [age]
-    identity = "{{ .chezmoi.homeDir }}/Documents/App/chezmoiKey.key"
-    recipient = "age1rj6mw5dseznwnzqcg42graut2efw725wr0yjjx5qdsjzvqxmwgqqhhag43"
+  identity = "{{ .chezmoi.homeDir }}/Documents/App/chezmoiKey.key"
+  recipient = "age1rj6mw5dseznwnzqcg42graut2efw725wr0yjjx5qdsjzvqxmwgqqhhag43"
 
 [edit]
-    command = "nvim"
+  command = "nvim"
 
 [diff]
-    command = "nvim"
-    args = [
-      "-d",
-      {{ printf "%q" "{{ .Destination }}" }},
-      {{ printf "%q" "{{ .Target }}" }},
-    ]
+  exclude = ["scripts"]
+  pager = "delta"
 
 [merge]
-    command = "nvim"
-    args = [
-      "-d",
-      {{ printf "%q" "{{ .Destination }}" }},
-      {{ printf "%q" "{{ .Source }}" }},
-      {{ printf "%q" "{{ .Target }}" }},
-    ]
+  command = "nvim"
+  args = [
+    "-d",
+    {{ printf "%q" "{{ .Destination }}" }},
+    {{ printf "%q" "{{ .Source }}" }},
+    {{ printf "%q" "{{ .Target }}" }},
+  ]
+
+[[textconv]]
+  pattern = "**/*.plist"
+  command = "plutil"
+  args = ["-convert", "xml1", "-o", "-", "-"]

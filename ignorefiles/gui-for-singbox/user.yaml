@@ -10,7 +10,7 @@ subscribesView: list
 rulesetsView: list
 pluginsView: list
 scheduledtasksView: grid
-windowStartState: 0
+windowStartState: 2
 webviewGpuPolicy: 1
 width: 1171
 height: 858
@@ -83,7 +83,9 @@ kernel:
       - $APP_BASE_PATH/$CORE_BASE_PATH/config.json
       - -D
       - $APP_BASE_PATH/$CORE_BASE_PATH
-pluginSettings: {}
+pluginSettings:
+  plugin-rolling-release:
+    AutoRollingMode: onReady
 githubApiToken: ""
 multipleInstance: false
 addPluginToMenu: false

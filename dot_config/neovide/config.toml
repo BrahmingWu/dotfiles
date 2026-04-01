@@ -2,6 +2,11 @@ frame = "transparent"
 mouse-cursor-icon = "arrow"
 title-hidden = false
 srgb = true
+system-native-tabs = true
+system-pinned-hotkey = "cmd+ctrl+z" # macOS only
+system-switcher-hotkey = "cmd+ctrl+n" # macOS only, requires system-native-tabs = true
+system-tab-prev-hotkey = "cmd+shift+[" # macOS only
+system-tab-next-hotkey = "cmd+shift+]" # macOS only
 
 [font]
 normal = [

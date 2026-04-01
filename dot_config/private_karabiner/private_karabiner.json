@@ -6,6 +6,7 @@
                 "rules": [
                     {
                         "description": "Change right_shift to caps_lock if pressed alone.",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {

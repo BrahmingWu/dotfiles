@@ -1,3 +1,7 @@
 [mgr]
 show_symlink   = false
 sort_dir_first = false
+
+[preview]
+max_width       = 1200
+max_height      = 1800

@@ -2,6 +2,7 @@
 
 {{- if eq .chezmoi.os "darwin" }}
 # MacOS build version: {{ output "sw_vers" "--buildVersion" }}
+# Week of the year: {{ output "date" "+%y%V" }}
 BREWFILE_NAME="{{ .chezmoi.sourceDir }}/ignorefiles/Brewfile"
 brew bundle dump --force --file "${BREWFILE_NAME}"
 {{- end }}
