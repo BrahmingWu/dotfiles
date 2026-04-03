@@ -2,7 +2,7 @@
 # All settings are optional and will use defaults if not specified
 
 # Theme to use for syntax highlighting
-theme = "catppuccin"
+theme = "solarized-light"
 
 # Typing speed in milliseconds per character
 speed = 30
