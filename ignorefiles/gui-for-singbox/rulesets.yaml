@@ -1,6 +1,6 @@
 - id: geosite_openai.binary
   tag: openai-geosite.srs
-  updateTime: 1775031317732
+  updateTime: 1776392413581
   disabled: false
   type: Http
   format: binary
@@ -9,7 +9,7 @@
   count: 18
 - id: geosite_google-gemini.binary
   tag: google-gemini-geosite.srs
-  updateTime: 1775031317900
+  updateTime: 1776392413568
   disabled: false
   type: Http
   format: binary
@@ -18,16 +18,16 @@
   count: 36
 - id: direct
   tag: direct
-  updateTime: 1775031317120
+  updateTime: 1776392413218
   type: Manual
   format: source
   url: ""
   path: data/rulesets/direct.json
-  count: 15
+  count: 20
   disabled: false
 - id: geosite_geolocation-!cn.binary
   tag: geolocation-!cn-geosite.srs
-  updateTime: 1775031318282
+  updateTime: 1776392413695
   disabled: false
   type: Http
   format: binary
@@ -36,7 +36,7 @@
   count: 26545
 - id: geosite_netease.binary
   tag: netease-geosite.srs
-  updateTime: 1775031318405
+  updateTime: 1776392413734
   disabled: false
   type: Http
   format: binary

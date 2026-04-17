@@ -1,3 +1,4 @@
+tap "anomalyco/tap"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "surge-downloader/tap"
@@ -28,6 +29,7 @@ brew "lazygit"
 brew "lazyssh"
 brew "lnav"
 brew "lolcat"
+brew "mas"
 brew "mcat"
 brew "mole"
 brew "neovim"
@@ -37,16 +39,17 @@ brew "resvg"
 brew "ripgrep"
 brew "sevenzip"
 brew "starship"
-brew "tree-sitter-cli"
 brew "uv"
 brew "wget"
 brew "yazi"
 brew "yq"
 brew "zellij"
 brew "zoxide"
+brew "anomalyco/tap/opencode"
 brew "oven-sh/bun/bun"
 brew "tinypkg/tap/rime-wanxiang-updater"
 cask "nikitabobko/tap/aerospace"
+cask "browseros"
 cask "bruno"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-lxgw-wenkai"
@@ -59,4 +62,18 @@ cask "obsidian"
 cask "qlmarkdown"
 cask "surge-downloader/tap/surge"
 cask "syntax-highlight"
-uv "aider-chat", with: ["pip"]
+mas "DoubleMemory", id: 6737529034
+mas "Klack", id: 6446206067
+mas "MacFamilyTree 11", id: 6480510488
+mas "Microsoft Excel", id: 462058435
+mas "Microsoft Word", id: 462054704
+mas "NetEaseMusic", id: 944848654
+mas "Presentify", id: 1507246666
+mas "ShellBean", id: 1504613231
+mas "SnippetsLab", id: 1006087419
+mas "Snippety", id: 1530751461
+mas "Step Two", id: 1448916662
+mas "TencentMeeting", id: 1484048379
+mas "WeChat", id: 836500024
+mas "Windows App", id: 1295203466
+mas "Xcode", id: 497799835

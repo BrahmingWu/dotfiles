@@ -1,5 +1,5 @@
 - id: plugin-smart-proxy-switcher
-  version: v5.1.0
+  version: v5.2.0
   name: 节点智能切换
   description: 实现动态代理选择机制，包含故障转移、断路器、EWMA 延迟跟踪、基于分数调度与滞后控制。
   tags:
@@ -171,6 +171,92 @@
   disabled: false
   install: false
   installed: false
+- id: plugin-sub-store-v3
+  name: Sub-Store 纯净版
+  version: v1.3.2
+  description: 高级订阅管理工具。无Node.js、无MITM，优雅。（Advanced Subscription Manager for QX, Loon, Surge, Stash and Shadowrocket!）
+  tags:
+    - 实用工具
+  type: Http
+  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-sub-store-v3.js
+  path: data/plugins/plugin-sub-store-v3.js
+  triggers:
+    - on::manual
+    - on::ready
+  hasUI: false
+  menus:
+    运行服务: Start
+    停止服务: Stop
+    更新程序: Update
+  context:
+    profiles: {}
+    subscriptions: {}
+    rulesets: {}
+    plugins: {}
+    scheduledtasks: {}
+  status: 1
+  configuration:
+    - id: ID_ziwhcqmo
+      title: 服务监听地址
+      description: ""
+      key: Address
+      component: Input
+      value: 127.0.0.1:3002
+      options: []
+    - id: ID_or2prycz
+      title: 自动启动
+      description: 自动跟随GUI启动？（注：该服务总是跟随GUI自动停止）
+      key: AutoStart
+      component: Switch
+      value: false
+      options: []
+  disabled: false
+  install: true
+  installed: true
+- id: plugin-clash-api-dashboard
+  name: Clash API 仪表板
+  version: v4.0.0
+  description: "方便的切换和访问 Clash 面板。Supported by: 泡泡茶壶"
+  tags:
+    - 提升体验
+    - 功能扩展
+  type: Http
+  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-clash-api-dashboard.js
+  path: data/plugins/plugin-clash-api-dashboard.js
+  triggers:
+    - on::manual
+    - on::core::started
+    - on::core::stopped
+  hasUI: false
+  menus: {}
+  context:
+    profiles: {}
+    subscriptions: {}
+    rulesets: {}
+    plugins: {}
+    scheduledtasks: {}
+  status: 0
+  configuration:
+    - id: ID_vdiv901m
+      title: 选择仪表板
+      description: ""
+      key: DashboardName
+      component: Radio
+      value: Zashboard
+      options:
+        - Yacd,Yacd
+        - Zashboard,Zashboard
+        - MetaCubeXD,MetaCubeXD
+    - id: ID_m1ipygpg
+      title: 更多 Clash 模式切换
+      description: ""
+      key: ClashModeAction
+      component: Switch
+      value: false
+      options: []
+  disabled: false
+  install: false
+  installed: false
 - id: plugin-rolling-release
   name: 滚动发行
   version: v3.2.0
@@ -226,89 +312,31 @@
   disabled: false
   install: false
   installed: false
-- id: plugin-sub-store-v3
-  name: Sub-Store 纯净版
-  version: v1.3.2
-  description: 高级订阅管理工具。无Node.js、无MITM，优雅。（Advanced Subscription Manager for QX, Loon, Surge, Stash and Shadowrocket!）
+- id: plugin-node-convert
+  name: 节点转换
+  version: v2.21.10
+  description: 节点格式转换插件，支持v2Ray格式转clash、clash格式转sing-box。
   tags:
-    - 实用工具
+    - 节点处理
   type: Http
-  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-sub-store-v3.js
-  path: data/plugins/plugin-sub-store-v3.js
+  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-node-convert.js
+  path: data/plugins/plugin-node-convert.js
   triggers:
     - on::manual
-    - on::ready
-  hasUI: false
-  menus:
-    运行服务: Start
-    停止服务: Stop
-    更新程序: Update
-  context:
-    profiles: {}
-    subscriptions: {}
-    rulesets: {}
-    plugins: {}
-    scheduledtasks: {}
-  status: 2
-  configuration:
-    - id: ID_ziwhcqmo
-      title: 服务监听地址
-      description: ""
-      key: Address
-      component: Input
-      value: 127.0.0.1:3002
-      options: []
-    - id: ID_or2prycz
-      title: 自动启动
-      description: 自动跟随GUI启动？（注：该服务总是跟随GUI自动停止）
-      key: AutoStart
-      component: Switch
-      value: false
-      options: []
-  disabled: false
-  install: true
-  installed: true
-- id: plugin-clash-api-dashboard
-  name: Clash API 仪表板
-  version: v3.0.0
-  description: "方便的切换和访问 Clash 面板。Supported by: 泡泡茶壶"
-  tags:
-    - 提升体验
-    - 功能扩展
-  type: Http
-  url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/Generic/plugin-clash-api-dashboard.js
-  path: data/plugins/plugin-clash-api-dashboard.js
-  triggers:
-    - on::manual
-    - on::core::started
-    - on::core::stopped
+    - on::subscribe
   hasUI: false
   menus: {}
   context:
     profiles: {}
-    subscriptions: {}
+    subscriptions:
+      导出(URI): ExportAsURI
+      导出(Clash): ExportAsClash
+      导出(SingBox): ExportAsSingBox
     rulesets: {}
     plugins: {}
     scheduledtasks: {}
   status: 0
-  configuration:
-    - id: ID_vdiv901m
-      title: 选择仪表板
-      description: ""
-      key: DashboardName
-      component: Radio
-      value: Zashboard
-      options:
-        - Yacd,Yacd
-        - Zashboard,Zashboard
-        - MetaCubeXD,MetaCubeXD
-    - id: ID_m1ipygpg
-      title: 更多 Clash 模式切换
-      description: ""
-      key: ClashModeAction
-      component: Switch
-      value: false
-      options: []
-  disabled: true
+  configuration: []
+  disabled: false
   install: false
   installed: false

@@ -4,3 +4,10 @@
   include = ["**/shaders/**"]
   stripComponents = 3
   refreshPeriod = "168h"
+
+[".local/ChromeExtensions/Surge"]
+  type = "archive"
+  url = "https://github.com/SurgeDM/Surge/archive/main.tar.gz"
+  include = ["**/extension-chrome/**"]
+  stripComponents = 2
+  refreshPeriod = "168h"

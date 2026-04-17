@@ -270,16 +270,12 @@ if.app-name-regex-substring = '微信|Wexin|WeChat'
 run = ['layout floating', 'move-node-to-workspace W']
 
 [[on-window-detected]]
-if.app-id = 'com.google.Chrome'
+if.app-name-regex-substring = '^Google Chrome$|^BrowserOS$|^Safari$'
 run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^Ghostty$'
+if.app-name-regex-substring = '^Ghostty$|^kitty$'
 run = ['layout floating', 'move-node-to-workspace T']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '^kitty$'
-run = ['move-node-to-workspace T']
 
 [[on-window-detected]]
 if.window-title-regex-substring = 'SAP GUI'
@@ -290,8 +286,12 @@ if.app-id = 'com.tencent.flue.WeApp'
 run = ['layout floating', 'move-node-to-workspace F']
 
 [[on-window-detected]]
-if.window-title-regex-substring = '^(Quick\sLook)$'
+if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$'
 run = ['layout floating']
+
+[[on-window-detected]]
+if.app-name-regex-substring = '^Raycast$'
+run = ['layout floating', 'move-node-to-workspace A']
 
 # Common settings
 [[on-window-detected]]
