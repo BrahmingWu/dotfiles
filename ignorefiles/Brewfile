@@ -1,4 +1,5 @@
 tap "anomalyco/tap"
+tap "erickochen/purple"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "surge-downloader/tap"
@@ -31,15 +32,14 @@ brew "lnav"
 brew "lolcat"
 brew "mas"
 brew "mcat"
+brew "mise"
 brew "mole"
 brew "neovim"
-brew "node"
 brew "poppler"
 brew "resvg"
 brew "ripgrep"
 brew "sevenzip"
 brew "starship"
-brew "uv"
 brew "wget"
 brew "yazi"
 brew "yq"
@@ -47,7 +47,7 @@ brew "zellij"
 brew "zoxide"
 brew "zsh-vi-mode"
 brew "anomalyco/tap/opencode"
-brew "oven-sh/bun/bun"
+brew "erickochen/purple/purple"
 brew "tinypkg/tap/rime-wanxiang-updater"
 cask "nikitabobko/tap/aerospace"
 cask "browseros"
@@ -68,7 +68,6 @@ mas "Microsoft Excel", id: 462058435
 mas "Microsoft Word", id: 462054704
 mas "NetEaseMusic", id: 944848654
 mas "Presentify", id: 1507246666
-mas "ShellBean", id: 1504613231
 mas "SnippetsLab", id: 1006087419
 mas "Snippety", id: 1530751461
 mas "Step Two", id: 1448916662
