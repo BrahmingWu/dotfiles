@@ -1,0 +1,199 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-opus-4-6",
+          "variant": "max"
+        },
+        {
+          "model": "opencode/kimi-k2.5"
+        },
+        {
+          "model": "opencode/big-pickle"
+        }
+      ]
+    },
+    "hephaestus": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-sonnet-4-6"
+        }
+      ]
+    },
+    "oracle": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-opus-4-7",
+          "variant": "high"
+        },
+        {
+          "model": "opencode/gemini-3.1-pro",
+          "variant": "high"
+        }
+      ]
+    },
+    "explore": {
+      "model": "zhipuai/glm-4.7-flash",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-haiku-4-5"
+        },
+        {
+          "model": "opencode/big-pickle"
+        }
+      ]
+    },
+    "multimodal-looker": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/gpt-5-nano"
+        }
+      ]
+    },
+    "prometheus": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-opus-4-6",
+          "variant": "max"
+        },
+        {
+          "model": "opencode/gemini-3.1-pro",
+          "variant": "high"
+        }
+      ]
+    },
+    "metis": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-opus-4-6",
+          "variant": "max"
+        }
+      ]
+    },
+    "momus": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-sonnet-4-6",
+          "variant": "high"
+        },
+        {
+          "model": "opencode/gemini-3.1-pro",
+          "variant": "high"
+        }
+      ]
+    },
+    "atlas": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-sonnet-4-6"
+        }
+      ]
+    },
+    "sisyphus-junior": {
+      "model": "zhipuai/glm-4.7-flash",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-sonnet-4-6"
+        },
+        {
+          "model": "opencode/big-pickle"
+        }
+      ]
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "variant": "high",
+      "fallback_models": [
+        {
+          "model": "zhipuai/glm-5"
+        },
+        {
+          "model": "opencode/claude-opus-4-6",
+          "variant": "max"
+        }
+      ]
+    },
+    "ultrabrain": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-opus-4-6",
+          "variant": "max"
+        },
+        {
+          "model": "opencode/gemini-3.1-pro",
+          "variant": "high"
+        }
+      ]
+    },
+    "deep": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-sonnet-4-6"
+        },
+        {
+          "model": "opencode/gemini-3.1-pro",
+          "variant": "high"
+        }
+      ]
+    },
+    "artistry": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "variant": "high",
+      "fallback_models": [
+        {
+          "model": "zhipuai/glm-5"
+        },
+        {
+          "model": "opencode/claude-opus-4-6",
+          "variant": "max"
+        }
+      ]
+    },
+    "quick": {
+      "model": "zhipuai/glm-4.7-flash",
+      "fallback_models": [
+        {
+          "model": "opencode/big-pickle"
+        }
+      ]
+    },
+    "unspecified-low": {
+      "model": "zhipuai/glm-4.7-flash",
+      "fallback_models": [
+        {
+          "model": "opencode/big-pickle"
+        }
+      ]
+    },
+    "unspecified-high": {
+      "model": "minimax-cn/MiniMax-M2.7",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-sonnet-4-6"
+        }
+      ]
+    },
+    "writing": {
+      "model": "zhipuai/glm-4.7-flash",
+      "fallback_models": [
+        {
+          "model": "opencode/claude-sonnet-4-6"
+        }
+      ]
+    }
+  }
+}
