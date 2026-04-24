@@ -1,2 +1,7 @@
 # https://starship.rs/zh-CN/config/
 #
+"$schema" = "https://starship.rs/config-schema.json"
+continuation_prompt = '[▶▶ ](dimmed bright-black)'
+
+[sudo]
+disabled = false

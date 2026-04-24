@@ -45,6 +45,7 @@ brew "yazi"
 brew "yq"
 brew "zellij"
 brew "zoxide"
+brew "zsh-vi-mode"
 brew "anomalyco/tap/opencode"
 brew "oven-sh/bun/bun"
 brew "tinypkg/tap/rime-wanxiang-updater"
@@ -62,8 +63,6 @@ cask "obsidian"
 cask "qlmarkdown"
 cask "surge-downloader/tap/surge"
 cask "syntax-highlight"
-mas "DoubleMemory", id: 6737529034
-mas "Klack", id: 6446206067
 mas "MacFamilyTree 11", id: 6480510488
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft Word", id: 462054704

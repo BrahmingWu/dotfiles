@@ -11,4 +11,4 @@ alias lt4='eza -TL 4'
 alias l='eza -lah@'
 alias lzs='lazyssh'
 alias lzg='lazygit'
-
+alias f=fzf

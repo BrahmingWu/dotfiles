@@ -1,4 +1,4 @@
-# catppuccin latte
+# fzf catppuccin latte
 FZF_COLOR_LIGHT=" \
 --color=bg+:#CCD0DA,spinner:#DC8A78,hl:#D20F39 \
 --color=fg:#4C4F69,header:#D20F39,info:#8839EF,pointer:#DC8A78 \
@@ -6,7 +6,7 @@ FZF_COLOR_LIGHT=" \
 --color=selected-bg:#BCC0CC \
 --color=border:#9CA0B0,label:#4C4F69"
 
-# catppuccin macchiato
+# fzf catppuccin macchiato
 FZF_COLOR_DARK=" \
 --color=bg+:#363A4F,spinner:#F4DBD6,hl:#ED8796 \
 --color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
@@ -18,6 +18,7 @@ MY_FZF_THEME=$(is_dark_mode && echo "$FZF_COLOR_DARK" || echo "$FZF_COLOR_LIGHT"
 
 export FZF_DEFAULT_OPTS="${MY_FZF_THEME}
   --style minimal
+  --info inline-right
   --walker-skip .git,node_modules,target,.Trash,.cache
   --preview 'if [[ -d {} ]];
       then eza --color=always -TL2 {} ; 
@@ -27,17 +28,19 @@ export FZF_DEFAULT_OPTS="${MY_FZF_THEME}
     fi'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'
 "
-export FZF_CTRL_R_OPTS="${MY_THEME}
-  --style minimal
-  --info inline
+export FZF_CTRL_R_OPTS="
   --no-sort
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'
   --no-preview
 "
-export FZF_CTRL_T_OPTS="${MY_THEME}
-  --walker-skip .git,node_modules,target,.Trash,.cache
-  --preview 'bat -n --theme=auto:system --color=always {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-export FZF_ALT_C_OPTS="${MY_THEME}
+
+export FZF_CTRL_T_OPTS="
+  --select-1 --exit-0
+"
+
+export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target,.Trash
   --preview 'eza --color=always -TL2 {}'"
 # ripgrep->fzf->vim [QUERY]
@@ -58,7 +61,5 @@ rfv() (
     --preview-window '~4,+{2}+4/3,<80(up)' \
     --query "$*"
 )
-# Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
 
 export MCAT_THEME=$(is_dark_mode && echo "catppuccin" || echo "makurai-light")
