@@ -5,6 +5,10 @@ return {
     { "<leader>E", false },
   },
   opts = {
+    image = {
+      enabled = true,
+      doc = { max_width = 100, max_height = 100 },
+    },
     dashboard = {
       preset = {
         header = [[NVIM]],
