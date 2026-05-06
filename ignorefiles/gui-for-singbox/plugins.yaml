@@ -173,7 +173,7 @@
   installed: false
 - id: plugin-sub-store-v3
   name: Sub-Store 纯净版
-  version: v1.3.2
+  version: v1.4.0
   description: 高级订阅管理工具。无Node.js、无MITM，优雅。（Advanced Subscription Manager for QX, Loon, Surge, Stash and Shadowrocket!）
   tags:
     - 实用工具
@@ -314,7 +314,7 @@
   installed: false
 - id: plugin-node-convert
   name: 节点转换
-  version: v2.21.10
+  version: v3.0.0
   description: 节点格式转换插件，支持v2Ray格式转clash、clash格式转sing-box。
   tags:
     - 节点处理
@@ -325,7 +325,8 @@
     - on::manual
     - on::subscribe
   hasUI: false
-  menus: {}
+  menus:
+    更新依赖: Update
   context:
     profiles: {}
     subscriptions:
