@@ -1,7 +1,27 @@
 [mgr]
-show_symlink   = false
+show_symlink = false
 sort_dir_first = false
 
 [preview]
-max_width       = 1200
-max_height      = 1800
+max_width = 1200
+max_height = 1800
+
+[opener]
+book = [
+  { run = "bookokrat %s1", desc = "bookokrat Open", for = "macos", block = true },
+]
+bin_file = [
+  { run = "mcat -I %s1", desc = "mcat Open", for = "macos", block = true },
+]
+media_doc = [
+  { run = "mcat %s1", desc = "mcat Open", for = "macos", block = true },
+]
+
+[open]
+prepend_rules = [
+  { mime = "application/{pdf,epub*}", use = "book" },
+  { mime = "application/openxmlformats-officedocument*", use = "bin_file" },
+  { mime = "image/*", use = "bin_file" },
+  { mime = "video/*", use = "media_doc" },
+
+]

@@ -55,9 +55,8 @@ mouse-hide-while-typing = true
 macos-option-as-alt = true
 font-size = 18
 #quit-after-last-window-closed = true
-background-opacity = 0.8
+background-opacity = 0.80
 background-opacity-cells = true
-#background-blur = macos-glass-regular
 background-blur = true
 theme = light: Catppuccin Latte, dark: Catppuccin Macchiato
 macos-window-buttons = hidden
@@ -65,14 +64,13 @@ macos-titlebar-style = tabs
 macos-window-shadow = false
 scrollback-limit = 134217728
 shell-integration-features = ssh-terminfo,ssh-env,cursor,no-sudo,title,path
-unfocused-split-opacity = 0.8
 macos-non-native-fullscreen = true
 custom-shader = shaders/cursor_smear.glsl
 
 keybind = global:ctrl+backquote=toggle_quick_terminal
-keybind = performable:ctrl+k=goto_split:up   
-keybind = performable:ctrl+j=goto_split:down 
-keybind = performable:ctrl+h=goto_split:left 
+keybind = performable:ctrl+k=goto_split:up
+keybind = performable:ctrl+j=goto_split:down
+keybind = performable:ctrl+h=goto_split:left
 keybind = performable:ctrl+l=goto_split:right
 keybind = performable:super+ctrl+k=resize_split:up,10
 keybind = performable:super+ctrl+j=resize_split:down,10

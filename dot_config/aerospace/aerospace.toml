@@ -167,7 +167,6 @@ alt-d = 'workspace D'
 alt-e = 'workspace E'
 alt-f = 'workspace F'
 alt-g = 'workspace G'
-alt-i = 'workspace I'
 alt-m = 'workspace M'
 alt-n = 'workspace N'
 alt-o = 'workspace O'
@@ -199,7 +198,6 @@ alt-shift-d = 'move-node-to-workspace D --focus-follows-window'
 alt-shift-e = 'move-node-to-workspace E --focus-follows-window'
 alt-shift-f = 'move-node-to-workspace F --focus-follows-window'
 alt-shift-g = 'move-node-to-workspace G --focus-follows-window'
-alt-shift-i = 'move-node-to-workspace I --focus-follows-window'
 alt-shift-m = 'move-node-to-workspace M --focus-follows-window'
 alt-shift-n = 'move-node-to-workspace N --focus-follows-window'
 alt-shift-o = 'move-node-to-workspace O --focus-follows-window'
@@ -270,7 +268,7 @@ if.app-name-regex-substring = '微信|Wexin|WeChat'
 run = ['layout floating', 'move-node-to-workspace W']
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^Google Chrome$|^BrowserOS$|^Safari$'
+if.app-name-regex-substring = '^Google Chrome$|^BrowserOS$|^Safari$|^Helium$|^Zen$'
 run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
@@ -286,7 +284,7 @@ if.app-id = 'com.tencent.flue.WeApp'
 run = ['layout floating', 'move-node-to-workspace F']
 
 [[on-window-detected]]
-if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$'
+if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$|^Passwords$|^Keychain\sAccess$'
 run = ['layout floating']
 
 [[on-window-detected]]

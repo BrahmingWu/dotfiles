@@ -1,3 +1,14 @@
 [tools]
 bun = "latest"
 node = "latest"
+python = "latest"
+uv = "latest"
+
+# [env]
+# UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
+
+[settings]
+python.uv_venv_auto = "source"
+
+[settings.github]
+use_git_credentials = true
