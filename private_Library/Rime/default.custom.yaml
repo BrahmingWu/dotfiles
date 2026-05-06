@@ -4,6 +4,9 @@ patch:
   switcher/hotkeys:
     - Control+F4
   # switcher/fold_options: false
+  schema_list:
+    - schema: wanxiang_pro
+    - schema: wanxiang_english
 
 # 按键速查
 # https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md

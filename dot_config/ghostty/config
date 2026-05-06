@@ -65,6 +65,9 @@ macos-window-shadow = false
 scrollback-limit = 134217728
 shell-integration-features = ssh-terminfo,ssh-env,cursor,no-sudo,title,path
 macos-non-native-fullscreen = true
+quick-terminal-position = center
+quick-terminal-size = 60%,60%
+quick-terminal-screen = mouse
 custom-shader = shaders/cursor_smear.glsl
 
 keybind = global:ctrl+backquote=toggle_quick_terminal
