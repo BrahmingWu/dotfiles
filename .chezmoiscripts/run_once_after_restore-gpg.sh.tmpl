@@ -1,0 +1,45 @@
+#!/bin/sh
+
+command -v gpg >/dev/null 2>&1 || exit 0
+
+if gpg --list-secret-keys >/dev/null 2>&1; then
+  exit 0
+fi
+
+GPG_BACKUP_DIR="{{ .chezmoi.sourceDir }}/ignorefiles/gpg"
+KEY_FILE="${HOME}/Documents/App/chezmoiKey.key"
+
+if [ ! -d "${GPG_BACKUP_DIR}" ]; then
+  exit 0
+fi
+
+if [ ! -f "${GPG_BACKUP_DIR}/private.asc.age" ]; then
+  exit 0
+fi
+
+command -v age >/dev/null 2>&1 || {
+  exit 0
+}
+if [ ! -f "${KEY_FILE}" ]; then
+  exit 0
+fi
+
+GPG_IMPORT_DIR=$(mktemp -d)
+
+age -d -i "${KEY_FILE}" -o "${GPG_IMPORT_DIR}/public.asc" "${GPG_BACKUP_DIR}/public.asc.age"
+age -d -i "${KEY_FILE}" -o "${GPG_IMPORT_DIR}/private.asc" "${GPG_BACKUP_DIR}/private.asc.age"
+
+if [ -f "${GPG_BACKUP_DIR}/ownertrust.txt.age" ]; then
+  age -d -i "${KEY_FILE}" -o "${GPG_IMPORT_DIR}/ownertrust.txt" "${GPG_BACKUP_DIR}/ownertrust.txt.age"
+fi
+
+gpg --import "${GPG_IMPORT_DIR}/public.asc"
+gpg --import "${GPG_IMPORT_DIR}/private.asc"
+
+if [ -f "${GPG_IMPORT_DIR}/ownertrust.txt" ]; then
+  gpg --import-ownertrust "${GPG_IMPORT_DIR}/ownertrust.txt"
+fi
+
+rm -rf "${GPG_IMPORT_DIR}"
+
+echo "GPG keys restored successfully."
