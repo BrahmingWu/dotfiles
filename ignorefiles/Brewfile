@@ -1,7 +1,6 @@
 tap "anomalyco/tap"
 tap "erickochen/purple"
 tap "nikitabobko/tap"
-tap "oven-sh/bun"
 tap "surge-downloader/tap"
 tap "tinypkg/tap"
 brew "agg"
