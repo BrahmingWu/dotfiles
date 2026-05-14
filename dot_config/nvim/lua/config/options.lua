@@ -84,4 +84,7 @@ if vim.g.neovide then
   vim.keymap.set("n", "<D-0>", function()
     vim.g.neovide_scale_factor = 1.0
   end)
+
+  -- Prepend mise shims to PATH
+  vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
 end

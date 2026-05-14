@@ -284,7 +284,7 @@ if.app-id = 'com.tencent.flue.WeApp'
 run = ['layout floating', 'move-node-to-workspace F']
 
 [[on-window-detected]]
-if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$|^Passwords$|^Keychain\sAccess$'
+if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$|^Passwords$|^Keychain\sAccess$|KeePassXC'
 run = ['layout floating']
 
 [[on-window-detected]]
