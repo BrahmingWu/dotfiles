@@ -1,4 +1,4 @@
-function () {
+function zvm_config() {
   ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 }
 function y() {

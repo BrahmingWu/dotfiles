@@ -1,7 +1,4 @@
-# Set up fzf key bindings and fuzzy completion
-
 function zvm_after_init() {
-  # source <(fzf --zsh)
   eval "$(tv init zsh)"
   eval "$(atuin init zsh)"
 }

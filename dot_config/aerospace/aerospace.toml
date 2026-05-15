@@ -288,8 +288,8 @@ if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$|^Passwords$|^Ke
 run = ['layout floating']
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^Raycast$'
-run = ['layout floating', 'move-node-to-workspace A']
+if.app-name-regex-substring = '^Raycast$|^SuperCmd$'
+run = ['layout floating']
 
 # Common settings
 [[on-window-detected]]
