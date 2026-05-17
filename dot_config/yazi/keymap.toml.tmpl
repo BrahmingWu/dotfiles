@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.os "darwin" }}
+
 # macOS: Preview files with the system Quick Look
 [[mgr.prepend_keymap]]
 on = "<C-p>"
@@ -8,14 +8,10 @@ run = "shell -- qlmanage -p %s"
 on   = [ "g", "i" ]
 run  = "cd ~/Library/Mobile\\ Documents"
 desc = "Go to iCloud"
-{{ end }}
+
 
 # Confirm before quitting if multiple tabs are open
 [[mgr.prepend_keymap]]
 on  = "q"
-run = "plugin confirm-quit"
+run = "close"
 
-
-[[mgr.prepend_keymap]]
-on  = "Q"
-run = "plugin confirm-quit"

@@ -1,7 +1,7 @@
 export EDITOR="nvim"
 export XDG_CONFIG_HOME="$HOME/.config"
 export EZA_ICONS_AUTO="auto"
-export _ZO_DATA_DIR="$HOME/Documents/App/zoxide/"
+export _ZO_DATA_DIR="$HOME/Documents/AppData/zoxide/"
 export _ZO_ECHO=1
 export ZELLIJ_AUTO_EXIT="true"
 export LESS="-FRXM -j 5"
