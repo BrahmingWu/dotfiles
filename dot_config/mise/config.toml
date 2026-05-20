@@ -1,12 +1,23 @@
 [tools]
 bun = "latest"
 node = "latest"
+"npm:typescript-language-server" = { version = "latest", postinstall = """
+  TS_DIR=~/.local/share/mise/installs/npm-typescript/latest
+  if [ -d "$TS_DIR" ]; then
+    ln -sf "$TS_DIR/node_modules/typescript" "$MISE_TOOL_INSTALL_PATH/node_modules/typescript"
+  fi
+""" }
 pi = "latest"
 python = "latest"
 uv = "latest"
+"npm:typescript" = "latest"
+"npm:@biomejs/biome" = "latest"
 
 [env]
 UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
+
+[settings]
+experimental = true
 
 [settings.python]
 uv_venv_auto = "source"

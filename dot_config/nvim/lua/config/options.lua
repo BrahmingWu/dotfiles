@@ -4,6 +4,7 @@
 
 local opt = vim.opt
 opt.spelllang = { "en", "cjk" }
+vim.opt.spellfile = vim.fn.stdpath("config") .. "/spell/custom.utf-8.add"
 vim.g.autoformat = false
 
 if vim.g.neovide then

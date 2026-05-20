@@ -53,6 +53,7 @@ brew "xh"
 brew "yazi"
 brew "yq"
 brew "zellij"
+brew "zk"
 brew "zoxide"
 brew "zsh-vi-mode"
 brew "anomalyco/tap/opencode"
@@ -82,12 +83,10 @@ mas "Microsoft Excel", id: 462058435
 mas "Microsoft Word", id: 462054704
 mas "NetEaseMusic", id: 944848654
 mas "Presentify", id: 1507246666
-mas "SnippetsLab", id: 1006087419
 mas "Snippety", id: 1530751461
 mas "Step Two", id: 1448916662
 mas "TencentMeeting", id: 1484048379
 mas "WeChat", id: 836500024
 mas "Windows App", id: 1295203466
 mas "Xcode", id: 497799835
-uv "jrnl"
 uv "yt-dlp"
