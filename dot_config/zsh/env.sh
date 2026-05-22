@@ -6,6 +6,7 @@ export _ZO_ECHO=1
 export ZELLIJ_AUTO_EXIT="true"
 export LESS="-FRXM -j 5"
 export ZELLIJ_AUTO_ATTACH="true"
+export BAT_THEME=auto:system
 export LANG=en_US.UTF-8
 
 export PATH="$PATH:$HOME/.local/bin"

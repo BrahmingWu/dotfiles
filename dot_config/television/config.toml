@@ -15,7 +15,7 @@
 
 # General settings
 # ----------------------------------------------------------------------------
-tick_rate = 50
+tick_rate = 100
 default_channel = "files"
 # Shell settings
 # --------------

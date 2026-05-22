@@ -8,7 +8,7 @@ command = ["tv list-channels"]
 
 [preview]
 command = "bat -pn --color always ${TELEVISION_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/television}/cable/{}.toml"
-shell = "bash"
+shell = "zsh"
 
 [keybindings]
 enter = "actions:channel-enter"

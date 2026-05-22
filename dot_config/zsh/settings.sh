@@ -24,7 +24,7 @@ export FZF_DEFAULT_OPTS="${MY_FZF_THEME}
       then eza --color=always -TL2 {} ; 
     elif [[ \$(file --mime-encoding -b {}) =~ binary ]];
       then mcat {} 2> /dev/null || file {};
-    else bat -p --theme=auto:system --color=always {};
+    else bat -p --color=always {};
     fi'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'
 "
@@ -57,7 +57,7 @@ rfv() (
     --bind "ctrl-o:execute:$OPENER" \
     --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
     --delimiter : \
-    --preview 'bat --theme=auto:system --style=full --color=always --highlight-line {2} {1}' \
+    --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
     --preview-window '~4,+{2}+4/3,<80(up)' \
     --query "$*"
 )
