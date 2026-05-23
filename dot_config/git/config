@@ -1,0 +1,38 @@
+[user]
+  name = Brahming Wu
+  email = brahmingwu@outlook.com
+  signingkey = ~/.ssh/id_ed25519_personal
+
+[core]
+  pager = delta
+
+[diff]
+  tool = nvimdiff
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true  # use n and N to move between diff sections
+  ; dark = true      # or light = true, or omit for auto-detection
+  side-by-side = true
+
+[merge]
+  tool = nvimdiff
+  conflictStyle = zdiff3
+[commit]
+  gpgsign = true
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.ssh/allowed_signers
+[tag]
+	gpgSign = true
+[pager]
+	diff = diffnav
+
+; [includeIf "hasconfig:remote.*.url:*//*git.y*o.com:*/**"]
+;   path = ~/.config/git/config_work
+
+[includeIf "gitdir:~/MyDocs/src/Work/"]
+  path = ~/.config/git/config_work
