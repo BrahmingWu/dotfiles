@@ -28,11 +28,8 @@
   allowedSignersFile = ~/.ssh/allowed_signers
 [tag]
 	gpgSign = true
-[pager]
-	diff = diffnav
-
-; [includeIf "hasconfig:remote.*.url:*//*git.y*o.com:*/**"]
-;   path = ~/.config/git/config_work
+; [pager]
+; 	diff = diffnav
 
 [includeIf "gitdir:~/MyDocs/src/Work/"]
   path = ~/.config/git/config_work

@@ -25,6 +25,7 @@ brew "gh"
 brew "ghostscript"
 brew "git"
 brew "git-delta"
+brew "gitui"
 brew "htop"
 brew "imagemagick-full", link: true
 brew "jq"

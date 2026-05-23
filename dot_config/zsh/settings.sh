@@ -16,6 +16,11 @@ FZF_COLOR_DARK=" \
 
 MY_FZF_THEME=$(is_dark_mode && echo "$FZF_COLOR_DARK" || echo "$FZF_COLOR_LIGHT")
 
+
+LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,"
+
+export LG_CONFIG_FILE="$LG_CONFIG_FILE$(is_dark_mode && echo "$XDG_CONFIG_HOME/lazygit/theme_dark.yml" || echo "$XDG_CONFIG_HOME/lazygit/theme_light.yml")"
+
 export FZF_DEFAULT_OPTS="${MY_FZF_THEME}
   --style minimal
   --info inline-right
