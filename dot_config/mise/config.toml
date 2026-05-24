@@ -12,6 +12,8 @@ python = "latest"
 uv = "latest"
 "npm:typescript" = "latest"
 "npm:@biomejs/biome" = "latest"
+"github:bjarneo/cliamp" = "latest"
+"pipx:yt-dlp" = "latest"
 
 [env]
 UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }

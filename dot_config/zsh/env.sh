@@ -17,3 +17,8 @@ export FX_THEME="1"
 
 export https_proxy=http://127.0.0.1:20122 http_proxy=http://127.0.0.1:20122 all_proxy=socks5://127.0.0.1:20122
 
+if [ -f ~/.env ]; then
+  set -a
+  source ~/.env
+  set +a
+fi
