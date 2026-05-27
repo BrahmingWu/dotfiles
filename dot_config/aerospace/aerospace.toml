@@ -39,9 +39,9 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 #on-focus-changed = ['move-mouse window-lazy-center']
 exec-on-workspace-change = ['/bin/bash','-c','''
-  if [ ${AEROSPACE_FOCUSED_WORKSPACE} = "T" ]; then
+  if [[ ${AEROSPACE_FOCUSED_WORKSPACE} = "T" ]]; then
     /usr/local/bin/aerospace mode terminal
-  elif [ ${AEROSPACE_PREV_WORKSPACE} = "T" ]; then
+  elif [[ ${AEROSPACE_PREV_WORKSPACE} = "T" ]]; then
     /usr/local/bin/aerospace mode main
   fi
   ''']

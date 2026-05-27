@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sing-box.daemon</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/sing-box</string>
+        <string>run</string>
+        <string>-c</string>
+        <string>/Users/brahmingwu/Documents/AppConf/sing-box/config.json</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/Users/brahmingwu/Documents/AppConf/sing-box/sing-box.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/brahmingwu/Documents/AppConf/sing-box/sing-box.err.log</string>
+</dict>
+</plist>

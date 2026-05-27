@@ -16,7 +16,6 @@ FZF_COLOR_DARK=" \
 
 MY_FZF_THEME=$(is_dark_mode && echo "$FZF_COLOR_DARK" || echo "$FZF_COLOR_LIGHT")
 
-
 LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,"
 
 export LG_CONFIG_FILE="$LG_CONFIG_FILE$(is_dark_mode && echo "$XDG_CONFIG_HOME/lazygit/theme_dark.yml" || echo "$XDG_CONFIG_HOME/lazygit/theme_light.yml")"
@@ -67,4 +66,20 @@ rfv() (
     --query "$*"
 )
 
+export EDITOR="nvim"
+export EZA_ICONS_AUTO="auto"
+export _ZO_ECHO=1
+#export MANPAGER='nvim +Man!'
+export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+export PAGER="less"
+
+export FX_THEME="1"
+export ZELLIJ_AUTO_EXIT="true"
+export LESS="-FRXM -j 5"
+export ZELLIJ_AUTO_ATTACH="true"
+export PI_CODING_AGENT_DIR="$HOME/Documents/AppData/pi/agent/"
 export MCAT_THEME=$(is_dark_mode && echo "catppuccin" || echo "makurai-light")
+
+export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+export HOMEBREW_INSTALL_FROM_API=1

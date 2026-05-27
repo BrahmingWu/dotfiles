@@ -2,11 +2,11 @@ function zvm_config() {
   ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 }
 function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	command yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
 }
 
 is_dark_mode() {
@@ -16,3 +16,5 @@ is_dark_mode() {
     return 1
   fi
 }
+
+source "$HOME/Documents/AppConf/sing-box/toggle.sh"

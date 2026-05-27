@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sing-box.proxy</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>
+            sleep 5
+            printf 'export https_proxy=http://127.0.0.1:20122 http_proxy=http://127.0.0.1:20122 all_proxy=socks5://127.0.0.1:20122\n' &gt; /Users/brahmingwu/.config/zsh/proxy.sh
+            BYPASS=$(/usr/local/bin/jq -r &apos;[.rules[]? | .domain_suffix[]? | select(startswith(&quot;.&quot;)) | &quot;*&quot; + .] + [.rules[]? | .domain[]?] | unique | join(&quot;, &quot;)&apos; /Users/brahmingwu/Documents/AppConf/sing-box/rulesets/direct.json 2&gt;/dev/null)
+            for svc in $(networksetup -listallnetworkservices 2&gt;/dev/null | grep -vE &apos;Bluetooth|Thunderbolt|iPhone|USB|VPN&apos;); do
+                networksetup -setwebproxy &quot;$svc&quot; 127.0.0.1 20122 2&gt;/dev/null 1&gt;/dev/null
+                networksetup -setsecurewebproxy &quot;$svc&quot; 127.0.0.1 20122 2&gt;/dev/null 1&gt;/dev/null
+                networksetup -setsocksfirewallproxy &quot;$svc&quot; 127.0.0.1 20122 2&gt;/dev/null 1&gt;/dev/null
+                [[ -n &quot;$BYPASS&quot; ]] &amp;&amp; networksetup -setproxybypassdomains &quot;$svc&quot; &quot;$BYPASS&quot; 2&gt;/dev/null 1&gt;/dev/null
+            done
+        </string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+</dict>
+</plist>
