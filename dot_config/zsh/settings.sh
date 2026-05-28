@@ -77,7 +77,6 @@ export FX_THEME="1"
 export ZELLIJ_AUTO_EXIT="true"
 export LESS="-FRXM -j 5"
 export ZELLIJ_AUTO_ATTACH="true"
-export PI_CODING_AGENT_DIR="$HOME/Documents/AppData/pi/agent/"
 export MCAT_THEME=$(is_dark_mode && echo "catppuccin" || echo "makurai-light")
 
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
