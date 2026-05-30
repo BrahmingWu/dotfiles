@@ -48,6 +48,14 @@ paths = ["Stickies/**"]
 filename = "{{title}}_{{format-date now '%Y-%m'}}"
 template = "stickies.md"
 
+[group.tips]
+paths = ["Tips/**"]
+
+[group.tips.note]
+# %Y-%m-%d is actually the default format, so you could use {{format-date now}} instead.
+filename = "{{title}}"
+template = "tips.md"
+
 # MARKDOWN SETTINGS
 [format.markdown]
 # Enable support for #hashtags
@@ -83,7 +91,8 @@ ed = "zk edit $@"
 n = "zk new $1 -t $2"
 sn = 'zk new --no-input "$ZK_NOTEBOOK_DIR/Stickies" -t "$@"'
 ss = 'zk edit "$ZK_NOTEBOOK_DIR/Stickies" -i "$@"'
-st = 'zk edit "$ZK_NOTEBOOK_DIR/Stickies" -i -t "$@"'
+tn = 'zk new --no-input "$ZK_NOTEBOOK_DIR/Tips" -t "$@"'
+ts = 'zk edit "$ZK_NOTEBOOK_DIR/Tips" -i "$@"'
 
 # Edit the last modified note.
 edlast = "zk edit --limit 1 --sort modified- $@"

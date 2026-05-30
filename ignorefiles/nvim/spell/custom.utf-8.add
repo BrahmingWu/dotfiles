@@ -29,3 +29,6 @@ macOS
 Ghostty
 zellij
 neovim
+mcp
+lsp
+config
