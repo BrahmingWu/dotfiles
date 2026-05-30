@@ -4,9 +4,9 @@ node = "latest"
 pi = "latest"
 python = "latest"
 uv = "latest"
-"github:bjarneo/cliamp" = "latest"
 "pipx:yt-dlp" = "latest"
 "github:can1357/oh-my-pi" = "latest"
+"npm:typescript" = "latest"
 
 [env]
 UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
