@@ -1,9 +1,9 @@
-function zvm_after_init() {
-  eval "$(tv init zsh)"
-  eval "$(atuin init zsh)"
-}
+bindkey -v
+bindkey -M vicmd '.' insert-last-word
 
-# function zvm_after_lazy_keybings() {
-#   bindkey -M vicmd '.' insert-last-word
-# }
-source "$(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
+bindkey -M viins 'jj' vi-cmd-mode
+bindkey -M viins '\e[3~' delete-char
+bindkey -M viins '^?' backward-delete-char
+# 强大的补全菜单：可以用方向键，甚至 hjkl 在菜单里移动！
+# zstyle ':completion:*' menu select
+

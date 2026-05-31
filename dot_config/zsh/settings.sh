@@ -14,11 +14,19 @@ FZF_COLOR_DARK=" \
 --color=selected-bg:#494D64 \
 --color=border:#6E738D,label:#CAD3F5"
 
-MY_FZF_THEME=$(is_dark_mode && echo "$FZF_COLOR_DARK" || echo "$FZF_COLOR_LIGHT")
+_is_dark=false
+is_dark_mode && _is_dark=true
 
-LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,"
-
-export LG_CONFIG_FILE="$LG_CONFIG_FILE$(is_dark_mode && echo "$XDG_CONFIG_HOME/lazygit/theme_dark.yml" || echo "$XDG_CONFIG_HOME/lazygit/theme_light.yml")"
+if [[ $_is_dark == true ]]; then
+  MY_FZF_THEME=$FZF_COLOR_DARK
+  LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,$XDG_CONFIG_HOME/lazygit/theme_dark.yml"
+  MCAT_THEME=catppuccin
+else
+  MY_FZF_THEME=$FZF_COLOR_LIGHT
+  LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,$XDG_CONFIG_HOME/lazygit/theme_light.yml"
+  MCAT_THEME=makurai-light
+fi
+export MCAT_THEME
 
 export FZF_DEFAULT_OPTS="${MY_FZF_THEME}
   --style minimal
@@ -47,10 +55,10 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target,.Trash
   --preview 'eza --color=always -TL2 {}'"
-# ripgrep->fzf->vim [QUERY]
+
 rfv() (
   RELOAD='reload:rg --column --color=always --smart-case {q} || :'
-  OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+  OPENER='if [[ $FZM_SELECT_COUNT -eq 0 ]]; then
             nvim {1} +{2}     # No selection. Open the current line in Vim.
           else
             nvim +cw -q {+f}  # Build quickfix list for the selected items.
@@ -69,7 +77,6 @@ rfv() (
 export EDITOR="nvim"
 export EZA_ICONS_AUTO="auto"
 export _ZO_ECHO=1
-#export MANPAGER='nvim +Man!'
 export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 export PAGER="less"
 
@@ -77,7 +84,6 @@ export FX_THEME="1"
 export ZELLIJ_AUTO_EXIT="true"
 export LESS="-FRXM -j 5"
 export ZELLIJ_AUTO_ATTACH="true"
-export MCAT_THEME=$(is_dark_mode && echo "catppuccin" || echo "makurai-light")
 
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
