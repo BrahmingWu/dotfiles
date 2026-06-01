@@ -17,8 +17,8 @@
     <key>KeepAlive</key>
     <false/>
     <key>StandardOutPath</key>
-    <string>/Users/brahmingwu/Documents/AppConf/sing-box/sing-box.log</string>
+    <string>/Users/brahmingwu/.local/state/sing-box-log/sing-box.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/brahmingwu/Documents/AppConf/sing-box/sing-box.err.log</string>
+    <string>/Users/brahmingwu/.local/state/sing-box-log/sing-box.err.log</string>
 </dict>
 </plist>

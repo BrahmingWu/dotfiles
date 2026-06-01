@@ -33,3 +33,5 @@ mcp
 lsp
 config
 quickfix
+nvim
+ripgrep
