@@ -5,3 +5,18 @@ continuation_prompt = '[▶▶ ](dimmed bright-black)'
 
 [sudo]
 disabled = false
+symbol = '👩‍💻 '
+
+[shlvl]
+disabled = false
+format = '[$symbol]($style)'
+#symbol = '󱞩 '
+symbol = '󱏒 '
+
+repeat = true
+repeat_offset = 2
+
+[status]
+format = '[\[$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false

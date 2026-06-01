@@ -81,9 +81,7 @@ export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08
 export PAGER="less"
 
 export FX_THEME="1"
-export ZELLIJ_AUTO_EXIT="true"
 export LESS="-FRXM -j 5"
-export ZELLIJ_AUTO_ATTACH="true"
 
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"

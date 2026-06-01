@@ -288,7 +288,7 @@ if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$|^Passwords$|^Ke
 run = ['layout floating']
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^Raycast$|^SuperCmd$'
+if.app-name-regex-substring = '^Raycast$|^Maccy$'
 run = ['layout floating']
 
 # Common settings
