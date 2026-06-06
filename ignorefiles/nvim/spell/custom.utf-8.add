@@ -35,3 +35,17 @@ config
 quickfix
 nvim
 ripgrep
+omp
+lazygit
+fzf
+fd
+jq
+yq
+gh
+eza
+iCloud
+POSIX
+TOML
+YAML
+JS
+uv

@@ -175,10 +175,7 @@ alt-q = 'workspace Q'
 alt-s = 'workspace S'
 alt-t = 'workspace T'
 alt-u = 'workspace U'
-alt-v = 'workspace V'
 alt-w = 'workspace W'
-alt-x = 'workspace X'
-alt-y = 'workspace Y'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 #alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
@@ -206,10 +203,7 @@ alt-shift-q = 'move-node-to-workspace Q --focus-follows-window'
 alt-shift-s = 'move-node-to-workspace S --focus-follows-window'
 alt-shift-t = 'move-node-to-workspace T --focus-follows-window'
 alt-shift-u = 'move-node-to-workspace U --focus-follows-window'
-alt-shift-v = 'move-node-to-workspace V --focus-follows-window'
 alt-shift-w = 'move-node-to-workspace W --focus-follows-window'
-alt-shift-x = 'move-node-to-workspace X --focus-follows-window'
-alt-shift-y = 'move-node-to-workspace Y --focus-follows-window'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
@@ -288,7 +282,7 @@ if.window-title-regex-substring = '^(Quick\sLook)$|^(Step\sTwo)$|^Passwords$|^Ke
 run = ['layout floating']
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^Raycast$|^Maccy$'
+if.app-name-regex-substring = '^Raycast$|^Maccy$|^SuperCmd$'
 run = ['layout floating']
 
 # Common settings

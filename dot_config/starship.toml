@@ -14,7 +14,7 @@ format = '[$symbol]($style)'
 symbol = '󱏒 '
 
 repeat = true
-repeat_offset = 2
+repeat_offset = 1
 
 [status]
 format = '[\[$common_meaning$signal_name$maybe_int\]]($style) '

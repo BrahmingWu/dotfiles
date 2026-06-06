@@ -17,4 +17,15 @@ is_dark_mode() {
   fi
 }
 
+p() {
+  local cwd="$(pwd)"
+  if [[ $cwd = "$HOME" ]]; then
+    mkdir -p ~/.omp/scratch
+    cd ~/.omp/scratch && omp "$@" --no-lsp --no-extensions --no-skills
+    cd "$HOME" || echo "Failed to return to home directory"
+  else
+    omp "$@" --no-lsp --no-extensions --no-skills
+  fi
+}
+
 source "$HOME/Documents/AppConf/sing-box/toggle.sh"
