@@ -80,6 +80,9 @@ export _ZO_ECHO=1
 export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 export PAGER="less"
 
+export SSH_ASKPASS="${HOME}/.ssh/askpass-rbw"
+export SSH_ASKPASS_REQUIRE=force
+
 export FX_THEME="1"
 export LESS="-FRXM -j 5"
 

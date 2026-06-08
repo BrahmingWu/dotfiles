@@ -1,0 +1,77 @@
+#!/bin/bash
+set -euo pipefail
+
+prompt="${1:-}"
+
+# ===== 辅助函数：从 ssh_config 反查 IP/域名 → Host 别名 =====
+reverse_lookup_alias() {
+  local target="$1"
+  # 遍历 ssh_config，找到 HostName == target 的第一个 Host 条目
+  awk -v tgt="$target" '
+    /^Host / { alias=$2; next }
+    /^[[:space:]]*HostName[[:space:]]/ {
+      if ($2 == tgt && alias !~ /[?*]/) { print alias; exit }
+    }
+  ' ~/.ssh/config 2>/dev/null
+}
+
+# ===== 场景 1：密钥 passphrase =====
+if echo "$prompt" | grep -qi "passphrase"; then
+  # 尝试从 rbw 取（命名约定: sshkey-<文件名>）
+  key_path=$(echo "$prompt" | sed -n "s/.*for key '\\(.*\\)'.*/\\1/p" | head -1)
+  if [[ -n "$key_path" ]]; then
+    key_name=$(basename "$key_path")
+    passphrase=$(rbw get "sshkey-${key_name}" 2>/dev/null) || true
+    if [[ -n "$passphrase" ]]; then
+      printf '%s\n' "$passphrase"
+      exit 0
+    fi
+  fi
+  # 取不到 → 返回空串，让 key 认证失败，SSH 会自动尝试 password 认证
+  printf '\n'
+  exit 0
+fi
+
+# ===== 场景 2：SSH 登录密码 =====
+
+# 2a. 从提示中提取 IP/域名
+host_candidate="$(echo "$prompt" | sed -E "s/.*@([^ ']+).*/\1/")"
+
+# 2b. 尝试从父进程命令行提取别名
+ssh_target=""
+if [[ "$(uname)" == "Darwin" ]]; then
+  ssh_cmd=$(ps -p $PPID -o command= 2>/dev/null || true)
+else
+  ssh_cmd=$(tr '\0' ' ' </proc/$PPID/cmdline 2>/dev/null || true)
+fi
+if [[ -n "$ssh_cmd" ]]; then
+  ssh_target=$(echo "$ssh_cmd" | awk '{for(i=1;i<=NF;i++) if($i !~ /^-/) print $i}' | tail -n 1)
+fi
+
+# 2c. 按优先级尝试获取密码
+password=""
+
+# 优先 1：PPID 命令行别名 → ssh-JumpServer
+if [[ -z "$password" ]] && [[ -n "$ssh_target" ]]; then
+  password=$(rbw get "ssh-${ssh_target}" 2>/dev/null) || true
+fi
+
+# 优先 2：IP 反查 ssh_config 别名 → ssh-JumpServer
+if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
+  alias_from_ip=$(reverse_lookup_alias "$host_candidate")
+  if [[ -n "$alias_from_ip" ]]; then
+    password=$(rbw get "ssh-${alias_from_ip}" 2>/dev/null) || true
+  fi
+fi
+
+# 优先 3：直接用 IP/域名 → ssh-1.2.3.4
+if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
+  password=$(rbw get "ssh-${host_candidate}" 2>/dev/null) || true
+fi
+
+# ===== 输出 =====
+if [[ -n "$password" ]]; then
+  printf '%s\n' "$password"
+else
+  exit 1
+fi

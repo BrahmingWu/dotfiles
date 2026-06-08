@@ -7,6 +7,7 @@ uv = "latest"
 "pipx:yt-dlp" = "latest"
 "github:can1357/oh-my-pi" = "latest"
 "npm:typescript" = "latest"
+"npm:@colbymchenry/codegraph" = "latest"
 
 [env]
 UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
