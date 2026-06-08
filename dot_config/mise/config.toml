@@ -23,3 +23,6 @@ use_git_credentials = true
 
 [settings.npm]
 package_manager = "bun"
+
+[settings.pipx]
+uvx = true

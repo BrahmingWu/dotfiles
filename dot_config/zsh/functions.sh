@@ -17,7 +17,7 @@ is_dark_mode() {
   fi
 }
 
-p() {
+op() {
   local cwd="$(pwd)"
   if [[ $cwd = "$HOME" ]]; then
     mkdir -p ~/.omp/scratch

@@ -51,17 +51,17 @@ fi
 # 2c. 按优先级尝试获取密码
 password=""
 
-# 优先 1：PPID 命令行别名 → ssh-JumpServer
-if [[ -z "$password" ]] && [[ -n "$ssh_target" ]]; then
-  password=$(rbw get "ssh-${ssh_target}" 2>/dev/null) || true
-fi
-
-# 优先 2：IP 反查 ssh_config 别名 → ssh-JumpServer
+# 优先 1：IP 反查 ssh_config 别名（真正问密码的服务器，ProxyJump 场景关键）
 if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
   alias_from_ip=$(reverse_lookup_alias "$host_candidate")
   if [[ -n "$alias_from_ip" ]]; then
     password=$(rbw get "ssh-${alias_from_ip}" 2>/dev/null) || true
   fi
+fi
+
+# 优先 2：PPID 命令行别名 → ssh-<target>
+if [[ -z "$password" ]] && [[ -n "$ssh_target" ]]; then
+  password=$(rbw get "ssh-${ssh_target}" 2>/dev/null) || true
 fi
 
 # 优先 3：直接用 IP/域名 → ssh-1.2.3.4
