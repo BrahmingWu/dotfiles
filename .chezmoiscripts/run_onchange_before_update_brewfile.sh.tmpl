@@ -1,9 +1,10 @@
 #!/bin/sh
+set -e
 
 {{- if eq .chezmoi.os "darwin" }}
 # MacOS build version: {{ output "sw_vers" "--buildVersion" }}
 # Week of the year: {{ output "date" "+%y%V" }}
 BREWFILE_NAME="{{ .chezmoi.sourceDir }}/ignorefiles/Brewfile"
+command -v brew >/dev/null 2>&1 || { echo "Brewfile dump: skipped - brew not installed"; exit 0; }
 brew bundle dump --force --file "${BREWFILE_NAME}"
 {{- end }}
-

@@ -30,6 +30,7 @@
 chezmoiKey.key.age
 
 ignorefiles
+**/espanso
 
 {{- if ne .chezmoi.os "darwin" }}
 **/aerospace

@@ -1,20 +1,19 @@
 #!/bin/sh
+set -e
 
 # Week of the year: {{ output "date" "+%y%V" }}
 
-command -v gpg >/dev/null 2>&1 || exit 0
+command -v gpg >/dev/null 2>&1 || { echo "GPG backup: skipped - gpg not installed"; exit 0; }
 
 if ! gpg --list-secret-keys >/dev/null 2>&1; then
-  echo "No GPG secret keys found, skipping backup."
+  echo "GPG backup: skipped - no secret keys found"
   exit 0
 fi
 
-command -v age >/dev/null 2>&1 || {
-  echo "age not found, skip GPG backup"
-  exit 0
-}
+command -v age >/dev/null 2>&1 || { echo "GPG backup: skipped - age not installed"; exit 0; }
 
 GPG_EXPORT_DIR=$(mktemp -d)
+trap 'rm -rf "${GPG_EXPORT_DIR}"' EXIT
 GPG_BACKUP_DIR="{{ .chezmoi.sourceDir }}/ignorefiles/gpg"
 AGE_RECIPIENT="{{ .chezmoi.config.age.recipient }}"
 mkdir -p "${GPG_BACKUP_DIR}"
@@ -23,10 +22,14 @@ gpg --armor --export >"${GPG_EXPORT_DIR}/public.asc"
 gpg --armor --export-secret-keys >"${GPG_EXPORT_DIR}/private.asc"
 gpg --export-ownertrust >"${GPG_EXPORT_DIR}/ownertrust.txt"
 
+# Check exports are not empty
+if [ ! -s "${GPG_EXPORT_DIR}/public.asc" ] || [ ! -s "${GPG_EXPORT_DIR}/private.asc" ]; then
+  echo "GPG backup: skipped - export produced empty output"
+  exit 0
+fi
+
 age -a -r "${AGE_RECIPIENT}" -o "${GPG_BACKUP_DIR}/public.asc.age" "${GPG_EXPORT_DIR}/public.asc"
 age -a -r "${AGE_RECIPIENT}" -o "${GPG_BACKUP_DIR}/private.asc.age" "${GPG_EXPORT_DIR}/private.asc"
 age -a -r "${AGE_RECIPIENT}" -o "${GPG_BACKUP_DIR}/ownertrust.txt.age" "${GPG_EXPORT_DIR}/ownertrust.txt"
-
-rm -rf "${GPG_EXPORT_DIR}"
 
 echo "GPG keys backed up and encrypted to ${GPG_BACKUP_DIR}"

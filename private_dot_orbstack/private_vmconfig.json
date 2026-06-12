@@ -1,4 +1,0 @@
-{
-	"k8s.expose_services": true,
-	"k8s.kubeconfig_use_domain": true
-}

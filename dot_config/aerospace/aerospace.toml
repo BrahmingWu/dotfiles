@@ -85,7 +85,8 @@ outer.right = 10
 [workspace-to-monitor-force-assignment]
 1 = 'built-in'
 2 = 'main'
-5 = 'secondary'
+3 = 'secondary'
+4 = 'secondary'
 E = 'secondary'
 
 

@@ -1,86 +1,157 @@
-tap "anhoder/go-musicfox"
-tap "dlvhdr/formulae"
-tap "erickochen/purple"
-tap "nikitabobko/tap"
-tap "supercmdlabs/supercmd"
-tap "surge-downloader/tap"
-tap "tinypkg/tap"
+tap "anhoder/go-musicfox", trusted: true
+tap "dlvhdr/formulae", trusted: true
+tap "erickochen/purple", trusted: true
+tap "nikitabobko/tap", trusted: true
+tap "surge-downloader/tap", trusted: true
+tap "tinypkg/tap", trusted: true
+# Simple, modern, secure file encryption
 brew "age"
+# Asciicast to GIF converter
 brew "agg"
+# Record and share terminal sessions
 brew "asciinema"
+# Code searching, linting, rewriting
 brew "ast-grep"
+# Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Terminal EPUB Book Reader
 brew "bookokrat"
+# Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
+# Console Matrix
 brew "cmatrix"
+# Perl lib for reading and writing EXIF metadata
 brew "exiftool"
+# Modern, maintained replacement for ls
 brew "eza"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Ogg Bitstream Library
 brew "libogg"
+# Free lossless audio codec
 brew "flac"
+# Vorbis general audio compression codec
 brew "libvorbis"
+# Play, record, convert, and stream many audio and video codecs
 brew "ffmpeg-full", link: true
+# Banner-like program prints strings as ASCII art
 brew "figlet"
+# Terminal JSON viewer
 brew "fx"
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# Nonsense activity generator
 brew "genact"
+# GitHub command-line tool
 brew "gh"
+# Interpreter for PostScript and PDF
 brew "ghostscript"
+# Distributed revision control system
 brew "git"
+# Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Improved top (interactive process viewer)
 brew "htop"
+# Tools and libraries to manipulate images in many formats
 brew "imagemagick-full", link: true
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Simple terminal UI for git commands
 brew "lazygit"
+# Curses-based tool for viewing and analyzing log files
 brew "lnav"
+# Rainbows and unicorns in your console!
 brew "lolcat"
+# Mac App Store command-line interface
 brew "mas"
+# Terminal image, video, directory, and Markdown viewer
 brew "mcat"
+# Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Deep clean and optimize your Mac
 brew "mole"
+# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Paste PNG into files
 brew "pngpaste"
+# PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
+# Terminal slideshow tool
 brew "presenterm"
+# Unofficial Bitwarden CLI client
 brew "rbw"
+# Terminal client for .http/.rest files with HTTP, GraphQL, and gRPC support
 brew "resterm"
+# SVG rendering tool and library
 brew "resvg"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Universal proxy platform
 brew "sing-box"
+# Cross-shell prompt for astronauts
 brew "starship"
+# Modernized, complete, self-contained TeX/LaTeX engine
 brew "tectonic"
+# General purpose fuzzy finder TUI
 brew "television"
+# Pretty print math in monospace fonts, using a TeX-like syntax
 brew "utftex"
+# Modern watch command
+brew "viddy"
+# Internet file retriever
 brew "wget"
+# Friendly and fast tool for sending HTTP requests
 brew "xh"
+# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
+# Pluggable terminal workspace, with terminal multiplexer as the base feature
 brew "zellij"
+# Plain text note-taking assistant
 brew "zk"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# go-musicfox是musicfox的重写版，使用Go编写的网易云音乐命令行程序。
 brew "anhoder/go-musicfox/go-musicfox"
+# Git diff pager based on delta but with a file tree, à la GitHub
 brew "dlvhdr/formulae/diffnav"
+# Open-source terminal SSH manager and SSH config editor
 brew "erickochen/purple/purple"
+# Rime Wanxiang dictionary updater
 brew "tinypkg/tap/rime-wanxiang-updater"
+# AeroSpace is an i3-like tiling window manager for macOS
 cask "nikitabobko/tap/aerospace"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-lxgw-wenkai"
 cask "font-symbols-only-nerd-font"
+# Web browser
 cask "google-chrome"
+# Chromium-based web browser
 cask "helium-browser"
+# Keyboard customiser
 cask "karabiner-elements"
-cask "keepassxc"
+# Adaptive brightness for external displays
 cask "lunar"
+# Clipboard manager
 cask "maccy"
+# Smooths scrolling and set mouse scroll directions independently
 cask "mos"
+# Neovim Client
 cask "neovide-app"
+# Quick Look generator for Markdown files
 cask "qlmarkdown"
-cask "supercmdlabs/supercmd/supercmd"
+# Blazing fast TUI download manager built in Go for power users
 cask "surge-downloader/tap/surge"
+# Quicklook extension for source files
 cask "syntax-highlight"
+# Free and open-source OpenVPN client
 cask "tunnelblick"
+# Gecko based web browser
 cask "zen"
 mas "Feishu", id: 1551632588
 mas "MacFamilyTree 11", id: 6480510488
@@ -94,4 +165,3 @@ mas "TencentMeeting", id: 1484048379
 mas "WeChat", id: 836500024
 mas "Windows App", id: 1295203466
 mas "Xcode", id: 497799835
-uv "trafilatura"

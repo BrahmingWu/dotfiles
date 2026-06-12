@@ -1,4 +1,4 @@
-znap eval starship 'starship init zsh --print-full-init'
+[[ "$TERM" != "dumb" ]] && znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 znap eval zoxide 'zoxide init zsh'
 znap eval mise 'mise activate zsh'

@@ -15,13 +15,37 @@ reverse_lookup_alias() {
   ' ~/.ssh/config 2>/dev/null
 }
 
+# ===== 辅助函数：从密码存储获取密码（macOS Keychain 优先，fallback 到 rbw）=====
+get_password() {
+  local entry_name="$1"
+  local password=""
+
+  # macOS: 优先尝试 Keychain
+  if [[ "$(uname)" == "Darwin" ]]; then
+    password=$(security find-generic-password -a "$USER" -s "$entry_name" -w 2>/dev/null) || true
+  fi
+
+  # Fallback: rbw（跨平台兼容）
+  if [[ -z "$password" ]]; then
+    password=$(rbw get "$entry_name" 2>/dev/null) || true
+  fi
+
+  printf '%s' "$password"
+}
+
+# ===== 场景 0：Host key 验证提示 =====
+if echo "$prompt" | grep -qi "continue connecting\|authenticity"; then
+  printf 'yes\n'
+  exit 0
+fi
+
 # ===== 场景 1：密钥 passphrase =====
 if echo "$prompt" | grep -qi "passphrase"; then
-  # 尝试从 rbw 取（命名约定: sshkey-<文件名>）
+  # 尝试取（命名约定: sshkey-<文件名>）
   key_path=$(echo "$prompt" | sed -n "s/.*for key '\\(.*\\)'.*/\\1/p" | head -1)
   if [[ -n "$key_path" ]]; then
     key_name=$(basename "$key_path")
-    passphrase=$(rbw get "sshkey-${key_name}" 2>/dev/null) || true
+    passphrase=$(get_password "sshkey-${key_name}")
     if [[ -n "$passphrase" ]]; then
       printf '%s\n' "$passphrase"
       exit 0
@@ -37,36 +61,42 @@ fi
 # 2a. 从提示中提取 IP/域名
 host_candidate="$(echo "$prompt" | sed -E "s/.*@([^ ']+).*/\1/")"
 
-# 2b. 尝试从父进程命令行提取别名
-ssh_target=""
-if [[ "$(uname)" == "Darwin" ]]; then
-  ssh_cmd=$(ps -p $PPID -o command= 2>/dev/null || true)
-else
-  ssh_cmd=$(tr '\0' ' ' </proc/$PPID/cmdline 2>/dev/null || true)
-fi
-if [[ -n "$ssh_cmd" ]]; then
-  ssh_target=$(echo "$ssh_cmd" | awk '{for(i=1;i<=NF;i++) if($i !~ /^-/) print $i}' | tail -n 1)
-fi
-
-# 2c. 按优先级尝试获取密码
 password=""
 
-# 优先 1：IP 反查 ssh_config 别名（真正问密码的服务器，ProxyJump 场景关键）
-if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
-  alias_from_ip=$(reverse_lookup_alias "$host_candidate")
-  if [[ -n "$alias_from_ip" ]]; then
-    password=$(rbw get "ssh-${alias_from_ip}" 2>/dev/null) || true
+# 优化：如果 host_candidate 本身是 Host 别名（非 IP），直接尝试获取
+if [[ -n "$host_candidate" ]] && [[ ! "$host_candidate" =~ ^[0-9.]+$ ]]; then
+  password=$(get_password "ssh-${host_candidate}")
+fi
+
+# 2b. 如果还没找到，尝试从父进程命令行提取别名 + IP 反查
+if [[ -z "$password" ]]; then
+  ssh_target=""
+  if [[ "$(uname)" == "Darwin" ]]; then
+    ssh_cmd=$(ps -p $PPID -o command= 2>/dev/null || true)
+  else
+    ssh_cmd=$(tr '\0' ' ' </proc/$PPID/cmdline 2>/dev/null || true)
   fi
-fi
+  if [[ -n "$ssh_cmd" ]]; then
+    ssh_target=$(echo "$ssh_cmd" | awk '{for(i=1;i<=NF;i++) if($i !~ /^-/) print $i}' | tail -n 1)
+  fi
 
-# 优先 2：PPID 命令行别名 → ssh-<target>
-if [[ -z "$password" ]] && [[ -n "$ssh_target" ]]; then
-  password=$(rbw get "ssh-${ssh_target}" 2>/dev/null) || true
-fi
+  # 优先 1：IP 反查 ssh_config 别名（真正问密码的服务器，ProxyJump 场景关键）
+  if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
+    alias_from_ip=$(reverse_lookup_alias "$host_candidate")
+    if [[ -n "$alias_from_ip" ]]; then
+      password=$(get_password "ssh-${alias_from_ip}")
+    fi
+  fi
 
-# 优先 3：直接用 IP/域名 → ssh-1.2.3.4
-if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
-  password=$(rbw get "ssh-${host_candidate}" 2>/dev/null) || true
+  # 优先 2：PPID 命令行别名 → ssh-<target>
+  if [[ -z "$password" ]] && [[ -n "$ssh_target" ]]; then
+    password=$(get_password "ssh-${ssh_target}")
+  fi
+
+  # 优先 3：直接用 IP/域名 → ssh-1.2.3.4
+  if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
+    password=$(get_password "ssh-${host_candidate}")
+  fi
 fi
 
 # ===== 输出 =====
