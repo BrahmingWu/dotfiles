@@ -1,7 +1,20 @@
-[".config/ghostty/shaders"]
+[".config/ghostty/shaders/KroneCorylus/"]
   type = "archive"
   url = "https://github.com/KroneCorylus/ghostty-shader-playground/archive/master.tar.gz"
-  include = ["**/shaders/**"]
+  include = ["**/*.glsl"]
   stripComponents = 3
   refreshPeriod = "168h"
 
+[".config/ghostty/shaders/sahaj-b/"]
+  type = "archive"
+  url = "https://github.com/sahaj-b/ghostty-cursor-shaders/archive/master.tar.gz"
+  include = ["**/*.glsl"]
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/ghostty/shaders/0xhckr/"]
+  type = "archive"
+  url = "https://github.com/0xhckr/ghostty-shaders/archive/master.tar.gz"
+  include = ["**/*.glsl"]
+  stripComponents = 1
+  refreshPeriod = "168h"

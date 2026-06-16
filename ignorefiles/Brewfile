@@ -129,8 +129,6 @@ cask "nikitabobko/tap/aerospace"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-lxgw-wenkai"
 cask "font-symbols-only-nerd-font"
-# Web browser
-cask "google-chrome"
 # Chromium-based web browser
 cask "helium-browser"
 # Keyboard customiser
