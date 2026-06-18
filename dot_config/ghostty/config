@@ -50,7 +50,8 @@
 
 #window-height = 40
 #window-width = 160
-maximize = true
+# maximize = true
+window-decoration = none
 mouse-hide-while-typing = true
 macos-option-as-alt = true
 font-size = 18

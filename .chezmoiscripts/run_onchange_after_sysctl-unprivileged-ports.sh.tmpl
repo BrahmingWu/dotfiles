@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+# version: 1
+
+# Only run on Linux
+case "$(uname -s)" in
+  Linux) ;;
+  *) exit 0 ;;
+esac
+
+log() { echo "sysctl-unprivileged-ports: $*"; }
+
+SOURCE_FILE="{{ .chezmoi.sourceDir }}/private_dot_local/private_share/sysctl/unprivileged-ports.conf"
+TARGET_FILE="/etc/sysctl.d/99-unprivileged-ports.conf"
+
+if [ ! -f "$SOURCE_FILE" ]; then
+  log "source not found: $SOURCE_FILE"
+  exit 1
+fi
+
+sudo cp "$SOURCE_FILE" "$TARGET_FILE"
+sudo sysctl --system > /dev/null 2>&1
+log "applied $TARGET_FILE"

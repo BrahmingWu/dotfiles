@@ -1,12 +1,13 @@
 #!/bin/sh
 set -e
-# version: 1
+# version: 2
 
 log_skip() { echo "GPG restore: skipped - $*"; }
 
 command -v gpg >/dev/null 2>&1 || { log_skip "gpg not installed"; exit 1; }
 
-if gpg --list-secret-keys >/dev/null 2>&1; then
+# Check for actual secret key output (keyboxd returns 0 even with no keys)
+if gpg --list-secret-keys 2>/dev/null | grep -q "^sec"; then
   log_skip "secret keys already exist"
   exit 0
 fi

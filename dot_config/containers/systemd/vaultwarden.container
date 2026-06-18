@@ -1,0 +1,24 @@
+# ~/.config/containers/systemd/vaultwarden.container
+# Quadlet unit — converts to a systemd service automatically
+
+[Container]
+Image=docker.io/vaultwarden/server:latest
+ContainerName=vaultwarden
+Environment=DOMAIN=https://vw.localhost
+Environment=WEBSOCKET_ENABLED=true
+Environment=SIGNUPS_ALLOWED=true
+
+# 数据目录
+Volume=%h/Documents/AppData/vaultwarden/data:/data/
+
+# 加入 Caddy 网络，不暴露端口
+Network=caddy-net
+
+SecurityLabelDisable=true
+
+[Service]
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

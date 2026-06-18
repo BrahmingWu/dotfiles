@@ -1,0 +1,29 @@
+# ~/.config/containers/systemd/caddy.container
+# Quadlet unit — converts to a systemd service automatically
+
+[Container]
+Image=docker.io/library/caddy:latest
+ContainerName=caddy
+
+# 暴露 HTTPS 和 HTTP 端口
+PublishPort=443:443
+PublishPort=80:80
+
+# 挂载 Caddyfile 和数据卷
+Volume=%h/.config/containers/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+Volume=caddy-data:/data
+Volume=caddy-config:/config
+
+# 加入 Caddy 网络
+Network=caddy-net
+SecurityLabelDisable=true
+
+[Unit]
+After=network.target
+[Service]
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=10
+
+[Install]
+WantedBy=default.target

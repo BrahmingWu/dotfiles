@@ -1,0 +1,5 @@
+# ~/.config/containers/systemd/caddy-net.network
+# 内部网络，Caddy 反向代理使用
+
+[Network]
+NetworkName=caddy-net

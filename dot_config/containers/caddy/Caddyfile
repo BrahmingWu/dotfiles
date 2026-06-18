@@ -1,0 +1,7 @@
+vw.local {
+    reverse_proxy vaultwarden:80
+}
+
+mem.local {
+    reverse_proxy hindsight:9999
+}

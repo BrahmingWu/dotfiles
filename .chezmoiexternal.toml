@@ -4,4 +4,3 @@
   include = ["**/shaders/**"]
   stripComponents = 3
   refreshPeriod = "168h"
-
