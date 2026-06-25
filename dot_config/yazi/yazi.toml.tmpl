@@ -6,6 +6,7 @@ sort_dir_first = false
 max_width = 1200
 max_height = 1800
 
+{{- if eq .chezmoi.os "darwin" }}
 [opener]
 book = [
   { run = "bookokrat %s1", desc = "bookokrat Open", for = "macos", block = true },
@@ -23,5 +24,5 @@ prepend_rules = [
   { mime = "application/openxmlformats-officedocument*", use = "bin_file" },
   { mime = "image/*", use = "bin_file" },
   { mime = "video/*", use = "media_doc" },
-
 ]
+{{ end }}

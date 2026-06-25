@@ -1,0 +1,81 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "spacing": 4,
+    "exclusive": true,
+    // 模块布局
+    "modules-left": [
+        "niri/window"
+    ],
+    "modules-center": [
+        "niri/workspaces"
+    ],
+    "modules-right": [
+        "tray",
+        "wireplumber",
+        "backlight",
+        // "network",
+        "battery",
+        "clock"
+    ],
+
+    // --- 模块详细配置 ---
+
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "active": "",
+            "default": ""
+        }
+    },
+
+    "niri/window": {
+        "format": " {title} ",
+        "separate-outputs": true,
+        "max-length": 50
+    },
+
+    "clock": {
+        "format": " {:%H:%M   %m-%d}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    },
+
+    "wireplumber": {
+        "format": "{icon}  {volume}%",
+        "format-muted": " Muted",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "format-icons": ["", "", ""]
+    },
+    "backlight": {
+      "device": "intel_backlight",
+      "format": "{icon} {percent}%",
+      "format-icons": ["󰃞", "󰃟", "󰃠"],
+      "on-scroll-up": "brightnessctl set +5%",
+      "on-scroll-down": "brightnessctl set 5%-"
+    },
+
+    "network": {
+        "format-wifi": "  {essid}",
+        "format-ethernet": "󰈀 Wired",
+        "format-disconnected": "⚠ Disconnected",
+        "tooltip-format": "{ipaddr}/{cidr}",
+        "on-click": "ghostty --title='WiFi-Manager' -e nmtui"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    }
+}

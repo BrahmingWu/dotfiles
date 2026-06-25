@@ -1,0 +1,141 @@
+/* ==============================================
+   waybar — Dark Theme (Catppuccin Mocha inspired)
+   ============================================== */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+window#waybar {
+    background: rgba(24, 24, 37, 0.75);
+    color: #cdd6f4;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.3s ease;
+}
+
+/* ---- Workspaces ---- */
+
+#workspaces {
+    padding: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    margin: 5px 2px;
+    color: #6c7086;
+    background: transparent;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover {
+    color: #bac2de;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+#workspaces button.active {
+    color: #89b4fa;
+    background: rgba(137, 180, 250, 0.15);
+}
+
+#workspaces button.urgent {
+    color: #f38ba8;
+}
+
+/* ---- Window Title ---- */
+
+#window {
+    padding: 0 12px;
+    color: #a6adc8;
+    font-weight: 500;
+}
+
+/* ---- Modules (pill style) ---- */
+
+#clock,
+#battery,
+#backlight,
+#network,
+#wireplumber,
+#tray {
+    padding: 0 14px;
+    margin: 5px 3px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    transition: background 0.2s ease;
+}
+
+/* ---- Clock ---- */
+
+#clock {
+    color: #bac2de;
+    font-weight: 600;
+}
+
+/* ---- Battery ---- */
+
+#battery {
+    color: #a6e3a1;
+}
+
+#battery.warning:not(.charging) {
+    color: #f9e2af;
+}
+
+#battery.critical:not(.charging) {
+    background: rgba(243, 139, 168, 0.25);
+    color: #f38ba8;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
+
+/* ---- Backlight ---- */
+
+#backlight {
+    color: #f9e2af;
+}
+
+/* ---- Volume ---- */
+
+#wireplumber {
+    color: #94e2d5;
+}
+
+#wireplumber.muted {
+    color: #6c7086;
+}
+
+/* ---- Network ---- */
+
+#network {
+    color: #cba6f7;
+}
+
+#network.disconnected {
+    color: #f38ba8;
+}
+
+/* ---- Tray ---- */
+
+#tray {
+    background: transparent;
+    padding: 0 8px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}

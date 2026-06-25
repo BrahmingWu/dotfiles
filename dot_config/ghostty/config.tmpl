@@ -58,9 +58,11 @@ font-family = "JetBrainsMono Nerd Font"
 font-family = "LXGW WenKai Mono"
 font-size = 18
 #quit-after-last-window-closed = true
+{{- if eq .chezmoi.os "darwin" }}
 background-opacity = 0.80
 background-opacity-cells = true
 background-blur = true
+{{ end }}
 theme = light: Catppuccin Latte, dark: Catppuccin Macchiato
 macos-window-buttons = hidden
 macos-titlebar-style = tabs
@@ -83,4 +85,8 @@ keybind = performable:super+ctrl+k=resize_split:up,10
 keybind = performable:super+ctrl+j=resize_split:down,10
 keybind = performable:super+ctrl+h=resize_split:left,10
 keybind = performable:super+ctrl+l=resize_split:right,10
-
+{{- if eq .chezmoi.os "linux" }}
+keybind = ctrl+w=close_tab:this
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
+{{ end }}

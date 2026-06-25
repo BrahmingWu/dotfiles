@@ -1,4 +1,4 @@
-
+{{- if eq .chezmoi.os "darwin" }}
 # macOS: Preview files with the system Quick Look
 [[mgr.prepend_keymap]]
 on = "<C-p>"
@@ -8,10 +8,20 @@ run = "shell -- qlmanage -p %s"
 on   = [ "g", "i" ]
 run  = "cd ~/Library/Mobile\\ Documents"
 desc = "Go to iCloud"
-
+{{ end }}
 
 # Confirm before quitting if multiple tabs are open
 [[mgr.prepend_keymap]]
 on  = "q"
 run = "close"
 
+{{- if eq .chezmoi.os "linux" }}
+[[mgr.prepend_keymap]]
+on  = "y"
+run = [ 'shell -- for path in %s; do echo "file://$path"; done | wl-copy -t text/uri-list', "yank" ]
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "w" ]
+run  = "cd ~/.local/share/WeChat_Data/Shared"
+desc = "Go to WeChat files"
+{{ end }}

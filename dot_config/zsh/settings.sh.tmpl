@@ -21,40 +21,27 @@ if [[ $_is_dark == true ]]; then
   MY_FZF_THEME=$FZF_COLOR_DARK
   LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,$XDG_CONFIG_HOME/lazygit/theme_dark.yml"
   MCAT_THEME=catppuccin
+  export BAT_THEME="Catppuccin Macchiato"
 else
   MY_FZF_THEME=$FZF_COLOR_LIGHT
   LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,$XDG_CONFIG_HOME/lazygit/theme_light.yml"
   MCAT_THEME=makurai-light
+  export BAT_THEME="Catppuccin Latte"
 fi
 export MCAT_THEME
 
-export FZF_DEFAULT_OPTS="${MY_FZF_THEME}
-  --style minimal
-  --info inline-right
-  --walker-skip .git,node_modules,target,.Trash,.cache
-  --preview 'if [[ -d {} ]];
-      then eza --color=always -TL2 {} ; 
-    elif [[ \$(file --mime-encoding -b {}) =~ binary ]];
-      then mcat {} 2> /dev/null || file {};
-    else bat -p --color=always {};
-    fi'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'
-"
-export FZF_CTRL_R_OPTS="
-  --no-sort
-  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-  --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'
-  --no-preview
-"
+export FZF_DEFAULT_OPTS="${MY_FZF_THEME} --style minimal --info inline-right \
+  --walker-skip .git,node_modules,target,.Trash,.cache \
+  --preview 'if [[ -d {} ]]; then eza --color=always -TL2 {} ; \
+    elif [[ \$(file --mime-encoding -b {}) =~ binary ]]; \
+      then mcat {} 2> /dev/null || file {}; else bat -p -f {}; fi' \
+  --bind 'ctrl-/:change-preview-window(down|hidden)'"
 
-export FZF_CTRL_T_OPTS="
-  --select-1 --exit-0
-"
-
-export FZF_ALT_C_OPTS="
-  --walker-skip .git,node_modules,target,.Trash
-  --preview 'eza --color=always -TL2 {}'"
+# export FZF_CTRL_R_OPTS="--no-sort --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --color header:italic --header 'Press CTRL-Y to copy command into clipboard' --no-preview"
+#
+# export FZF_CTRL_T_OPTS="--select-1 --exit-0"
+#
+# export FZF_ALT_C_OPTS="--walker-skip .git,node_modules,target,.Trash --preview 'eza --color=always -TL2 {}'"
 
 rfv() (
   RELOAD='reload:rg --column --color=always --smart-case {q} || :'
@@ -85,7 +72,8 @@ export SSH_ASKPASS_REQUIRE=force
 
 export FX_THEME="1"
 export LESS="-FRXM -j 5"
-
+{{- if eq .chezmoi.os "darwin" }}
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
 export HOMEBREW_INSTALL_FROM_API=1
+{{ end }}

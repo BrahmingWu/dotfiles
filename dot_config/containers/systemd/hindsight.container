@@ -5,18 +5,22 @@
 [Container]
 Image=ghcr.io/vectorize-io/hindsight:latest
 ContainerName=hindsight
+Environment=HTTP_PROXY=
+Environment=HTTPS_PROXY=
+Environment=NO_PROXY=
+Environment=http_proxy=
+Environment=https_proxy=
+Environment=no_proxy=
 EnvironmentFile=%h/.config/containers/hindsight.env
 UserNS=keep-id
 
-# REST API + MCP（保留端口暴露便于调试）
+# REST API + MCP
 PublishPort=8888:8888
 # Web UI
 PublishPort=9999:9999
 
-# 加入 Caddy 网络
 Network=caddy-net
 
-# 数据目录 — 用 bind mount，方便备份和 rsync
 Volume=%h/Documents/AppData/hindsight/data:/home/hindsight/.pg0
 
 # 容器内进程以非 root 运行时的安全标签

@@ -4,8 +4,13 @@
 [Container]
 Image=docker.io/library/caddy:latest
 ContainerName=caddy
+Environment=HTTP_PROXY=
+Environment=HTTPS_PROXY=
+Environment=NO_PROXY=
+Environment=http_proxy=
+Environment=https_proxy=
+Environment=no_proxy=
 
-# 暴露 HTTPS 和 HTTP 端口
 PublishPort=443:443
 PublishPort=80:80
 

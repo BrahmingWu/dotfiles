@@ -1,6 +1,3 @@
-function zvm_config() {
-  ZVM_SYSTEM_CLIPBOARD_ENABLED=true
-}
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"
@@ -13,7 +10,7 @@ is_dark_mode() {
   if [[ "$OSTYPE" == darwin* ]]; then
     [[ $(defaults read -g AppleInterfaceStyle 2>/dev/null) == "Dark" ]]
   else
-    return 1
+    [[ "$(cat ~/.cache/color-scheme 2>/dev/null)" == "dark" ]]
   fi
 }
 

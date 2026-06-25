@@ -4,14 +4,18 @@
 [Container]
 Image=docker.io/vaultwarden/server:latest
 ContainerName=vaultwarden
+Environment=HTTP_PROXY=
+Environment=HTTPS_PROXY=
+Environment=NO_PROXY=
+Environment=http_proxy=
+Environment=https_proxy=
+Environment=no_proxy=
 Environment=DOMAIN=https://vw.localhost
 Environment=WEBSOCKET_ENABLED=true
 Environment=SIGNUPS_ALLOWED=true
 
-# 数据目录
 Volume=%h/Documents/AppData/vaultwarden/data:/data/
 
-# 加入 Caddy 网络，不暴露端口
 Network=caddy-net
 
 SecurityLabelDisable=true

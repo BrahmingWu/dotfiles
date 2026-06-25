@@ -32,9 +32,16 @@ chezmoiKey.key.age
 ignorefiles
 **/espanso
 
+{{- if ne .chezmoi.os "linux" }}
+**/niri
+**/containers
+**/bat
+{{ end }}
+
 {{- if ne .chezmoi.os "darwin" }}
 **/aerospace
 Library/
+**/raycast
 **/neovide
 **/karabiner
 {{- end }}
