@@ -1,0 +1,24 @@
+font=Inter Medium 11
+width=350
+padding=10
+margin=10
+border-size=2
+border-radius=8
+
+[mode=light]
+background-color=#eff1f599
+text-color=#4c4f69
+border-color=#8839ef
+progress-color=over #ccd0da
+
+[urgency=high]
+border-color=#fe640b
+
+[mode=dark]
+background-color=#24273a99
+text-color=#cad3f5
+border-color=#b7bdf8
+progress-color=over #363a4f
+
+[urgency=high]
+border-color=#f5a97f

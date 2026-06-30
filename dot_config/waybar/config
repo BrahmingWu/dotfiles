@@ -6,7 +6,8 @@
     "exclusive": true,
     // 模块布局
     "modules-left": [
-        "niri/window"
+        "niri/window",
+        "mpris"
     ],
     "modules-center": [
         "niri/workspaces"
@@ -17,10 +18,10 @@
         "backlight",
         // "network",
         "battery",
-        "clock"
+        "clock",
+        "idle_inhibitor",
+        "privacy"
     ],
-
-    // --- 模块详细配置 ---
 
     "niri/workspaces": {
         "format": "{icon}",
@@ -33,7 +34,8 @@
     "niri/window": {
         "format": " {title} ",
         "separate-outputs": true,
-        "max-length": 50
+        "icon": true,
+        "max-length": 80
     },
 
     "clock": {
@@ -77,5 +79,44 @@
     "tray": {
         "icon-size": 18,
         "spacing": 10
-    }
+    },
+
+    "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+          "activated": "󰅶",
+          "deactivated": "󰾪"
+      }
+    },
+    "mpris": {
+      "format": "{status_icon} {dynamic}",
+      "format-paused": "{status_icon} <i>{dynamic}</i>",
+      "player-icons": {
+        "default": "▶",
+        "mpv": "🎵"
+      },
+      "status-icons": {
+        "paused": "⏸",
+        "playing": "▶"
+      },
+      "dynamic-order": ["title"]
+    },
+  "privacy": {
+    "icon-spacing": 4,
+    "icon-size": 18,
+    "transition-duration": 250,
+    "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      },
+      {
+        "type": "audio-in",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      }
+    ],
+    "ignore-monitor": true
+  }
 }

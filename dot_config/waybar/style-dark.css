@@ -64,6 +64,8 @@ window#waybar {
 #backlight,
 #network,
 #wireplumber,
+#idle_inhibitor,
+#privacy,
 #tray {
     padding: 0 14px;
     margin: 5px 3px;

@@ -36,6 +36,12 @@ ignorefiles
 **/niri
 **/containers
 **/bat
+**/fuzzel
+**/mako
+**/satty
+**/sway
+**/waybar
+**/darkman
 {{ end }}
 
 {{- if ne .chezmoi.os "darwin" }}

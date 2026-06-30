@@ -67,6 +67,8 @@ window#waybar {
 #backlight,
 #network,
 #wireplumber,
+#idle_inhibitor,
+#privacy,
 #tray {
   padding: 0 14px;
   margin: 5px 3px;
@@ -74,7 +76,12 @@ window#waybar {
   background: rgba(0, 0, 0, 0.05);
   transition: background 0.2s ease;
 }
-
+#privacy-item.screenshare {
+  color: #a11e4e;
+}
+#privacy-item.audio-in {
+  color: #ef5b0b;
+}
 /* ---- Clock ---- */
 
 #clock {
@@ -87,7 +94,9 @@ window#waybar {
 #battery {
   /* color: #40a02b; */
 }
-
+#battery.charging {
+  color: #1e9049;
+}
 #battery.warning:not(.charging) {
   color: #df8e1d;
 }
@@ -117,7 +126,7 @@ window#waybar {
 }
 
 #wireplumber.muted {
-  color: #9ca0b0;
+  color: #fc5040;
 }
 
 /* ---- Network ---- */

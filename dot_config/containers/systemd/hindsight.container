@@ -15,9 +15,9 @@ EnvironmentFile=%h/.config/containers/hindsight.env
 UserNS=keep-id
 
 # REST API + MCP
-PublishPort=8888:8888
+PublishPort=127.0.0.1:8888:8888
 # Web UI
-PublishPort=9999:9999
+PublishPort=127.0.0.1:9999:9999
 
 Network=caddy-net
 

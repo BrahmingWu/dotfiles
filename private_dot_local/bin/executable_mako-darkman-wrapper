@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# mako wrapper: start mako, then sync mode from darkman.
+# Replaces `spawn-at-startup "mako"` in niri config.
+set -e
+
+/usr/bin/mako &
+MAKO_PID=$!
+
+# Wait for mako D-Bus name to be owned (not just activatable)
+for _ in $(seq 30); do
+  busctl --user list 2>/dev/null | grep -q '^org.freedesktop.Notifications[[:space:]]*[0-9]' && break
+  sleep 0.3
+done
+
+# Query darkman for current mode and apply it
+if MODE=$(darkman get 2>/dev/null) && [ -n "$MODE" ]; then
+  makoctl mode -s "$MODE"
+fi
+
+wait $MAKO_PID

@@ -16,8 +16,8 @@ PublishPort=80:80
 
 # 挂载 Caddyfile 和数据卷
 Volume=%h/.config/containers/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-Volume=caddy-data:/data
-Volume=caddy-config:/config
+Volume=%h/Documents/AppData/caddy/data:/data
+Volume=%h/Documents/AppData/caddy/config:/config
 
 # 加入 Caddy 网络
 Network=caddy-net

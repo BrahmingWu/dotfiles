@@ -10,7 +10,7 @@ Environment=NO_PROXY=
 Environment=http_proxy=
 Environment=https_proxy=
 Environment=no_proxy=
-Environment=DOMAIN=https://vw.localhost
+Environment=DOMAIN=https://vw.home
 Environment=WEBSOCKET_ENABLED=true
 Environment=SIGNUPS_ALLOWED=true
 
