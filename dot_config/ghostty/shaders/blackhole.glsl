@@ -53,7 +53,7 @@ const float DISK_CONTRAST = 1.6000; // streak contrast: 0 = smooth haze, higher 
                                     // light & screen
 const float EXPOSURE      = 1.4000; // tonemap exposure for the disk light (terminal text is untouched)
 const float DRIFT_SPEED   = 1.0000; // how fast the hole floats around
-const float WORK_AREA     = 0.6600; // bottom screen fraction kept undistorted
+const float WORK_AREA     = 0.3300; // bottom screen fraction kept undistorted
 const float DILATION_MIN  = 0.2000; // disk pattern time rate at full size (gravitational time dilation theme)
                                     // token mode
 const float TOKEN_AREA_MIN = 0.0100; // MODE_TOKENS: shadow area at 0% context, as a fraction of the terminal area
@@ -171,6 +171,7 @@ const DiskLook LOOK_DEFAULT = DiskLook(
     DOPPLER_MIX, DISK_BEAM, DISK_GAIN, DISK_CONTRAST, DISK_WIND, DISK_SPEED,
     EXPOSURE, STAR_GAIN);
 #define DEMO_N 8
+#define STYLE_N 7
 // the tuner's presets (ParamSpec.swift), ~5.25 s each; Zen is skipped (too
 // subtle to read in a quick demo) and Inferno bookends the loop
 const DiskLook DEMO_TOUR[DEMO_N] = DiskLook[DEMO_N](
@@ -182,7 +183,7 @@ const DiskLook DEMO_TOUR[DEMO_N] = DiskLook[DEMO_N](
     DiskLook(15000.0, 1.30,  0.35, 3.0, 14.0, 0.35, 1.00, 4.0, 1.2, 1.3, 8.0, 5.0, 0.80, 0.0),  // quasar
     DiskLook(18000.0, 1.05,  0.55, 3.0, 16.0, 0.30, 1.00, 5.0, 1.0, 1.5, 9.0, 6.0, 0.75, 0.0),  // blazar
     DiskLook( 5500.0, 1.50,  0.35, 1.8,  8.0, 0.00, 1.00, 2.5, 0.0, 1.6, 7.0, 5.0, 1.00, 0.6),  // pure lens
-    DiskLook( 5500.0, 1.50,  0.35, 1.8,  8.0, 0.90, 0.60, 2.5, 2.2, 1.6, 7.0, 5.0, 1.40, 0.0)); // inferno
+    DiskLook( 7000.0, 1.45,  0.15, 3.5,  7.0, 0.40, 0.50, 2.0, 0.5, 0.3, 3.0, 1.5, 0.70, 0.0)); // zen
 
 DiskLook mixLook(DiskLook a, DiskLook b, float f) {
     return DiskLook(
@@ -209,10 +210,10 @@ DiskLook demoLook() {
 // is the last five minutes of every hour. Independently, iTimeCursorChange
 // acts as a live typing detector: stop using the terminal and the hole
 // shrinks away; it never shows while you are not actually working.
-const float WORK_PERIOD_MIN = 55.0000; // work minutes per cycle (growth phase)
-const float BREAK_MIN       = 5.0000; // break minutes per cycle (hole gone)
+const float WORK_PERIOD_MIN = 55.000; // work minutes per cycle (growth phase)
+const float BREAK_MIN       = 5.000; // break minutes per cycle (hole gone)
 const float IDLE_FADE_SEC   = 90.0000; // typing pause at which fading starts
-const float TIME_SCALE      = 100.0000; // TESTING: 1 = real wall-clock schedule; >1 fast-forwards growth via iTime (100 -> a full cycle in ~36 s). Set back to 1 for normal use.
+const float TIME_SCALE      = 1.0000; // TESTING: 1 = real wall-clock schedule; >1 fast-forwards growth via iTime (100 -> a full cycle in ~36 s). Set back to 1 for normal use.
 
 // critical impact parameter of a Schwarzschild hole, in r_s: rays under this
 // fall in; it is the apparent (shadow) radius seen from far away. Physics,
@@ -291,7 +292,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     float aspect = res.x / res.y;
 
     // Ghostty's fragCoord y runs top-down; work in height-from-bottom
-    float yUp = 1.0 - uv.y;
+    // float yUp = 1.0 - uv.y;
+    float yUp = uv.y;
 
     // smooth animation runs off iTime (advances every frame); per-mode envelopes
     // (wall clock / token fill) only set how big, how fast and how far it moves
@@ -299,8 +301,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
     // disk look: the tunables verbatim, or the demo tour's current blend
     DiskLook L = LOOK_DEFAULT;
-    if (SIZE_MODE == MODE_DEMO) L = demoLook();
-
+    if (SIZE_MODE == MODE_DEMO) {
+      L = demoLook();
+    } else if (SIZE_MODE == MODE_POMODORO) {
+      L = DEMO_TOUR[STYLE_N];
+    }
     // disk extent in r_s, sanitized: the inner edge stays outside the photon
     // sphere (1.5 r_s) where circular orbits stop making sense
     float rin  = max(L.inner, 1.6);
@@ -320,7 +325,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         // schedule rides the wall clock; for testing, TIME_SCALE adds extra
         // progress via iTime (which always advances per frame), so e.g. 100 runs
         // a full cycle in seconds without depending on how Ghostty steps iDate.w
-        float wall     = iDate.w + iTime * (TIME_SCALE - 1.0);
+        // float wall     = iDate.w + iTime * (TIME_SCALE - 1.0);
+        float wall     = iTime + iTime * (TIME_SCALE - 1.0);
         float phase    = mod(wall, cycleSec);
         float collapse = min(60.0, workSec * 0.15);  // scales down for short debug cycles
         float grow = clamp(phase / workSec, 0.0, 1.0)
@@ -332,19 +338,27 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         // and is gone by the time the pause becomes a real break
         float idle = max(0.0, iTime - iTimeCursorChange);
         I *= 1.0 - smoothstep(IDLE_FADE_SEC, max(BREAK_MIN * 60.0, IDLE_FADE_SEC + 1.0), idle);
-        sz = mix(0.22, 1.0, I);              // starts small, grows toward break time
+        // sz = mix(0.22, 1.0, I);              // starts small, grows toward break time
+        sz = mix(0.12, 6.0, smoothstep(0.12, 1.0, I));              // starts small, grows toward break time
         // lazy Lissajous drift, vertically confined so the hole and its disk
         // stay above the work area at the bottom; bounds adapt to size (the
         // disk's projected half-extent is rout/B_CRIT shadow radii), drift
         // follows size: a small calm hole hovers, a big one roams wide
         // (amplitude, not frequency — FM would jerk the phase as I evolves)
         float ext = (rout / B_CRIT) * HOLE_RADIUS * sz;
-        float yLo = WORK_AREA + 0.12 + ext;  // clears shield band + wobble
-        float yHi = max(yLo, 0.90 - ext);    // clears the screen top
+        // float yLo = WORK_AREA + 0.12 + ext;  // clears shield band + wobble
+        // float yHi = max(yLo, 0.90 - ext);    // clears the screen top
+        float yLo = WORK_AREA + 0.5 + ext;  // clears shield band + wobble
+        float yHi = max(yLo, 1 - ext);    // clears the screen top
         float spd = mix(0.35, 1.0, I);
+        // center = vec2(
+        //     0.5 + (0.24 * sin(t * 0.21) + 0.05 * sin(t * 0.083)) * spd,
+        //     1.0 - mix(yLo, yHi, 0.5 + (0.42 * sin(t * 0.157 + 2.0) + 0.08 * sin(t * 0.117)) * spd));
+        // center += I * vec2(0.040 * sin(t * 0.83) + 0.020 * sin(t * 1.31),
+        //                    0.030 * sin(t * 1.03 + 1.0));
         center = vec2(
-            0.5 + (0.24 * sin(t * 0.21) + 0.05 * sin(t * 0.083)) * spd,
-            1.0 - mix(yLo, yHi, 0.5 + (0.42 * sin(t * 0.157 + 2.0) + 0.08 * sin(t * 0.117)) * spd));
+            0.95 + (0.06 * sin(t * 0.21) + 0.05 * sin(t * 0.083)) * spd,
+            mix(yLo, yHi, 0.05 + (0.42 * sin(t * 0.157 + 2.0) + 0.08 * sin(t * 0.117)) * spd));
         center += I * vec2(0.040 * sin(t * 0.83) + 0.020 * sin(t * 1.31),
                            0.030 * sin(t * 1.03 + 1.0));
     } else {

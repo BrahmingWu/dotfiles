@@ -17,14 +17,14 @@ return {
         dark = "macchiato",
       },
       dim_inactive = {
-        enabled = false, -- dims the background color of inactive window
+        enabled = true, -- dims the background color of inactive window
         shade = "dark",
-        percentage = 0.10, -- percentage of the shade to apply to the inactive window
+        percentage = 0.20, -- percentage of the shade to apply to the inactive window
       },
       transparent_background = true,
       float = {
-        transparent = false, -- enable transparent floating windows
-        solid = false, -- use solid styling for floating windows, see |winborder|
+        transparent = true, -- enable transparent floating windows
+        solid = true, -- use solid styling for floating windows, see |winborder|
       },
       auto_integrations = true,
     },
