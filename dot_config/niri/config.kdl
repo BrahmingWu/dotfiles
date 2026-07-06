@@ -181,7 +181,7 @@ layout {
         //
         // The focus ring only draws around the active window, so the only place
         // where you can see its inactive-color is on other monitors.
-        inactive-color "#505050"
+        inactive-color "#7060f050"
  // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
         // The angle is the same as in linear-gradient, and is optional,
@@ -264,9 +264,6 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 spawn-at-startup "fcitx5"
-spawn-at-startup "swaybg" "-m" "fill" "-i" "/home/brahmingwu/Pictures/Wallpapers/wallhaven_6lw77w.jpg"
-spawn-at-startup "waybar"
-spawn-at-startup "mako-darkman-wrapper"
 spawn-at-startup "nm-applet"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
