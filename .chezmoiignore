@@ -31,6 +31,7 @@ chezmoiKey.key.age
 
 ignorefiles
 **/espanso
+**/swayidle*
 
 {{- if ne .chezmoi.os "linux" }}
 **/niri
