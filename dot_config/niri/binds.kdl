@@ -1,7 +1,7 @@
 binds {
-    // Mod+Shift+V {
-    //     spawn "bash" "-c" "cliphist list | fuzzel -d | { read -r selected && echo \"$selected\" | cliphist decode | wl-copy; }"
-    // }
+    Mod+Shift+V {
+        spawn "noctalia" "msg" "panel-toggle" "clipboard"
+    }
     Mod+A hotkey-overlay-title=null {
         spawn "wtype" "-M" "ctrl" "-k" "a" "-m" "ctrl"
     }
@@ -40,20 +40,21 @@ binds {
     Mod+Backslash {
         toggle-window-rule-opacity
     }
-    // Mod+F12 hotkey-overlay-title=null {
-    //     spawn-sh "pkill waybar || true && waybar"
-    // }
+    Mod+F12 hotkey-overlay-title=null {
+        // spawn-sh "pkill waybar || true && waybar"
+        spawn-sh "pkill noctalia || true && sleep 3 && noctalia -d"
+    }
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal" {
         spawn "ghostty"
     }
     Mod+Space hotkey-overlay-title="Run an Application" {
         // spawn "fuzzel"
-        spawn-sh "noctalia msg panel-toggle launcher"
+        spawn "noctalia" "msg" "panel-toggle" "launcher"
     }
     Mod+Alt+L hotkey-overlay-title="Lock the Screen" {
         // spawn "swaylock"
-        spawn-sh "noctalia msg session lock"
+        spawn "noctalia" "msg" "session" "lock"
     }
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -372,7 +373,7 @@ binds {
         center-column
     }
     // Center all fully visible columns on screen.
-    // Alt+Ctrl+C { center-visible-columns; }
+    Alt+Ctrl+C { center-visible-columns; }
     // Finer width adjustments.
     // This command can also:
     // * set width in pixels: "1000"
@@ -395,16 +396,16 @@ binds {
         set-window-height "+10%"
     }
     // Move the focused window between the floating and the tiling layout.
-    Alt+V {
+    Alt+F {
         toggle-window-floating
     }
-    Alt+Shift+V {
+    Alt+Shift+F {
         switch-focus-between-floating-and-tiling
     }
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
-    Alt+W {
+    Alt+T {
         toggle-column-tabbed-display
     }
     // Actions to switch layouts.

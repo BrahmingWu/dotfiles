@@ -3,7 +3,7 @@
 # Docs: https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
 
 [Container]
-Image=ghcr.io/vectorize-io/hindsight:latest
+Image=ghcr.io/vectorize-io/hindsight:latest-slim
 ContainerName=hindsight
 Environment=HTTP_PROXY=
 Environment=HTTPS_PROXY=

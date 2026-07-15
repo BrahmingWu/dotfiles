@@ -44,9 +44,18 @@ window-rule {
     }
 }
 window-rule {
-    match app-id="wechat"
+    match app-id="^wechat$"
     // block-out-from "screen-capture"
     block-out-from "screencast"
+}
+window-rule {
+    match app-id="^folia$"
+    focus-ring {
+        off
+    }
+    shadow {
+        off
+    }
 }
 window-rule {
     match is-window-cast-target=true
