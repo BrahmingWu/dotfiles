@@ -14,9 +14,20 @@ format = '[$symbol]($style)'
 symbol = '󱏒 '
 
 repeat = true
+{{- if eq .chezmoi.os "darwin" }}
 repeat_offset = 1
+{{ else }}
+repeat_offset = 3
+{{- end }}
 
 [status]
 format = '[\[$common_meaning$signal_name$maybe_int\]]($style) '
 map_symbol = true
 disabled = false
+
+[memory_usage]
+disabled = false
+symbol = ''
+format = '$symbol  [${ram}]($style) '
+style = 'bold dimmed red'
+
