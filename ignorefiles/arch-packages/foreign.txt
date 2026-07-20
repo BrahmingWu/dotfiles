@@ -1,0 +1,15 @@
+bibata-cursor-theme-bin
+bluetuith-bin
+bookokrat-bin
+folia-major-bin
+go-musicfox-bin
+helium-browser-bin
+hwatch-bin
+kalker-bin
+mark-shot-bin
+mcat-bin
+mihomo-party-bin
+owmods-gui-bin
+protonplus
+purple-bin
+wechat

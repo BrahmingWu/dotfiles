@@ -1,0 +1,34 @@
+#!/bin/sh
+set -e
+
+{{- if eq .chezmoi.os "linux" }}
+# Week of the year: {{ output "date" "+%y%V" }}
+BACKUP_DIR="{{ .chezmoi.sourceDir }}/ignorefiles/arch-packages"
+command -v pacman >/dev/null 2>&1 || exit 0
+
+mkdir -p "$BACKUP_DIR"
+
+TMP_NATIVE=$(mktemp)
+TMP_FOREIGN=$(mktemp)
+trap 'rm -f "$TMP_NATIVE" "$TMP_FOREIGN"' EXIT
+
+pacman -Qqen > "$TMP_NATIVE"
+pacman -Qqem > "$TMP_FOREIGN"
+
+count_lines() { wc -l < "$1" 2>/dev/null || echo 0; }
+
+for pair in "$TMP_NATIVE:native.txt" "$TMP_FOREIGN:foreign.txt"; do
+  SRC="${pair%%:*}"
+  DST="$BACKUP_DIR/${pair#*:}"
+  NEW_COUNT=$(count_lines "$SRC")
+  if [ -f "$DST" ]; then
+    OLD_COUNT=$(count_lines "$DST")
+    if [ "$NEW_COUNT" -lt "$OLD_COUNT" ]; then
+      echo "arch-packages/${pair#*:}: new ($NEW_COUNT) < existing ($OLD_COUNT), skipped"
+      continue
+    fi
+  fi
+  mv "$SRC" "$DST"
+  echo "arch-packages/${pair#*:}: $NEW_COUNT entries"
+done
+{{- end }}

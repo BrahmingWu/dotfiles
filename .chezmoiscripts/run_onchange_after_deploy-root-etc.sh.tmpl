@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+{{- if eq .chezmoi.os "linux" }}
+{{- $cmd := printf "find %s/ignorefiles/root_etc -type f | sort | xargs sha256sum | sha256sum | cut -d' ' -f1" .chezmoi.sourceDir }}
+# root_etc checksum: {{ output "sh" "-c" $cmd }}
+
+ROOT_ETC="{{ .chezmoi.sourceDir }}/ignorefiles/root_etc"
+[ -d "$ROOT_ETC" ] || exit 0
+
+find "$ROOT_ETC" -type f | while read -r src; do
+  rel="${src#$ROOT_ETC/}"
+  target="/etc/$rel"
+
+  if [ -f "$target" ] && diff -q "$src" "$target" >/dev/null 2>&1; then
+    continue
+  fi
+
+  sudo mkdir -p "$(dirname "$target")"
+  sudo cp "$src" "$target"
+  echo "root_etc: $rel → $target"
+
+  case "$rel" in
+    sysctl.d/*) sudo sysctl --system >/dev/null 2>&1 ;;
+  esac
+done
+{{- end }}
