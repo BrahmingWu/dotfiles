@@ -58,18 +58,10 @@ font-family = "JetBrainsMono Nerd Font"
 font-family = "LXGW WenKai Mono"
 font-size = 18
 #quit-after-last-window-closed = true
-{{- if eq .chezmoi.os "darwin" }}
-background-opacity = 0.80
 background-opacity-cells = true
-background-blur = true
-{{ end }}
 theme = light: Catppuccin Latte, dark: Catppuccin Macchiato
-macos-window-buttons = hidden
-macos-titlebar-style = tabs
-macos-window-shadow = false
 scrollback-limit = 134217728
 shell-integration-features = ssh-env,cursor,sudo,title,path
-macos-non-native-fullscreen = true
 quick-terminal-position = center
 quick-terminal-size = 60%,60%
 quick-terminal-screen = mouse
@@ -86,8 +78,18 @@ keybind = performable:super+ctrl+k=resize_split:up,10
 keybind = performable:super+ctrl+j=resize_split:down,10
 keybind = performable:super+ctrl+h=resize_split:left,10
 keybind = performable:super+ctrl+l=resize_split:right,10
-{{- if eq .chezmoi.os "linux" }}
-keybind = ctrl+w=close_tab:this
+{{- if eq .chezmoi.os "darwin" }}
+background-opacity = 0.80
+background-blur = true
+macos-window-buttons = hidden
+macos-titlebar-style = tabs
+macos-window-shadow = false
+macos-non-native-fullscreen = true
+{{ else }}
+background-opacity = 0.90
+keybind = ctrl+w=close_surface
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down
+# keybind = ctrl+insert=unbind
 {{ end }}
+

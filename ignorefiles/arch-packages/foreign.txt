@@ -1,7 +1,6 @@
 bibata-cursor-theme-bin
 bluetuith-bin
 bookokrat-bin
-folia-major-bin
 go-musicfox-bin
 helium-browser-bin
 hwatch-bin

@@ -14,6 +14,7 @@ fi
 echo "$MODE" > ~/.cache/color-scheme
 
 # 2. Set GTK4 / libadwaita color scheme
+niri msg action do-screen-transition
 gsettings set org.gnome.desktop.interface color-scheme \
     "$([ "$MODE" = "dark" ] && echo "prefer-dark" || echo "prefer-light")" 2>/dev/null || true
 
