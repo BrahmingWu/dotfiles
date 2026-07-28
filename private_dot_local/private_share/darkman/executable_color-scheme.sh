@@ -10,23 +10,30 @@ else
     MODE="$(cat ~/.cache/color-scheme 2>/dev/null || echo "dark")"
 fi
 
-# 1. Write cache file for shell (is_dark_mode in functions.sh)
+# Write cache file for shell (is_dark_mode in functions.sh)
 echo "$MODE" > ~/.cache/color-scheme
 
-# 2. Set GTK4 / libadwaita color scheme
+# Set GTK4 / libadwaita color scheme
 niri msg action do-screen-transition
 gsettings set org.gnome.desktop.interface color-scheme \
     "$([ "$MODE" = "dark" ] && echo "prefer-dark" || echo "prefer-light")" 2>/dev/null || true
 
-# # 3. Reload waybar (picks up style-dark.css / style-light.css)
+
+ln -sf "$HOME"/.config/eza/"$([ "$MODE" = "light" ] && echo "theme_light.yml" || echo "theme_dark.yml")" \
+    "$HOME"/.config/eza/theme.yml
+
+ln -sf "$HOME"/.config/atuin/themes/"$([ "$MODE" = "light" ] && echo "catppuccin-latte.toml" || echo "catppuccin-macchiato.toml")" \
+    "$HOME"/.config/atuin/themes/catppuccin.toml
+
+# # Reload waybar (picks up style-dark.css / style-light.css)
 # pkill -SIGUSR2 waybar 2>/dev/null || true
 #
-# # 4. Sync mako notification mode (only when mako D-Bus is ready)
+# # Sync mako notification mode (only when mako D-Bus is ready)
 # if busctl --user list 2>/dev/null | grep -q '^org\.freedesktop\.Notifications[[:space:]]*[0-9]'; then
 #     makoctl mode -s "$MODE"
 # fi
 #
-# # 5. Switch wallpaper for swaybg (managed as systemd service)
+# # Switch wallpaper for swaybg (managed as systemd service)
 # WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 # case "$MODE" in
 #     dark)  WALLPAPER_FILE="$WALLPAPER_DIR/wallhaven_e8wvww.jpg"  ;;

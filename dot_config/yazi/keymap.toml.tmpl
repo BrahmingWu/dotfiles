@@ -15,6 +15,11 @@ desc = "Go to iCloud"
 on  = "q"
 run = "close"
 
+[[mgr.prepend_keymap]]
+on   = "T"
+run  = "plugin toggle-pane max-preview"
+desc = "Maximize or restore the preview pane"
+
 {{- if eq .chezmoi.os "linux" }}
 [[mgr.prepend_keymap]]
 on  = "y"

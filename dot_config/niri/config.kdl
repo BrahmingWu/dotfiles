@@ -60,7 +60,7 @@ input {
 
     }
     // warp-mouse-to-focus
-    workspace-auto-back-and-forth
+    // workspace-auto-back-and-forth
  // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
     // focus-follows-mouse max-scroll-amount="0%"
@@ -82,7 +82,7 @@ cursor {
 }
 // https://niri-wm.github.io/niri/Configuration:-Layout
 layout {
-    gaps 5
+    gaps 10
     center-focused-column "never"
     always-center-single-column
     preset-column-widths {
@@ -93,10 +93,10 @@ layout {
     }
     background-color "transparent"
     default-column-width {
-        proportion 0.5
+        // proportion 0.5
     }
     focus-ring {
-        // off
+        off
         width 3
         active-color "#8f58ef"
         inactive-color "#7060f050"
@@ -111,17 +111,17 @@ layout {
     shadow {
         on
         // draw-behind-window true
-        softness 30
-        spread 5
-        offset x=0 y=5
+        softness 20
+        spread 3
+        offset x=0 y=0
         // inactive-color "#000000f0"
         color "#00000080"
     }
     struts {
         left 32
         right 32
-        top 1
-        bottom 1
+        top 0
+        bottom 0
     }
     tab-indicator {
         place-within-column
@@ -204,6 +204,5 @@ overview {
 debug {
     honor-xdg-activation-with-invalid-serial
 }
-include "./rules.kdl"
-include "./binds.kdl"
-
+include "rules.kdl"
+include "binds.kdl"
