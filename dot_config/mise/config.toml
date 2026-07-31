@@ -1,21 +1,19 @@
 [tools]
 bun = "latest"
 node = "latest"
-python = "latest"
 uv = "latest"
 "pipx:yt-dlp" = "latest"
 "github:can1357/oh-my-pi" = "latest"
 "npm:typescript" = "latest"
 "npm:@colbymchenry/codegraph" = "latest"
 usage = "latest"
-java = "21"
 
 [env]
-UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
+# UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
 
 [settings]
 experimental = true
-minimum_release_age_excludes = ["github:can1357/oh-my-pi","pi"]
+minimum_release_age_excludes = ["github:can1357/oh-my-pi", "pi"]
 
 [settings.python]
 uv_venv_auto = "source"

@@ -14,8 +14,16 @@ window-rule {
     }
 }
 window-rule {
+    match app-id="^helium$"
+    open-on-workspace "Browser"
+    default-column-width {
+        proportion 0.8
+    }
+}
+window-rule {
     match app-id="^com\\.mitchellh\\.ghostty$"
     opacity 0.8
+    open-on-workspace "Terminal"
     default-column-width {
         proportion 0.6
     }
@@ -43,6 +51,10 @@ window-rule {
     block-out-from "screencast"
 }
 window-rule {
+    match app-id="^com\\-sap\\-platin\\-Gui$"
+    open-on-workspace "SAP"
+}
+window-rule {
     match is-active=false
     exclude is-floating=true
     exclude is-active-in-column=true
@@ -54,6 +66,12 @@ window-rule {
         saturation 0.3
     }
 }
+// window-rule {
+//     match is-floating=true
+//     background-effect {
+//         xray false
+//     }
+// }
 window-rule {
     match is-window-cast-target=true
     opacity 1.0

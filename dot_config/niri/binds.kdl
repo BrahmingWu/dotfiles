@@ -17,16 +17,16 @@ binds {
     Mod+W hotkey-overlay-title=null {
         spawn "wtype" "-M" "ctrl" "-k" "w" "-m" "ctrl"
     }
-    Mod+T hotkey-overlay-title=null {
-        spawn "wtype" "-M" "ctrl" "-k" "t" "-m" "ctrl"
-    }
-    Mod+S hotkey-overlay-title=null {
-        spawn "wtype" "-M" "ctrl" "-k" "s" "-m" "ctrl"
-    }
+    // Mod+T hotkey-overlay-title=null {
+    //     spawn "wtype" "-M" "ctrl" "-k" "t" "-m" "ctrl"
+    // }
+    // Mod+S hotkey-overlay-title=null {
+    //     spawn "wtype" "-M" "ctrl" "-k" "s" "-m" "ctrl"
+    // }
     Mod+Shift+Slash {
         show-hotkey-overlay
     }
-    Mod+Alt+Shift+Ctrl+Backslash {
+    Alt+Backslash {
         toggle-window-rule-opacity
     }
     Mod+F12 hotkey-overlay-title=null {
@@ -106,12 +106,12 @@ binds {
     Mod+H hotkey-overlay-title=null {
         focus-column-left
     }
-    // Mod+J hotkey-overlay-title=null {
-    //     focus-window-down
-    // }
-    // Mod+K hotkey-overlay-title=null {
-    //     focus-window-up
-    // }
+    Mod+J hotkey-overlay-title=null {
+        focus-window-down
+    }
+    Mod+K hotkey-overlay-title=null {
+        focus-window-up
+    }
     Mod+L hotkey-overlay-title=null {
         focus-column-right
     }
@@ -125,22 +125,28 @@ binds {
         move-column-left
     }
     Mod+Shift+J hotkey-overlay-title=null {
-        move-window-down-or-to-workspace-down
+        move-window-down
     }
     Mod+Shift+K hotkey-overlay-title=null {
-        move-window-up-or-to-workspace-up
+        move-window-up
     }
     Mod+Shift+L hotkey-overlay-title=null {
         move-column-right
     }
+    Mod+Shift+A {
+        move-column-to-first
+    }
+    Mod+Shift+E {
+        move-column-to-last
+    }
     // Alternative commands that move across workspaces when reaching
     // the first or last window in a column.
-    Mod+J {
-        focus-window-or-workspace-down
-    }
-    Mod+K {
-        focus-window-or-workspace-up
-    }
+    // Mod+J {
+    //     focus-window-or-workspace-down
+    // }
+    // Mod+K {
+    //     focus-window-or-workspace-up
+    // }
     // Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
     // Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
     // Mod+Home { focus-column-first; }
@@ -177,6 +183,9 @@ binds {
     Mod+Shift+0 {
         move-window-to-monitor-next
     }
+    Mod+Ctrl+Shift+0 {
+        move-workspace-to-monitor-next
+    }
     // And you can also move a whole workspace to another monitor:
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
@@ -184,18 +193,18 @@ binds {
     // Mod+Shift+Ctrl+J  { move-workspace-to-monitor-down; }
     // Mod+Shift+Ctrl+K  { move-workspace-to-monitor-up; }
     // Mod+Shift+Ctrl+L  { move-workspace-to-monitor-right; }
-    // Mod+U {
-    //     focus-workspace-down
-    // }
-    // Mod+I {
-    //     focus-workspace-up
-    // }
-    // Mod+Shift+U {
-    //     move-column-to-workspace-down
-    // }
-    // Mod+Shift+I {
-    //     move-column-to-workspace-up
-    // }
+    Mod+U {
+        focus-workspace-up
+    }
+    Mod+I {
+        focus-workspace-down
+    }
+    Mod+Shift+U {
+        move-workspace-up
+    }
+    Mod+Shift+I {
+        move-workspace-down
+    }
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
     // ...
@@ -382,17 +391,30 @@ binds {
     // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
     // set-column-width "100" will make the column occupy 200 physical screen pixels.
     Mod+Minus {
-        set-column-width "-10%"
+        set-column-width "-1%"
     }
     Mod+Equal {
-        set-column-width "+10%"
+        set-column-width "+1%"
     }
     // Finer height adjustments when in column with other windows.
     Mod+Shift+Minus {
-        set-window-height "-10%"
+        set-window-height "-1%"
     }
     Mod+Shift+Equal {
-        set-window-height "+10%"
+        set-window-height "+1%"
+    }
+    Mod+Ctrl+Minus {
+        set-column-width "-5%"
+    }
+    Mod+Ctrl+Equal {
+        set-column-width "+5%"
+    }
+    // Finer height adjustments when in column with other windows.
+    Mod+Shift+Ctrl+Minus {
+        set-window-height "-5%"
+    }
+    Mod+Shift+Ctrl+Equal {
+        set-window-height "+5%"
     }
     // Move the focused window between the floating and the tiling layout.
     Alt+F {
@@ -432,9 +454,9 @@ binds {
         toggle-keyboard-shortcuts-inhibit
     }
     // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E {
-        quit
-    }
+    // Mod+Shift+E {
+    //     quit
+    // }
     Ctrl+Alt+Delete {
         quit
     }
@@ -442,6 +464,24 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P {
         power-off-monitors
+    }
+    Mod+B {
+        focus-workspace "Browser"
+    }
+    Mod+Shift+B {
+        move-window-to-workspace "Browser"
+    }
+    Mod+T {
+        focus-workspace "Terminal"
+    }
+    Mod+Shift+T {
+        move-window-to-workspace "Terminal"
+    }
+    Mod+S {
+        focus-workspace "SAP"
+    }
+    Mod+Shift+S {
+        move-window-to-workspace "SAP"
     }
 }
 

@@ -1,14 +1,14 @@
-{{- if eq .chezmoi.os "darwin" }}
-# macOS: Preview files with the system Quick Look
 [[mgr.prepend_keymap]]
 on = "<C-p>"
 run = "shell -- qlmanage -p %s"
+desc = "Preview files with the system Quick Look"
+for = "macos"
 
 [[mgr.prepend_keymap]]
 on   = [ "g", "i" ]
 run  = "cd ~/Library/Mobile\\ Documents"
 desc = "Go to iCloud"
-{{ end }}
+for = "macos"
 
 # Confirm before quitting if multiple tabs are open
 [[mgr.prepend_keymap]]
@@ -20,13 +20,13 @@ on   = "T"
 run  = "plugin toggle-pane max-preview"
 desc = "Maximize or restore the preview pane"
 
-{{- if eq .chezmoi.os "linux" }}
 [[mgr.prepend_keymap]]
 on  = "y"
 run = [ 'shell -- for path in %s; do echo "file://$path"; done | wl-copy -t text/uri-list', "yank" ]
+for = "linux"
 
 [[mgr.prepend_keymap]]
 on   = [ "g", "w" ]
 run  = "cd ~/.local/share/WeChat_Data/Shared"
 desc = "Go to WeChat files"
-{{ end }}
+for = "linux"

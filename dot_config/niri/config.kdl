@@ -10,6 +10,7 @@ environment {
     AWT_TOOLKIT_MTOOLKIT "true"
     // 防止 Java 尝试重新设置父窗口，避免焦点混乱
     _JAVA_AWT_WM_NONREPARENTING "1"
+    // _JAVA_OPTIONS "-Dawt.toolkit.name=WLToolkit"
     no_proxy "localhost,127.0.0.1,.local"
     NO_PROXY "localhost,127.0.0.1,.local"
     https_proxy "http://127.0.0.1:20122"
@@ -59,9 +60,9 @@ input {
         // middle-emulation
 
     }
-    // warp-mouse-to-focus
+ // warp-mouse-to-focus
     // workspace-auto-back-and-forth
- // Focus windows and outputs automatically when moving the mouse into them.
+    // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
     // focus-follows-mouse max-scroll-amount="0%"
 }
@@ -93,7 +94,8 @@ layout {
     }
     background-color "transparent"
     default-column-width {
-        // proportion 0.5
+ // proportion 0.5
+
     }
     focus-ring {
         off
@@ -132,9 +134,9 @@ layout {
         gradient from="#8839ef80" to="#8839ef80" angle=45 relative-to="workspace-view"
     }
 }
-clipboard {
-    disable-primary
-}
+// clipboard {
+//     disable-primary
+// }
 spawn-at-startup "fcitx5"
 // spawn-at-startup "nm-applet"
 // spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
@@ -204,5 +206,8 @@ overview {
 debug {
     honor-xdg-activation-with-invalid-serial
 }
+workspace "Browser"
+workspace "Terminal"
+workspace "SAP"
 include "rules.kdl"
 include "binds.kdl"

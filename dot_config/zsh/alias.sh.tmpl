@@ -14,3 +14,7 @@ alias lg='lazygit'
 alias f='fzf'
 alias cat='bat'
 alias p='op --tools=read,web_search,retain,recall,reflect'
+{{- if eq .chezmoi.os "linux" }}
+alias ns='niri-session'
+alias se='sudoedit'
+{{ end }}

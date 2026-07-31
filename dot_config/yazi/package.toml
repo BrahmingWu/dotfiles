@@ -3,6 +3,11 @@ use = "yazi-rs/plugins:toggle-pane"
 rev = "4c63ed3"
 hash = "15e5b67a241172cbb86b8fbf9e63692"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:piper"
+rev = "4c63ed3"
+hash = "e0d59bd47866a6a574c74574097e5070"
+
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-macchiato"
 rev = "4770a34"
