@@ -82,6 +82,7 @@ openbsd-netcat
 papirus-icon-theme
 paru
 pavucontrol
+perl-image-exiftool
 pipewire
 pipewire-alsa
 pipewire-jack
@@ -90,6 +91,8 @@ playerctl
 podman
 polkit-gnome
 python-pyqt6
+qemu-full
+quickemu
 rbw
 remmina
 resvg
@@ -114,6 +117,7 @@ ttf-jetbrains-mono-nerd
 ttf-lxgw-wenkai-mono
 unzip
 vim
+virt-viewer
 waybar
 wev
 wget
