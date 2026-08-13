@@ -77,7 +77,7 @@ output "eDP-1" {
     position x=1280 y=0
 }
 cursor {
-    xcursor-size 32
+    // xcursor-size 32
     xcursor-theme "Bibata-Modern-Ice"
     hide-when-typing
 }

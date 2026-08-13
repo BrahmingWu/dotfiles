@@ -6,7 +6,6 @@ alsa-firmware
 alsa-ucm-conf
 archlinuxcn-keyring
 asciinema
-ast-grep
 asusctl
 atuin
 base
@@ -19,6 +18,8 @@ brightnessctl
 btrfs-progs
 chezmoi
 cliphist
+cups
+cups-pdf
 darkman
 ddcutil
 efibootmgr
@@ -42,6 +43,7 @@ genact
 ghostscript
 ghostty
 git-delta
+github-cli
 gnome-keyring
 grim
 grub

@@ -7,6 +7,8 @@ uv = "latest"
 "npm:typescript" = "latest"
 "npm:@colbymchenry/codegraph" = "latest"
 usage = "latest"
+java = "17"
+maven = "3.9"
 
 [env]
 # UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
