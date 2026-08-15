@@ -3,3 +3,8 @@ vw.home {
     reverse_proxy vaultwarden:80
 }
 
+mem.home {
+    tls internal
+    reverse_proxy hindsight:9999
+}
+
