@@ -47,3 +47,4 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+.codegraph

@@ -96,6 +96,7 @@ python-pyqt6
 qemu-full
 quickemu
 rbw
+rclone
 remmina
 resvg
 rime-wanxiang-pro-flypy
