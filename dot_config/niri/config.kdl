@@ -76,6 +76,14 @@ output "eDP-1" {
     focus-at-startup
     position x=1280 y=0
 }
+// lpsk ITcenter office
+output "HDMI-A-3" {
+    mode "1920x1080"
+    scale 1.0
+    transform "normal"
+    focus-at-startup
+    // position x=1280 y=0
+}
 cursor {
     // xcursor-size 32
     xcursor-theme "Bibata-Modern-Ice"

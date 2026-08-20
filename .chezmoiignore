@@ -51,4 +51,5 @@ Library/
 **/raycast
 **/neovide
 **/karabiner
+**/zellij
 {{- end }}

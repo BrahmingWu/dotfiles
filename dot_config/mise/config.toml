@@ -12,6 +12,7 @@ java = "17"
 maven = "3.9"
 "npm:@playwright/mcp" = "latest"
 "pipx:docling" = "latest"
+herdr = "latest"
 
 [env]
 # UV_PYTHON = { value = "{{ tools.python.path }}", tools = true }
