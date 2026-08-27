@@ -56,7 +56,6 @@ mouse-hide-while-typing = true
 macos-option-as-alt = true
 font-family = "JetBrainsMono Nerd Font"
 font-family = "LXGW WenKai Mono"
-font-size = 16
 #quit-after-last-window-closed = true
 background-opacity-cells = true
 theme = light: Catppuccin Latte, dark: Catppuccin Macchiato
@@ -81,6 +80,7 @@ keybind = performable:super+ctrl+h=resize_split:left,10
 keybind = performable:super+ctrl+l=resize_split:right,10
 {{- if eq .chezmoi.os "darwin" }}
 background-opacity = 0.80
+font-size = 16
 background-blur = true
 macos-window-buttons = hidden
 macos-titlebar-style = tabs
@@ -90,6 +90,7 @@ macos-non-native-fullscreen = true
 background-opacity = 0.90
 keybind = ctrl+w=close_surface
 keybind = super+d=new_split:right
+font-size = 14
 keybind = super+shift+d=new_split:down
 {{ end }}
 

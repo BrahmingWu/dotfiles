@@ -79,6 +79,7 @@ noto-fonts-emoji
 nss-mdns
 nvidia-open-dkms
 nvidia-utils
+nvtop
 onlyoffice-bin
 openbsd-netcat
 papirus-icon-theme
@@ -137,7 +138,6 @@ xwayland-satellite
 yay
 yazi
 zbar
-zellij
 zk
 zoxide
 zram-generator
