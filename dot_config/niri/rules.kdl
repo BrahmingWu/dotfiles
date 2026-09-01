@@ -45,11 +45,11 @@ window-rule {
         proportion 0.45
     }
 }
-window-rule {
-    match app-id="^wechat$"
-    // block-out-from "screen-capture"
-    block-out-from "screencast"
-}
+// window-rule {
+//     match app-id="^wechat$"
+//     // block-out-from "screen-capture"
+//     block-out-from "screencast"
+// }
 window-rule {
     match app-id="^com\\-sap\\-platin\\-Gui$"
     open-on-workspace "SAP"

@@ -18,8 +18,7 @@ op() {
   local cwd="$(pwd)"
   if [[ $cwd = "$HOME" ]]; then
     mkdir -p ~/.omp/scratch
-    cd ~/.omp/scratch && omp "$@"
-    cd "$HOME" || echo "Failed to return to home directory"
+    omp --cwd="$HOME/.omp/scratch" "$@"
   else
     omp "$@"
   fi
