@@ -66,12 +66,12 @@ window-rule {
         saturation 0.3
     }
 }
-// window-rule {
-//     match is-floating=true
-//     background-effect {
-//         xray false
-//     }
-// }
+window-rule {
+    match is-floating=true
+    background-effect {
+        xray false
+    }
+}
 window-rule {
     match is-window-cast-target=true
     opacity 1.0
