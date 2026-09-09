@@ -16,7 +16,7 @@ NEW_COUNT=$(count_lines "$TMPFILE")
 
 if [ -f "$BREWFILE" ]; then
   OLD_COUNT=$(count_lines "$BREWFILE")
-  if [ "$NEW_COUNT" -lt "$OLD_COUNT" ]; then
+  if [ "$NEW_COUNT" -lt "$((OLD_COUNT - 3))" ]; then
     echo "Brewfile: new ($NEW_COUNT) < existing ($OLD_COUNT), skipped"
     echo "  Run 'brew bundle dump --force' manually if intentional"
     exit 0

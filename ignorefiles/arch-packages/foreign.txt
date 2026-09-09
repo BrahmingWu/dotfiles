@@ -12,3 +12,4 @@ owmods-gui-bin
 protonplus
 purple-bin
 wechat
+wemeet-bin

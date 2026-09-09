@@ -23,7 +23,7 @@ for pair in "$TMP_NATIVE:native.txt" "$TMP_FOREIGN:foreign.txt"; do
   NEW_COUNT=$(count_lines "$SRC")
   if [ -f "$DST" ]; then
     OLD_COUNT=$(count_lines "$DST")
-    if [ "$NEW_COUNT" -lt "$OLD_COUNT" ]; then
+    if [ "$NEW_COUNT" -lt "$((OLD_COUNT -3 ))" ]; then
       echo "arch-packages/${pair#*:}: new ($NEW_COUNT) < existing ($OLD_COUNT), skipped"
       continue
     fi

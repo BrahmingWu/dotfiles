@@ -301,6 +301,7 @@ rows = [["state_icon", "state_text", "workspace"], ["terminal_title"]]
 # delivery = "off"
 # delay_seconds = 1
 
+delivery = "terminal"
 [ui.toast.herdr]
 # position = "bottom-right"
 
