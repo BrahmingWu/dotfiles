@@ -37,6 +37,12 @@ window-rule {
     open-floating true
 }
 window-rule {
+    match title="^JavaEmbeddedFrame$"
+    default-column-width {
+        proportion 0.45
+    }
+}
+window-rule {
     match title="^Picture in picture$"
     default-column-width {
         proportion 0.45
