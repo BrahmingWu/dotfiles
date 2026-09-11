@@ -43,6 +43,9 @@ ignorefiles
 **/sway
 **/waybar
 **/darkman
+**/fcitx5
+**/freedrp
+**/mihomo-party
 {{ end }}
 
 {{- if ne .chezmoi.os "darwin" }}
