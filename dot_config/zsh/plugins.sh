@@ -5,6 +5,7 @@ znap eval mise 'mise activate zsh'
 znap eval tv 'tv init zsh'
 znap eval atuin 'atuin init zsh'
 znap eval herdr 'herdr completion zsh'
+znap eval drift 'drift shell-init zsh'
 # znap eval omp 'omp completions zsh'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 znap source zsh-users/zsh-syntax-highlighting
