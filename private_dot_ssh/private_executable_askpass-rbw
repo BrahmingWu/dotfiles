@@ -1,107 +1,198 @@
 #!/bin/bash
-set -euo pipefail
+# SSH_ASKPASS helper.
+#
+# OpenSSH contract (readpass.c:ssh_askpass):
+#   exit 0   -> stdout is used verbatim as the answer (an empty answer is legal!)
+#   exit != 0 -> ssh gets NULL, which most call sites turn into an empty answer
+# So a prompt we cannot answer MUST either go to /dev/tty or fail loudly.
+# Answering with an empty string is destructive: ssh-keygen -p reads "empty
+# passphrase" as "remove the passphrase".
+#
+# Set SSH_ASKPASS_DEBUG=1 for trace output on stderr.
+# Set SSH_ASKPASS_TRUST_NEW_HOST=1 to auto-accept unknown host keys.
 
-prompt="${1:-}"
+set -uo pipefail
 
-# ===== 辅助函数：从 ssh_config 反查 IP/域名 → Host 别名 =====
-reverse_lookup_alias() {
-  local target="$1"
-  # 遍历 ssh_config，找到 HostName == target 的第一个 Host 条目
-  awk -v tgt="$target" '
-    /^Host / { alias=$2; next }
-    /^[[:space:]]*HostName[[:space:]]/ {
-      if ($2 == tgt && alias !~ /[?*]/) { print alias; exit }
-    }
-  ' ~/.ssh/config 2>/dev/null
+prompt="${1-}"
+dbg() { [ -n "${SSH_ASKPASS_DEBUG:-}" ] && printf '[askpass] %s\n' "$*" >&2; return 0; }
+
+# ===== 0. Permission prompts (AddKeysToAgent confirm): deny by default =====
+if [ "${SSH_ASKPASS_PROMPT:-}" = "confirm" ] || [ "${prompt#Add key }" != "$prompt" ]; then
+  dbg "permission prompt -> no"
+  printf 'no\n'
+  exit 0
+fi
+
+# ===== 1. Interactive fallback =====
+# NOTE: /dev/tty exists but open(2) fails with ENXIO when there is no
+# controlling terminal, and bash prints an error before the || branch runs,
+# so the whole open must run inside a redirected block.
+tty_ask() {
+  local a
+  { exec 3<>/dev/tty; } 2>/dev/null || { dbg "no controlling tty"; return 1; }
+  printf '%s' "$1" >&3 2>/dev/null
+  IFS= read -rs a <&3 2>/dev/null
+  printf '\n' >&3 2>/dev/null
+  exec 3<&- 3>&-
+  [ -n "$a" ] || return 1
+  printf '%s\n' "$a"
 }
 
-# ===== 辅助函数：从密码存储获取密码（macOS Keychain 优先，fallback 到 rbw）=====
-get_password() {
-  local entry_name="$1"
-  local password=""
+# notify_start() (FIDO user-presence) execs the askpass program purely to
+# DISPLAY a message, with stdout on /dev/null. Reading stdin here would block
+# the touch operation, so print and return without waiting for an answer.
+if [ "${SSH_ASKPASS_PROMPT:-}" = "none" ]; then
+  dbg "notify-only prompt"
+  { printf '%s\n' "$prompt" >/dev/tty; } 2>/dev/null || true
+  exit 0
+fi
 
-  # macOS: 优先尝试 Keychain
-  if [[ "$(uname)" == "Darwin" ]]; then
+# ===== 2. Secret store (macOS Keychain first, rbw fallback) =====
+# `timeout` is GNU coreutils and absent on macOS; gtimeout is the brew name.
+with_timeout() {
+  if command -v timeout >/dev/null 2>&1; then timeout 3 "$@"
+  elif command -v gtimeout >/dev/null 2>&1; then gtimeout 3 "$@"
+  else "$@"
+  fi
+}
+
+get_password() {
+  local entry_name="$1" password=""
+
+  if [ "$(uname)" = "Darwin" ]; then
     password=$(security find-generic-password -a "$USER" -s "$entry_name" -w 2>/dev/null) || true
   fi
 
-  # Fallback: rbw（跨平台兼容）
-  if [[ -z "$password" ]]; then
-    password=$(rbw get "$entry_name" 2>/dev/null) || true
+  if [ -z "$password" ]; then
+    command -v rbw >/dev/null 2>&1 || return 0
+    # rbw get blocks on an interactive unlock prompt when locked; probing
+    # `rbw unlocked` costs ~13ms and avoids that hang entirely.
+    rbw unlocked >/dev/null 2>&1 || { dbg "rbw locked"; return 0; }
+    password=$(with_timeout rbw get "$entry_name" 2>/dev/null) || true
   fi
 
   printf '%s' "$password"
 }
 
-# ===== 场景 0：Host key 验证提示 =====
-if echo "$prompt" | grep -qi "continue connecting\|authenticity"; then
-  printf 'yes\n'
-  exit 0
-fi
+# ===== 3. Prompt parsing =====
+# OpenSSH puts the RESOLVED HostName in the password prompt, not the Host
+# alias, so an IP is reverse-mapped back to its alias in ssh_config.
+reverse_lookup_alias() {
+  local target="$1"
+  [ -f ~/.ssh/config ] || return 0
+  awk -v tgt="$target" '
+    /^[[:space:]]*Host[[:space:]]/ && $2 !~ /[?*]/ { alias=$2; next }
+    /^[[:space:]]*HostName[[:space:]]/ {
+      if ($2 == tgt && alias != "") { print alias; exit }
+    }
+  ' ~/.ssh/config 2>/dev/null
+}
 
-# ===== 场景 1：密钥 passphrase =====
-if echo "$prompt" | grep -qi "passphrase"; then
-  # 尝试取（命名约定: sshkey-<文件名>）
-  key_path=$(echo "$prompt" | sed -n "s/.*for key '\\(.*\\)'.*/\\1/p" | head -1)
-  if [[ -n "$key_path" ]]; then
-    key_name=$(basename "$key_path")
-    passphrase=$(get_password "sshkey-${key_name}")
-    if [[ -n "$passphrase" ]]; then
-      printf '%s\n' "$passphrase"
+# "user@host's password:" / "(user@host) Password:" / "Password for user@host:"
+extract_host() {
+  local h
+  h=$(printf '%s' "$1" | sed -nE 's/.*@\[([0-9A-Fa-f:]+)\].*/\1/p')
+  [ -n "$h" ] && { printf '%s' "$h"; return; }
+  printf '%s' "$1" | sed -nE 's/.*@([A-Za-z0-9._-]+).*/\1/p'
+}
+
+# "Enter passphrase for key '/path':" (ssh), "Enter passphrase for \"/path\":"
+# (ssh-keygen), "Enter passphrase for /path:" (ssh-add).
+# Only returns something that looks like a path, so that the unquoted
+# ssh-keygen prompts ("Enter new passphrase (empty for no passphrase):")
+# do not masquerade as key filenames.
+extract_keypath() {
+  local t="${1#*assphrase for }" c
+  t="${t#key }"
+  case $t in
+    \"*\") t="${t#\"}"; printf '%s' "${t%%\"*}"; return ;;
+    \'*\') t="${t#\'}"; printf '%s' "${t%%\'*}"; return ;;
+  esac
+  c="${t%%:*}"
+  case $c in
+    */*) case $c in *" "*) return ;; *) printf '%s' "$c" ;; esac ;;
+  esac
+}
+
+# ===== 4. Host key confirmation =====
+case "$prompt" in
+  *"continue connecting"*|*"authenticity of host"*)
+    if [ -n "${SSH_ASKPASS_TRUST_NEW_HOST:-}" ]; then
+      dbg "host key -> yes (SSH_ASKPASS_TRUST_NEW_HOST)"
+      printf 'yes\n'
       exit 0
     fi
+    tty_ask "$prompt" && exit 0
+    dbg "unknown host key, not confirmed and no tty"
+    exit 1
+    ;;
+esac
+
+# ===== 5. Key passphrase / PIN =====
+lower=$(printf '%s' "$prompt" | tr '[:upper:]' '[:lower:]')
+case "$lower" in
+  *passphrase*|*pin*)
+    key_path=$(extract_keypath "$prompt")
+    if [ -n "$key_path" ]; then
+      passphrase=$(get_password "sshkey-$(basename "$key_path")")
+      if [ -n "$passphrase" ]; then
+        dbg "key passphrase hit: $key_path"
+        printf '%s\n' "$passphrase"
+        exit 0
+      fi
+      dbg "key passphrase miss: $key_path"
+    else
+      dbg "unmanaged passphrase prompt"
+    fi
+    # Never answer empty here: see the header comment.
+    tty_ask "$prompt" && exit 0
+    exit 1
+    ;;
+esac
+
+# ===== 6. Login password =====
+password_for_host() {
+  local h="$1" pw=""
+  [ -n "$h" ] || return 0
+  pw=$(get_password "ssh-$h")
+  if [ -z "$pw" ]; then
+    case $h in
+      [0-9]*)
+        local a
+        a=$(reverse_lookup_alias "$h")
+        [ -n "$a" ] && pw=$(get_password "ssh-$a")
+        ;;
+    esac
   fi
-  # 取不到 → 返回空串，让 key 认证失败，SSH 会自动尝试 password 认证
-  printf '\n'
-  exit 0
-fi
+  printf '%s' "$pw"
+}
 
-# ===== 场景 2：SSH 登录密码 =====
-
-# 2a. 从提示中提取 IP/域名
-host_candidate="$(echo "$prompt" | sed -E "s/.*@([^ ']+).*/\1/")"
-
+host_candidate=$(extract_host "$prompt")
 password=""
+[ -n "$host_candidate" ] && password=$(password_for_host "$host_candidate")
 
-# 优化：如果 host_candidate 本身是 Host 别名（非 IP），直接尝试获取
-if [[ -n "$host_candidate" ]] && [[ ! "$host_candidate" =~ ^[0-9.]+$ ]]; then
-  password=$(get_password "ssh-${host_candidate}")
-fi
-
-# 2b. 如果还没找到，尝试从父进程命令行提取别名 + IP 反查
-if [[ -z "$password" ]]; then
-  ssh_target=""
-  if [[ "$(uname)" == "Darwin" ]]; then
-    ssh_cmd=$(ps -p $PPID -o command= 2>/dev/null || true)
+if [ -z "$password" ]; then
+  # Fall back to the ssh command line (handles ProxyJump, where the prompt
+  # names the jump host but the user typed the destination alias).
+  if [ "$(uname)" = "Darwin" ]; then
+    ssh_cmd=$(ps -p "$PPID" -o command= 2>/dev/null || true)
   else
     ssh_cmd=$(tr '\0' ' ' </proc/$PPID/cmdline 2>/dev/null || true)
   fi
-  if [[ -n "$ssh_cmd" ]]; then
-    ssh_target=$(echo "$ssh_cmd" | awk '{for(i=1;i<=NF;i++) if($i !~ /^-/) print $i}' | tail -n 1)
-  fi
-
-  # 优先 1：IP 反查 ssh_config 别名（真正问密码的服务器，ProxyJump 场景关键）
-  if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
-    alias_from_ip=$(reverse_lookup_alias "$host_candidate")
-    if [[ -n "$alias_from_ip" ]]; then
-      password=$(get_password "ssh-${alias_from_ip}")
+  if [ -n "$ssh_cmd" ]; then
+    ssh_target=$(printf '%s' "$ssh_cmd" | awk '{for(i=NF;i>=1;i--) if($i !~ /^-/ && $i !~ /=/) {print $i; exit}}')
+    if [ -n "$ssh_target" ]; then
+      password=$(password_for_host "${ssh_target##*@}")
     fi
   fi
-
-  # 优先 2：PPID 命令行别名 → ssh-<target>
-  if [[ -z "$password" ]] && [[ -n "$ssh_target" ]]; then
-    password=$(get_password "ssh-${ssh_target}")
-  fi
-
-  # 优先 3：直接用 IP/域名 → ssh-1.2.3.4
-  if [[ -z "$password" ]] && [[ -n "$host_candidate" ]]; then
-    password=$(get_password "ssh-${host_candidate}")
-  fi
 fi
 
-# ===== 输出 =====
-if [[ -n "$password" ]]; then
+if [ -n "$password" ]; then
+  dbg "password hit: ${host_candidate:-?}"
   printf '%s\n' "$password"
-else
-  exit 1
+  exit 0
 fi
+
+dbg "password miss: ${host_candidate:-?}"
+tty_ask "$prompt" && exit 0
+exit 1
