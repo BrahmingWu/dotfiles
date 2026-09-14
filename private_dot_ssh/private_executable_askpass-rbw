@@ -56,6 +56,29 @@ with_timeout() {
   fi
 }
 
+# Ensures rbw is usable before any lookup. A locked rbw makes `rbw get` block on
+# an interactive unlock prompt; probing `rbw unlocked` costs ~13ms and avoids
+# that hang. When locked we run `rbw unlock` so the master-password prompt
+# (pinentry) appears INSTEAD of silently falling through to ssh's
+# server-password prompt, which is easily mistaken for the rbw unlock prompt.
+#
+# Call this ONCE, from the main shell, before the candidate lookups: get_password
+# runs inside command substitutions, so a flag set in there would be lost and
+# every candidate entry name would re-open pinentry.
+rbw_unlock_attempted=""
+rbw_ensure_unlocked() {
+  command -v rbw >/dev/null 2>&1 || return 1
+  rbw unlocked >/dev/null 2>&1 && return 0
+  [ -n "$rbw_unlock_attempted" ] && return 1
+  rbw_unlock_attempted=1
+  dbg "rbw locked; running rbw unlock"
+  # No timeout here on purpose: this waits for the user to type the master
+  # password into pinentry. stdout is the askpass answer channel, so it must be
+  # discarded.
+  rbw unlock >/dev/null 2>&1 || true
+  rbw unlocked >/dev/null 2>&1
+}
+
 get_password() {
   local entry_name="$1" password=""
 
@@ -65,9 +88,8 @@ get_password() {
 
   if [ -z "$password" ]; then
     command -v rbw >/dev/null 2>&1 || return 0
-    # rbw get blocks on an interactive unlock prompt when locked; probing
-    # `rbw unlocked` costs ~13ms and avoids that hang entirely.
-    rbw unlocked >/dev/null 2>&1 || { dbg "rbw locked"; return 0; }
+    # Never unlock from here (subshell): just bail out if still locked.
+    rbw unlocked >/dev/null 2>&1 || { dbg "rbw locked: $entry_name"; return 0; }
     password=$(with_timeout rbw get "$entry_name" 2>/dev/null) || true
   fi
 
@@ -128,6 +150,11 @@ case "$prompt" in
     ;;
 esac
 
+# Unlock once, up front, so pinentry is shown before ssh has already decided to
+# ask for the server password. Must happen in the main shell (not inside
+# get_password's subshell) and before the passphrase branch, which also needs it.
+rbw_ensure_unlocked
+
 # ===== 5. Key passphrase / PIN =====
 lower=$(printf '%s' "$prompt" | tr '[:upper:]' '[:lower:]')
 case "$lower" in
@@ -179,12 +206,16 @@ if [ -z "$password" ]; then
   else
     ssh_cmd=$(tr '\0' ' ' </proc/$PPID/cmdline 2>/dev/null || true)
   fi
-  if [ -n "$ssh_cmd" ]; then
-    ssh_target=$(printf '%s' "$ssh_cmd" | awk '{for(i=NF;i>=1;i--) if($i !~ /^-/ && $i !~ /=/) {print $i; exit}}')
-    if [ -n "$ssh_target" ]; then
-      password=$(password_for_host "${ssh_target##*@}")
-    fi
-  fi
+  # Only take the last argument when the parent really is ssh; otherwise a
+  # wrapper (shell function, python driver, ...) leaks its own name in here.
+  case "$ssh_cmd" in
+    ssh\ *|*/ssh\ *)
+      ssh_target=$(printf '%s' "$ssh_cmd" | awk '{for(i=NF;i>=1;i--) if($i !~ /^-/ && $i !~ /=/) {print $i; exit}}')
+      if [ -n "$ssh_target" ]; then
+        password=$(password_for_host "${ssh_target##*@}")
+      fi
+      ;;
+  esac
 fi
 
 if [ -n "$password" ]; then
@@ -194,5 +225,12 @@ if [ -n "$password" ]; then
 fi
 
 dbg "password miss: ${host_candidate:-?}"
+# If rbw was locked and the unlock attempt failed, the prompt about to appear is
+# ssh's SERVER password prompt — say so, otherwise it is easily mistaken for the
+# rbw master-password prompt.
+if [ -n "$rbw_unlock_attempted" ]; then
+  printf '[askpass] rbw is LOCKED; the prompt below is for the SERVER password.\n' >&2
+  printf '[askpass] run `rbw unlock` first to use the stored password.\n' >&2
+fi
 tty_ask "$prompt" && exit 0
 exit 1
