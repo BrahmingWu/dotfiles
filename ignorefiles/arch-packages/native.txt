@@ -18,6 +18,7 @@ brightnessctl
 btrfs-progs
 chezmoi
 cliphist
+cmatrix
 cups
 cups-pdf
 darkman
@@ -93,6 +94,7 @@ pipewire-pulse
 playerctl
 podman
 polkit-gnome
+protonplus
 python-pyqt6
 qemu-full
 quickemu

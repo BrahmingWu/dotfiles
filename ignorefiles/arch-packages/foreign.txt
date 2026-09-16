@@ -1,6 +1,7 @@
 bibata-cursor-theme-bin
 bluetuith-bin
 bookokrat-bin
+drift-bin
 go-musicfox-bin
 helium-browser-bin
 hwatch-bin
@@ -9,7 +10,6 @@ mark-shot-bin
 mcat-bin
 mihomo-party-bin
 owmods-gui-bin
-protonplus
 purple-bin
 wechat
 wemeet-bin
