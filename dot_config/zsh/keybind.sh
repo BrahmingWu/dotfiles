@@ -20,3 +20,6 @@ bindkey -M vicmd '.' _dot_insert_last_word
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey -M viins '\e[3~' delete-char
 bindkey -M viins '^?' backward-delete-char
+if [[ -n ${GHOSTTY_RESOURCES_DIR:-} ]]; then
+  source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+fi
