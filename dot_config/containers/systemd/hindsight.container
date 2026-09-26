@@ -5,14 +5,12 @@
 [Container]
 Image=ghcr.io/vectorize-io/hindsight:latest-slim
 ContainerName=hindsight
-# Copilot runtime downloads need the host proxy; container loopback is not the host.
-# Keep local services and Alibaba Cloud APIs direct.
 Environment=HTTP_PROXY=
-Environment=HTTPS_PROXY=http://host.containers.internal:20122
-Environment=NO_PROXY=localhost,127.0.0.1,::1,.localhost,.aliyuncs.com,host.containers.internal,hindsight,caddy
+Environment=HTTPS_PROXY=
+Environment=NO_PROXY=
 Environment=http_proxy=
-Environment=https_proxy=http://host.containers.internal:20122
-Environment=no_proxy=localhost,127.0.0.1,::1,.localhost,.aliyuncs.com,host.containers.internal,hindsight,caddy
+Environment=https_proxy=
+Environment=no_proxy=
 EnvironmentFile=%h/.config/containers/hindsight.env
 UserNS=keep-id
 
