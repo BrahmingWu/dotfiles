@@ -214,8 +214,8 @@ overview {
 debug {
     honor-xdg-activation-with-invalid-serial
 }
-workspace "Browser"
-workspace "Terminal"
-workspace "SAP"
+workspace "B"
+workspace "T"
+workspace "S"
 include "rules.kdl"
 include "binds.kdl"

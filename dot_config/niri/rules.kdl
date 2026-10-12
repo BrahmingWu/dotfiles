@@ -15,15 +15,16 @@ window-rule {
 }
 window-rule {
     match app-id="^helium$"
-    open-on-workspace "Browser"
+    open-on-workspace "B"
     default-column-width {
         proportion 0.8
     }
 }
 window-rule {
     match app-id="^com\\.mitchellh\\.ghostty$"
+    match app-id="^so\\.stencil\\.tern$"
     opacity 0.8
-    open-on-workspace "Terminal"
+    open-on-workspace "T"
     default-column-width {
         proportion 0.8
     }
@@ -58,7 +59,7 @@ window-rule {
 // }
 window-rule {
     match app-id="^com\\-sap\\-platin\\-Gui$"
-    open-on-workspace "SAP"
+    open-on-workspace "S"
 }
 window-rule {
     match is-active=false

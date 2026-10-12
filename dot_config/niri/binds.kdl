@@ -468,22 +468,22 @@ binds {
         power-off-monitors
     }
     Mod+B {
-        focus-workspace "Browser"
+        focus-workspace "B"
     }
     Mod+Shift+B {
-        move-window-to-workspace "Browser"
+        move-window-to-workspace "B"
     }
     Mod+T {
-        focus-workspace "Terminal"
+        focus-workspace "T"
     }
     Mod+Shift+T {
-        move-window-to-workspace "Terminal"
+        move-window-to-workspace "T"
     }
     Mod+S {
-        focus-workspace "SAP"
+        focus-workspace "S"
     }
     Mod+Shift+S {
-        move-window-to-workspace "SAP"
+        move-window-to-workspace "S"
     }
 }
 
