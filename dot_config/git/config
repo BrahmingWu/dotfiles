@@ -31,7 +31,7 @@
 ; [pager]
 ; 	diff = diffnav
 
-[includeIf "gitdir:~/MyDocs/src/Work/"]
+[includeIf "gitdir:~/MyDocs/SAP/"]
   path = ~/.config/git/config_work
 [credential "https://github.com"]
 	helper = 

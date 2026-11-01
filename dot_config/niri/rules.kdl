@@ -39,6 +39,7 @@ window-rule {
 }
 window-rule {
     match title="^JavaEmbeddedFrame$"
+    match app-id="^Eclipse$" title=""
     default-column-width {
         proportion 0.45
     }

@@ -23,6 +23,14 @@ Network=caddy-net
 
 Volume=%h/Documents/AppData/hindsight/data:/home/hindsight/.pg0
 
+# The image's own shutdown script asks for 30s so the embedded pg0 can flush WAL;
+# podman's default --stop-timeout is 10s, which SIGKILLs the container mid-task
+# (that is also how operations end up stranded in 'processing').
+StopTimeout=30
+# Matches the upstream docker run line; PostgreSQL uses /dev/shm for parallel
+# workers, and the default 64MiB is small for shared_buffers=256MB.
+ShmSize=1g
+
 # 容器内进程以非 root 运行时的安全标签
 SecurityLabelDisable=true
 
