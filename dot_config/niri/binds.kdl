@@ -35,7 +35,7 @@ binds {
     }
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal" {
-        spawn "ghostty"
+        spawn "tern"
     }
     Mod+Space hotkey-overlay-title="Run an Application" {
         // spawn "fuzzel"
