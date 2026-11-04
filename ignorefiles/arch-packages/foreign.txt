@@ -1,6 +1,7 @@
 bibata-cursor-theme-bin
 bluetuith-bin
 bookokrat-bin
+deepseek-harness-bin
 drift-bin
 go-musicfox-bin
 helium-browser-bin

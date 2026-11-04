@@ -102,6 +102,7 @@ rbw
 rclone
 remmina
 resvg
+rex
 rime-wanxiang-pro-flypy
 ripgrep
 rog-control-center
